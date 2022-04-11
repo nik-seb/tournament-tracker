@@ -34,6 +34,8 @@ The database superuser—meaning `postgres`—must only be used for database adm
 
 ## Spring Boot
 
+Note: Spring Boot has been configured to run on port `9000` for this project. You might be used to port 8080 from earlier in the cohort, but we changed it so as not to conflict with the Vue server that you will be running concurrently.  
+
 ### Datasource
 
 A Datasource has been configured for you in `/src/resources/application.properties`. It connects to the database using the `capstone_appuser` database user. You can change the name of this database if you want, but remember to change it here and in the `create.sh` script in the database folder:
@@ -129,3 +131,7 @@ public class JdbcUserDaoTests extends FinalCapstoneDaoTests {
 
 }
 ```
+
+### Functional tests
+
+Selenium has been included in this project, as well as an initial class file. It assumes that you have downloaded the appropriate version of `chromedriver.exe` to your home (`~`) directory, and that Windows will allow it to run. If you have questions about your configuration, please see an Instructor. Have fun writing automated functional tests!
