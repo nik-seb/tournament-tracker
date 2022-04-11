@@ -5,7 +5,7 @@
           <input type="text" name="tournamentName" v-model="newTournament.name">
           <label for="sportType">Sport or Game</label>
           <select id="sportType" name="sportType">
-              <option v-for="sport in sportNames" v-bind:key="sport.sportID" v-bind:value="sport.sportID">{{sport.name}}</option>
+              <option v-for="sport in sportNames" v-bind:key="sport.sportId" v-bind:value="sport.sportId">{{sport.sportName}}</option>
           </select>
           <!-- TO-DO: create input option for user to add new sport if sport does not exist -->
           <label for="startDate">Start Date</label>
@@ -28,7 +28,8 @@ export default {
                 name: '',
                 startDate: '',
                 endDate: '',
-                sportID: ''
+                sportId: '',
+                numOfTeams: 0
             },
             sportNames: []
         }
@@ -42,7 +43,7 @@ export default {
     methods: {
         createTournament() {
             tournamentService.createTournament(this.newTournament).then((response) => {
-                if (response.status == '200') {
+                if (response.status == 200) {
                     // TO-DO: push router to new tournament page
                 }
             })
