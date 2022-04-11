@@ -8,6 +8,10 @@ public class Tournament {
     private String endDate;
     private int sportId;
 
+    public Tournament(){
+
+    }
+
     public Tournament(int tournamentId, String tournamentName, int numOfTeams, String startDate, String endDate, int sportId) {
         this.tournamentId = tournamentId;
         this.tournamentName = tournamentName;
