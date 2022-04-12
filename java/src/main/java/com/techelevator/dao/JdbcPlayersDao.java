@@ -92,7 +92,7 @@ public class JdbcPlayersDao implements PlayersDao {
     public Players createPlayer(Players player) {
         String sql = "INSERT INTO players (user_id, player_name) VALUES (?, ?) RETURNING player_id;";
         int newPlayerId = jdbcTemplate.queryForObject(sql, int.class,  player.getUserId(),  player.getPlayerName());
-        Players newPlayer = getPlayer(newPlayerId);
+        Players newPlayer = getPlayerById(newPlayerId);
         return newPlayer;
 
     }
