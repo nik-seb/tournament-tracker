@@ -1,12 +1,29 @@
 package com.techelevator.model;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+
 public class Tournament {
+
+    @Min(value = 1, message = "Tournament ID Should Be a Positive Number.")
     private int tournamentId;
+
+    @NotBlank( message = "Tournament Name is Required.")
     private String tournamentName;
+
+    @Min(value = 1, message = "Number Of Teams Should Be a Positive Number.")
     private int numOfTeams;
+
+
     private String startDate;
     private String endDate;
+
+    @Min(value = 1, message = "Sport ID Should Be a Positive Number.")
     private int sportId;
+
+    public Tournament() {};
 
     public Tournament(int tournamentId, String tournamentName, int numOfTeams, String startDate, String endDate, int sportId) {
         this.tournamentId = tournamentId;
