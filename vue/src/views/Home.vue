@@ -1,12 +1,20 @@
 <template>
-  <div class="home">
-    <h1>Home</h1>
-    <p>You must be authenticated to see this</p>
-  </div>
+  <event-containers></event-containers>
 </template>
 
 <script>
+import EventContainers from '@/components/EventContainers';
+
+
+
 export default {
+
+components:{
+  EventContainers
+},
+
   name: "home"
+
 };
+
 </script>

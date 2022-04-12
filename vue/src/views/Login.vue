@@ -12,7 +12,7 @@
         role="alert"
         v-if="this.$route.query.registration"
       >Thank you for registering, please sign in.</div>
-      <label for="username" class="sr-only">Username</label>
+      <label id="user" for="username" class="sr-only">Please enter your username below</label>
       <input
         type="text"
         id="username"
@@ -22,7 +22,7 @@
         required
         autofocus
       />
-      <label for="password" class="sr-only">Password</label>
+      <label for="password" class="sr-only">Please enter your password below</label>
       <input
         type="password"
         id="password"
@@ -31,8 +31,8 @@
         v-model="user.password"
         required
       />
-      <router-link :to="{ name: 'register' }">Need an account?</router-link>
-      <button type="submit">Sign in</button>
+        <router-link :to="{ name: 'register' }">Need an account?</router-link>
+        <button type="submit">Sign in</button>
     </form>
   </div>
 </template>
@@ -74,3 +74,55 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+
+h1{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding-bottom: 60%;
+}
+
+/* #username {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+} */
+
+form {
+
+  display: flex;
+  flex-direction: column;
+  padding-left: 40%;
+  padding-right: 40%;
+  justify-items: center;
+}
+
+form label{
+  padding: 5%;
+  margin:auto;
+  font-family: Arial, Helvetica, sans-serif;
+  
+}
+
+.register{
+  padding-bottom: 10%;
+}
+
+#username{
+  padding-top: 2.5%;
+}
+
+#password{
+  
+  padding-top: 2.5%;
+}
+
+/* 
+.sr-only{
+  margin: 0% auto;
+  padding-bottom: 5%;
+} */
+
+</style>
