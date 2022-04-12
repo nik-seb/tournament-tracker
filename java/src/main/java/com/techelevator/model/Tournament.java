@@ -23,6 +23,7 @@ public class Tournament {
     @Min(value = 1, message = "Sport ID Should Be a Positive Number.")
     private int sportId;
 
+    public Tournament() {};
 
     public Tournament(int tournamentId, String tournamentName, int numOfTeams, String startDate, String endDate, int sportId) {
         this.tournamentId = tournamentId;
