@@ -1,13 +1,18 @@
 <template>
   <div>
-      <form v-on:submit.prevent>
+      <form v-on:submit.prevent="createTournament">
           <label for="tournamentName">Tournament Name</label>
           <input type="text" name="tournamentName" v-model="newTournament.name">
           <label for="sportType">Sport or Game</label>
-          <select id="sportType" name="sportType">
+          <select id="sportType" name="sportType" v-model="sportSelection">
+              <option value='' disabled></option>
               <option v-for="sport in sportNames" v-bind:key="sport.sportId" v-bind:value="sport.sportId">{{sport.sportName}}</option>
+              <option value="newSport">Add New Sport</option>
           </select>
-          <!-- TO-DO: create input option for user to add new sport if sport does not exist -->
+          <p v-if="sportSelection == 'newSport'">
+              <label for="newSportName">New Sport Name:</label>
+              <input type="text" name="newSportName" id="newSportName" v-model="newSportName">
+          </p>
           <label for="startDate">Start Date</label>
           <input type="date" name="startDate" v-model="newTournament.startDate">
           <label for="endDate">End Date</label>
@@ -31,18 +36,28 @@ export default {
                 sportId: '',
                 numOfTeams: 0
             },
-            sportNames: []
+            sportNames: [],
+            sportSelection: '',
+            newSport: ''
         }
     },
     created(){
-        // think this is better off in the store again so there's no need to re-retrieve sports list to get the name when displaying tournament details
-        TournamentService.getSportsList().then((response) => {
-            this.sportNames = response.data;
-        });
+        if (this.$store.sportList.length == 0) {
+            TournamentService.getSportsList().then((response) => {
+                if (response.status == 200) {
+                    this.$store.commit("SET_SPORT_LIST", response.data);
+                }
+            });
+        }
         // TO-DO: external API call to find holidays - or might that be generated when range is selected?
     },
     methods: {
         createTournament() {
+            if (this.newSport != '') {
+                this.createNewSport();
+                // TO-DO: set returned id from createNewSport as this tourn's sportId, or set through new GET by sport name
+                    // must set unique constraint on sport name column if the latter
+            }
             TournamentService.createTournament(this.newTournament).then((response) => {
                 if (response.status == 200) {
                     // there was a way to retrieve data after creating new row in table - how to return so can get serial ID?
@@ -50,6 +65,9 @@ export default {
                     this.$router.push({name: 'view-tournament', params: {id: 2}});
                 }
             })
+        },
+        createNewSport() {
+            TournamentService.createNewSport(this.newSport);
         }
     }
 }

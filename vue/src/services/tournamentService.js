@@ -7,6 +7,10 @@ export default {
       return axios.get('/sports'); 
   },
 
+  createSport(sportName) {
+    return axios.post('/sports', sportName);
+  },
+
   createTournament(tournament) {
     return axios.post('/tournaments', tournament);
   },
