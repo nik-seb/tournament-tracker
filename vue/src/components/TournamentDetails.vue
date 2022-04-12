@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import tournamentService from "@/services/tournamentService.js"
+import TournamentService from "@/services/TournamentService.js"
 
 // might want to set this in store as "activeTournament" so there's no need to pass it all around to view, join, edit, etc
 // could do the same with retrieved tournament list
@@ -28,13 +28,15 @@ export default {
         tournamentID: Number
     },
     created() {
-        tournamentService.getTournamentDetails(this.tournamentID).then((response) => {
-            this.tournament.id = response.data.tournamentId;
-            this.tournament.name = response.data.name;
-            this.tournament.startDate = response.data.startDate;
-            this.tournament.endDate = response.data.endDate;
-            this.tournament.sportId = response.data.sportId;
-            this.numOfTeams = response.data.numOfTeams;
+        TournamentService.getTournamentDetails(this.tournamentID).then((response) => {
+            if (response.status == 200) {
+                this.tournament.id = response.data.tournamentId;
+                this.tournament.name = response.data.name;
+                this.tournament.startDate = response.data.startDate;
+                this.tournament.endDate = response.data.endDate;
+                this.tournament.sportId = response.data.sportId;
+                this.numOfTeams = response.data.numOfTeams;
+            }
         })
     }
 }

@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import tournamentService from '@/services/tournamentService.js';
+import TournamentService from '@/services/TournamentService.js';
 
 export default {
     name: "create-tournament-form",
@@ -35,16 +35,19 @@ export default {
         }
     },
     created(){
-        tournamentService.getSportsList().then((response) => {
+        // think this is better off in the store again so there's no need to re-retrieve sports list to get the name when displaying tournament details
+        TournamentService.getSportsList().then((response) => {
             this.sportNames = response.data;
         });
         // TO-DO: external API call to find holidays - or might that be generated when range is selected?
     },
     methods: {
         createTournament() {
-            tournamentService.createTournament(this.newTournament).then((response) => {
+            TournamentService.createTournament(this.newTournament).then((response) => {
                 if (response.status == 200) {
-                    // TO-DO: push router to new tournament page
+                    // there was a way to retrieve data after creating new row in table - how to return so can get serial ID?
+                    // TO-DO: push router to new tournament page; get new ID for that
+                    this.$router.push({name: 'view-tournament', params: {id: 2}});
                 }
             })
         }
