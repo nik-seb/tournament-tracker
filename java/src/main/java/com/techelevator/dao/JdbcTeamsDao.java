@@ -1,5 +1,6 @@
 package com.techelevator.dao;
 
+import com.techelevator.model.Matches;
 import com.techelevator.model.Teams;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -15,6 +16,9 @@ import java.security.Principal;
 public class JdbcTeamsDao implements TeamsDao {
 
     private JdbcTemplate jdbcTemplate;
+
+
+    public JdbcTeamsDao() {}
 
     public JdbcTeamsDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -54,30 +58,54 @@ public class JdbcTeamsDao implements TeamsDao {
 
 
     @Override
-    public Teams getTeamSize(int teamSize) {
-        Teams team = new Teams();
+    public List<Teams> getTeamsBySize(int teamSize) {
+        List<Teams> teams = new ArrayList<>();
         String sql = "SELECT team_size " +
                      "FROM teams " +
                      "WHERE team_size = ?; ";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, teamSize);
-        if (results.next()) {
-            team = mapRowToTeams(results);
+        while (results.next()) {
+            teams.add(mapRowToTeams(results));
+        }
+
+        return teams;
+    }
+
+
+    @Override
+    public Teams createTeam(Teams team) {
+        String sql = "INSERT INTO teams (team_size) VALUES (?) RETURNING team_id;";
+        int newTeamId = jdbcTemplate.queryForObject(sql, int.class, team.getTeamSize());
+        Teams newTeam = getTeamById(newTeamId);
+        return newTeam;
+    }
+
+
+    @Override
+    public void updateTeam(Teams team) {
+        String sql = "UPDATE teams " +
+                " SET team_size = ?;";
+        jdbcTemplate.update(sql, team.getTeamSize());
+
+    }
+
+
+        @Override
+        public void deleteTeam(int teamId) {
+            String sql = "DELETE FROM teams WHERE team_id = ?;";
+            jdbcTemplate.update(sql, teamId);
 
         }
-        return team;
+
+
+
+
+        private Teams mapRowToTeams (SqlRowSet results) {
+            Teams team = new Teams();
+            team.setTeamId(results.getInt("team_id"));
+            team.setTeamSize(results.getInt("team_size"));
+            return team;
+        }
+
+
     }
-
-
-
-
-
-
-    private Teams mapRowToTeams(SqlRowSet results) {
-        Teams team = new Teams();
-        team.setTeamId(results.getInt("team_id"));
-        team.setTeamSize(results.getInt("team_size"));
-        return team;
-    }
-
-
-}

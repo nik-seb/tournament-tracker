@@ -11,6 +11,12 @@ public interface TeamsDao {
 
         Teams getTeamById(int teamId);
 
-        Teams getTeamSize(int teamSize);
+        List<Teams> getTeamsBySize(int teamSize);
+
+        Teams createTeam(Teams team);
+
+        void updateTeam(Teams team);
+
+        void deleteTeam(int teamId);
 
 }

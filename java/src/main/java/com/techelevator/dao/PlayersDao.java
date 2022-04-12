@@ -13,5 +13,10 @@ public interface PlayersDao {
 
     Players getPlayerByPlayerName(String playerName);
 
+    Players createPlayer(Players player);
+
+    void updatePlayer(Players player);
+
+    void deletePlayer(int playerId);
 
 }

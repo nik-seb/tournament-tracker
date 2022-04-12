@@ -11,10 +11,7 @@ public class JdbcMatchesDao implements MatchesDao {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public JdbcMatchesDao(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-
-    }
+    public JdbcMatchesDao(JdbcTemplate jdbcTemplate) { this.jdbcTemplate = jdbcTemplate; }
 
 
     @Override
@@ -60,7 +57,7 @@ public class JdbcMatchesDao implements MatchesDao {
     @Override
     public Matches createMatch(Matches match) {
         String sql = "INSERT INTO matches (tournament_id, start_date, start_time, home_team_id, away_team_id) " +
-                " VALUES (?, ?, ?, ?,?) RETURNING match_id;";
+                " VALUES (?, ?, ?, ?, ?) RETURNING match_id;";
         int newMatchId = jdbcTemplate.queryForObject(sql, int.class,
                 match.getTournamentId(), match.getDate(), match.getStartTime(), match.getHomeTeamId(), match.getAwayTeamId());
         Matches newMatch = getMatch(newMatchId);

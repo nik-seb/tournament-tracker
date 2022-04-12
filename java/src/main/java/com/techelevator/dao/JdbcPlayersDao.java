@@ -1,5 +1,6 @@
 package com.techelevator.dao;
 
+import com.techelevator.model.Matches;
 import com.techelevator.model.Players;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -87,8 +88,30 @@ public class JdbcPlayersDao implements PlayersDao {
 
 
 
+    @Override
+    public Players createPlayer(Players player) {
+        String sql = "INSERT INTO players (user_id, player_name) VALUES (?, ?) RETURNING player_id;";
+        int newPlayerId = jdbcTemplate.queryForObject(sql, int.class,  player.getUserId(),  player.getPlayerName());
+        Players newPlayer = getPlayer(newPlayerId);
+        return newPlayer;
 
+    }
 
+    @Override
+    public void updatePlayer(Players player) {
+        String sql = "UPDATE players " +
+                " SET user_id = ?, " +
+                " player_name = ?;";
+        jdbcTemplate.update(sql, player.getUserId(), player.getPlayerName());
+
+    }
+
+        @Override
+        public void deletePlayer(int playerId){
+            String sql = "DELETE FROM players WHERE player_id = ?;";
+            jdbcTemplate.update(sql, playerId);
+
+        }
 
     private Players mapRowToPlayers(SqlRowSet results) {
         Players player = new Players();
