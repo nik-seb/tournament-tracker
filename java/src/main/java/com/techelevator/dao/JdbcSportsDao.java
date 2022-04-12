@@ -4,10 +4,12 @@ import com.techelevator.model.Matches;
 import com.techelevator.model.Sports;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class JdbcSportsDao implements SportsDao {
 
     private final JdbcTemplate jdbcTemplate;
