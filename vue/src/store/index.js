@@ -35,16 +35,27 @@ export default new Vuex.Store({
     },
 
     sportList: [],
-    tournamentList: []
 
-  },
-    tournamentTestData:{
+    matchesList: [
+      {
+        
+
+      }
+    ],
+    
+    tournamentList: [
+
+    {
       name: '',
       startDate: '',
       endDate: '',
       sportId: '',
-      numOfTeams: '',
+      numOfTeams: '',   
+      id: null
     },
+
+  ],
+},
 
   getters:{
     userRole(state){
