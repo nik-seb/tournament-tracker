@@ -19,7 +19,18 @@ if(currentToken != null) {
 export default new Vuex.Store({
   state: {
     token: currentToken || '',
-    user: currentUser || {}
+    user: currentUser || {},
+    activeTournament: {
+      name: '',
+      startDate: '',
+      endDate: '',
+      sportId: '',
+      numOfTeams: '',
+      id: null
+    },
+    sportList: [],
+    tournamentList: []
+
   },
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -37,6 +48,18 @@ export default new Vuex.Store({
       state.token = '';
       state.user = {};
       axios.defaults.headers.common = {};
+    },
+    SET_ACTIVE_TOURNAMENT(state, tournament) {
+      state.activeTournament = tournament;
+    },
+    SET_SPORT_LIST(state, list) {
+      state.sportList = list;
+    },
+    ADD_SPORT_TO_LIST(state, sport) {
+      state.sportList.push(sport); // should be a full sport object with name and ID
+    },
+    ADD_TOURN_TO_LIST(state, tourn) {
+      state.tournamentList.push(tourn);
     }
   }
 })
