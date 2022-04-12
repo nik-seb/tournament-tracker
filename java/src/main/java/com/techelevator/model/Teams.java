@@ -1,9 +1,14 @@
 package com.techelevator.model;
 
+import javax.validation.constraints.Min;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Teams {
 
-
+    @Min(value = 1, message = "Team ID Should Be a Positive Number.")
     private int teamId;
+
+    @Min(value = 1, message = "Team Size Should Be a Positive Number.")
     private int teamSize;
     private String teamName;
 
@@ -14,6 +19,7 @@ public class Teams {
     public void setTeamName(String teamName) {
         this.teamName = teamName;
     }
+
 
     public Teams() {}
 
