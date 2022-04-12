@@ -24,7 +24,9 @@ INSERT INTO users (username,password_hash,role) VALUES ('admin','$2a$08$UkVvwpUL
 CREATE TABLE teams
 (
 	team_id SERIAL PRIMARY KEY,
+	team_name varchar(200) NOT NULL UNIQUE,
 	team_size int NOT NULL
+
 );
 CREATE TABLE sports
 (	

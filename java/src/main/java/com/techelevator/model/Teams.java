@@ -5,7 +5,15 @@ public class Teams {
 
     private int teamId;
     private int teamSize;
-    
+    private String teamName;
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
 
     public Teams() {}
 
