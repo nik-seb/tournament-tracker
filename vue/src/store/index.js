@@ -57,6 +57,9 @@ export default new Vuex.Store({
     },
     ADD_SPORT_TO_LIST(state, sport) {
       state.sportList.push(sport); // should be a full sport object with name and ID
+    },
+    ADD_TOURN_TO_LIST(state, tourn) {
+      state.tournamentList.push(tourn);
     }
   }
 })
