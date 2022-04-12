@@ -8,7 +8,8 @@ public class Sports {
     private String sportName;
 
 
-    public Sports() {}
+    public Sports() {
+    }
 
     public Sports(int sportId, String sportName) {
         this.sportId = sportId;
