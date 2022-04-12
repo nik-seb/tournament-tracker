@@ -1,10 +1,19 @@
 package com.techelevator.model;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+
 public class Players {
 
-
+    @Min(value = 1, message = "Player ID Should Be a Positive Number.")
     private int playerId;
+
+    @Min(value = 1, message = "User ID Should Be a Positive Number.")
     private int userId;
+
+    @NotBlank( message = "Player Name is Required.")
     private String playerName;
 
 

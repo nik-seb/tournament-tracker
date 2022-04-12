@@ -1,14 +1,26 @@
 package com.techelevator.model;
 
+import javax.validation.constraints.Min;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Matches {
 
-
+    @Min(value = 1, message = "Match ID Should Be a Positive Number.")
     private int matchId;
+
+    @Min(value = 1, message = "Tournament ID Should Be a Positive Number.")
     private int tournamentId;
+
+
     private String date;
     private String startTime;
+
+    @Min(value = 1, message = "Home Team ID Should Be a Positive Number.")
     private int homeTeamId;
+
+    @Min(value = 1, message = "Away Team ID Should Be a Positive Number.")
     private int awayTeamId;
+
 
     public Matches() {}
 
