@@ -1,5 +1,5 @@
 <template>
-  <h1>Logout</h1>
+  <h1 id="logout">Logout</h1>
 </template>
 
 <script>
@@ -10,3 +10,7 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+
+</style>
