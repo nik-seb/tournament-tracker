@@ -3,10 +3,12 @@ package com.techelevator.dao;
 import com.techelevator.model.Tournament;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class JdbcTournamentDao implements TournamentDao {
 
     private final JdbcTemplate jdbcTemplate;
