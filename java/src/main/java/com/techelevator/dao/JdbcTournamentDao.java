@@ -53,7 +53,7 @@ public class JdbcTournamentDao implements TournamentDao {
     }
 
     @Override
-    public Tournament updateTournament(Tournament tournament, int tournamentId) {
+    public Tournament updateTournament(int tournamentId) {
         String sql = "UPDATE tournaments " +
                 "SET tournament_id = ?, " +
                 "tournament_name = ?, " +
@@ -62,10 +62,27 @@ public class JdbcTournamentDao implements TournamentDao {
                 "end_date = ?, " +
                 "sport_id = ? " +
                 "WHERE tournament_id = ?;";
+
+        Tournament tournament = new Tournament();
         jdbcTemplate.update(sql, tournament.getTournamentId(), tournament.getTournamentName(), tournament.getNumOfTeams(),
                 tournament.getStartDate(), tournament.getEndDate(), tournament.getSportId(), tournamentId);
         return getTournamentById(tournamentId);
     }
+
+
+    @Override
+    public boolean deleteTournament(int tournamentId) {
+        String sql = "DELETE FROM tournaments WHERE tournament_id = ?;";
+        jdbcTemplate.update(sql, tournamentId);
+       if (getTournamentById(tournamentId) == null) {
+           return true;
+       } else {
+           return false;
+       }
+    }
+
+
+
     private Tournament mapRowToTourney(SqlRowSet row){
         Tournament tournament = new Tournament();
         tournament.setTournamentId(row.getInt("tournament_id"));
