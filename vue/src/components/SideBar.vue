@@ -2,21 +2,11 @@
          <aside>    
             <nav>
                 <ul class="sidebar-nav">
-                    <li id="create">
-                   <router-link to="/create" > Create Tournament </router-link>
-                    </li>
-                    <li>
-                   <router-link to="/tournaments/:id"> Display Tournaments </router-link>
-                   </li>
-                    <li>
-                       display matches placeholder
-                    </li>    
-                    <li>
-                        manage tournaments placeholder
-                    </li>    
-                    <li>
-                       contact us placeholder
-                    </li>
+                    <router-link v-bind:to="{name: 'create-tournament'}"><li>Create Tournament</li></router-link>
+                    <li>Display Tournaments</li>
+                    <li>Display Matches</li>
+                    <li>Manage Tournaments</li>
+                    <li>Contact Us</li>
                 </ul>
             </nav>
         </aside>

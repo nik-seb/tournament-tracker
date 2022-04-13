@@ -1,6 +1,5 @@
 package com.techelevator.dao;
 
-import com.techelevator.model.Matches;
 import com.techelevator.model.Players;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -58,13 +57,13 @@ public class JdbcPlayersDao implements PlayersDao {
 
 
    @Override
-    public Players getPlayerByPlayerName(String playerName) {
+    public Players getPlayerName(int playerId) {
 
         Players player = new Players();
         String sql = "SELECT player_name " +
                      "FROM players " +
-                     "WHERE player_name = ?; ";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, playerName);
+                     "WHERE player_id = ?; ";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, playerId);
             if (results.next()) {
             player = mapRowToPlayers(results);
 
@@ -98,19 +97,25 @@ public class JdbcPlayersDao implements PlayersDao {
     }
 
     @Override
-    public void updatePlayer(Players player) {
+    public Players updatePlayer(int playerId) {
         String sql = "UPDATE players " +
                 " SET user_id = ?, " +
-                " player_name = ?;";
-        jdbcTemplate.update(sql, player.getUserId(), player.getPlayerName());
-
+                " player_name = ?, " +
+                " WHERE player_id = ?;";
+        Players players = new Players();
+        jdbcTemplate.update(sql, players.getUserId(), players.getPlayerName());
+        return getPlayerById(playerId);
     }
 
         @Override
-        public void deletePlayer(int playerId){
+        public boolean deletePlayer(int playerId){
             String sql = "DELETE FROM players WHERE player_id = ?;";
             jdbcTemplate.update(sql, playerId);
-
+            if( getPlayerById(playerId) == null) {
+                return true;
+            } else {
+                return false;
+            }
         }
 
     private Players mapRowToPlayers(SqlRowSet results) {

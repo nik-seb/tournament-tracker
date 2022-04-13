@@ -7,16 +7,11 @@ import java.util.List;
 public interface TeamsDao {
 
 
-        List<Teams> listAllTeams();
-
-        Teams getTeamById(int teamId);
-
-        List<Teams> getTeamsBySize(int teamSize);
-
-        Teams createTeam(Teams team);
-
-        //boolean updateTeam(Teams team);
-
-        void deleteTeam(int teamId);
+      List<Teams> listAllTeams();
+      Teams getTeamById(int teamId);
+      Teams getTeamSize(int teamSize);
+      Teams createTeam(Teams team);
+      Teams updateTeam(int teamId);
+      boolean deleteTeam(int teamId);
 
 }
