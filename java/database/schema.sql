@@ -1,6 +1,6 @@
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS users, player_team, matches, players, tournaments, teams, locations, sports;
+DROP TABLE IF EXISTS users, tournament_teams, player_team, matches, players, tournaments, teams, locations, sports;
 DROP SEQUENCE IF EXISTS seq_user_id;
 
 CREATE SEQUENCE seq_user_id
@@ -30,12 +30,9 @@ CREATE TABLE teams
 );
 CREATE TABLE locations
 (
-
 	location_id SERIAL PRIMARY KEY,
-	city varchar(200) NOT NULL,
-	state varchar(200)
-
-
+	state_name VARCHAR(100),
+	city_name VARCHAR(100)
 );
 CREATE TABLE sports
 (	
@@ -63,6 +60,7 @@ CREATE TABLE tournaments
 	CONSTRAINT fk_sport_id FOREIGN KEY (sport_id) REFERENCES sports (sport_id)
 	
 );
+
 CREATE TABLE matches
 (
 	match_id SERIAL PRIMARY KEY,
@@ -71,11 +69,12 @@ CREATE TABLE matches
 	start_time time NOT NULL, 
 	home_team_id int,
 	away_team_id int,
-	location varchar(200) NOT NULL,
+	location_id int,
+	
 	CONSTRAINT fk_tournament_id FOREIGN KEY (tournament_id) REFERENCES tournaments (tournament_id),
 	CONSTRAINT fk_home_team FOREIGN KEY (home_team_id) REFERENCES teams (team_id),
-	CONSTRAINT fk_location  FOREIGN KEY (location) REFERENCES teams (location),
-	CONSTRAINT fk_away_team FOREIGN KEY (away_team_id) REFERENCES teams (team_id)
+	CONSTRAINT fk_away_team FOREIGN KEY (away_team_id) REFERENCES teams (team_id),
+	CONSTRAINT fk_location FOREIGN KEY (location_id) REFERENCES locations (location_id)
 );
 CREATE TABLE player_team
 (
@@ -85,6 +84,14 @@ CREATE TABLE player_team
 	CONSTRAINT fk_player_id FOREIGN KEY (player_id) REFERENCES players (player_id),
 	CONSTRAINT fk_team_id FOREIGN KEY (team_id) REFERENCES teams (team_id)
 	
+);
+CREATE TABLE tournament_teams
+(	
+	team_id int NOT NULL,
+	tournament_id int NOT NULL,
+	
+	CONSTRAINT fk_team_id FOREIGN KEY (team_id) REFERENCES teams (team_id),
+	CONSTRAINT fk_tournament_id FOREIGN KEY (tournament_id) REFERENCES tournaments (tournament_id)
 );
 
 INSERT INTO sports (sport_name)
@@ -107,5 +114,15 @@ INSERT INTO tournaments (tournament_name, num_of_teams, start_date, end_date, sp
 VALUES ('March Madness', 64, '03/01/2022', '04/04/2022', 1),
 		('Turkey Bowl', 16, '11/11/2022', '12/12/2022', 2),
 		('Dog-R-Us', 4, '05/08/2024', '05/09/2024', 9);
+		
+INSERT INTO locations(state_name, city_name)
+VALUES				 ('New York', 'New York City'),
+					 ('Ohio', 'Columbus'),
+					 ('Pennsylvania', 'Pittsburgh'),
+					 ('Texas', 'Austin'),
+					 ('Texas', 'Houston'),
+					 ('Texas', 'El Paso'),
+					 ('Georgia', 'Atlanta');
 
-COMMIT TRANSACTION;
+
+COMMIT TRANSACTION; 

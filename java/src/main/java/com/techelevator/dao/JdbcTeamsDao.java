@@ -106,12 +106,26 @@ public class JdbcTeamsDao implements TeamsDao {
     public boolean deleteTeam(int teamId) {
         String sql = "DELETE FROM teams WHERE team_id = ?;";
         jdbcTemplate.update(sql, teamId);
-        if(getTeamById(teamId) == null) {
+        if (getTeamById(teamId) == null) {
             return true;
         } else {
             return false;
+        }
     }
-}
+        public List<Teams> getTeamsByTournamentId(int id){
+        List<Teams> tournamentTeams = new ArrayList<>();
+        String sql = "SELECT team_id, team_name, team_size " +
+                "FROM teams " +
+                "JOIN tournament_teams USING(team_id) " +
+                "WHERE tournament_id = ?;";
+
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
+        while(results.next()){
+            tournamentTeams.add(mapRowToTeams(results));
+        }
+        return tournamentTeams;
+        }
+
 
 
         private Teams mapRowToTeams (SqlRowSet results) {
