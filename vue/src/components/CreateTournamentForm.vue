@@ -1,7 +1,7 @@
 <template>
   <div>
-      <form v-on:submit.prevent="createTournament()">
-          <label for="tournamentName">Tournament Name</label>
+      <form id="tournament-form" v-on:submit.prevent="createTournament()">
+          <label id="header" for="tournamentName">Tournament Name</label>
           <input type="text" name="tournamentName" v-model="newTournament.name">
           <label for="sportType">Sport or Game</label>
           <select id="sportType" name="sportType" v-model="sportSelection">
@@ -17,7 +17,7 @@
           <input type="date" name="startDate" v-model="newTournament.startDate">
           <label for="endDate">End Date</label>
           <input type="date" name="endDate" v-model="newTournament.endDate">
-          <button type="submit">Create tournament</button>
+          <button id="btn" type="submit">Create tournament</button>
       </form>
   </div>
 </template>
@@ -82,5 +82,10 @@ export default {
 </script>
 
 <style>
+#tournament-form{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
 
 </style>

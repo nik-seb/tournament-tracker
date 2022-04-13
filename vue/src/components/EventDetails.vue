@@ -2,20 +2,18 @@
 
  <div>
 
-<!-- create a v-if condition if date is less than end date display -->
-  <div class="prior-events" v-if="endDate">
-      {{this.$store.state.tournamentList.name}}
-      {{this.$store.state.tournamentList.numOfTeams}}
-      {{this.$store.state.tournamentList.endDate}} 
-  </div>
-  
-<!-- create a v-if condition if date is between start date and end date display -->
+  <tr class="prior-events"  v-for="tournament in this.$store.state.tournamentList" :key="tournament.id">
 
-  <div class="live-events" v-if="startDate">
-      {{this.$store.state.tournamentList.name}} 
-      {{this.$store.state.tournamentList.numOfTeams}}
-      {{this.$store.state.tournamentList.startDate}}
-      {{this.$store.state.tournamentList.endDate}}   
+      {{tournament.name}}
+      {{tournament.numOfTeams}}
+      {{tournament.endDate}} 
+
+  </tr>
+  <div class="live-events" v-if="startDate ">
+      {{tournament.name}} 
+      {{tournament.numOfTeams}} Number of teams
+      {{tournament.startDate}}  
+      {{tournament.endDate}}   
  </div>
 
 <!-- create a v-if condition if date is greater than end date display -->
@@ -31,6 +29,7 @@
 </template>
 
 <script>
+
 export default {
     name: "event-details-row",
 data(){
@@ -42,11 +41,16 @@ data(){
             startDate: '',
             endDate: '',
             sportId: '',
-            numOfTeams: '',   
+            numOfTeams: '', 
+            id: 0  
             },
        ],
     }
+    
   },
+
+
+        
 };
 </script>
 

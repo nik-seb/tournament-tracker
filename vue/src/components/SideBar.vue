@@ -2,15 +2,21 @@
          <aside>    
             <nav>
                 <ul class="sidebar-nav">
-                    <li>Create Tournament</li>
-                        <router-link ></router-link>
-                    <li>Display Tournaments</li>
-                        <router-link></router-link>
-                    <li>Display Matches</li>
-                        <router-link></router-link>
-                    <li>Manage Tournaments</li>
-                        <router-link></router-link>
-                    <li>Contact Us</li>
+                    <li id="create">
+                   <router-link to="/create" > Create Tournament </router-link>
+                    </li>
+                    <li>
+                   <router-link to="/tournaments/:id"> Display Tournaments </router-link>
+                   </li>
+                    <li>
+                       display matches placeholder
+                    </li>    
+                    <li>
+                        manage tournaments placeholder
+                    </li>    
+                    <li>
+                       contact us placeholder
+                    </li>
                 </ul>
             </nav>
         </aside>
@@ -45,5 +51,11 @@ aside img{
     height: 120px;
     width: 125px;
     margin: 0 auto;
+}
+
+#create{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 </style>
