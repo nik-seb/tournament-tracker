@@ -2,7 +2,6 @@ package com.techelevator.controller;
 
 import com.techelevator.dao.MatchesDao;
 import com.techelevator.model.Matches;
-import com.techelevator.model.Players;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -27,11 +27,11 @@ public class MatchesController {
     public MatchesController(MatchesDao matchesDao) { this.matchesDao = matchesDao; }
 
 
-//    @GetMapping("/matches")
-//    public List<Matches> getMatchesByDate() throws InterruptedException {
-//        return matchesDao.getMatchesByDate();
-//    }
-    // to do
+    @GetMapping("/matches")
+    public List<Matches> getMatchesByDate(@PathVariable LocalDate date) throws InterruptedException {
+        return matchesDao.getMatchesByDate(date);
+    }
+
 
     @GetMapping("/matches/{tournamentId}")
     public List<Matches> getMatchesByTournament(@PathVariable int tournamentId) throws InterruptedException {
