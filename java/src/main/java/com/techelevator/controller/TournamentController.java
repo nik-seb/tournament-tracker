@@ -29,7 +29,7 @@ public class TournamentController {
     }
 
 
-    @GetMapping("/tournament")
+    @GetMapping("/tournaments")
     public List<Tournament> getAllTournaments() throws InterruptedException {
         return tournamentDao.getAllTournaments();
     }

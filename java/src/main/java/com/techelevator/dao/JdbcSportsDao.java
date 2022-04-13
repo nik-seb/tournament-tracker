@@ -35,7 +35,7 @@ public class JdbcSportsDao implements SportsDao {
     @Override
     public List<Sports> getAllSports() {
         List<Sports> sports = new ArrayList<>();
-        SqlRowSet results = jdbcTemplate.queryForRowSet("SELECT sport_name " +
+        SqlRowSet results = jdbcTemplate.queryForRowSet("SELECT sport_id, sport_name " +
                 " FROM sports; ");
         while (results.next()) {
             sports.add(mapRowToSports(results));
