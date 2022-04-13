@@ -98,4 +98,10 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+#register{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+</style>
