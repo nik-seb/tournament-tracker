@@ -20,50 +20,55 @@ if(currentToken != null) {
 }
 
 export default new Vuex.Store({
-
   state: {
     token: currentToken || '',
     user: currentUser || {},
-    
     activeTournament: {
-      name: '',
+      tournamentName: '',
       startDate: '',
       endDate: '',
       sportId: '',
       numOfTeams: '',
       id: null
     },
-
-    sportList: [],
-
+    sportList: [
+      {sportName: "Cricket",
+      sportId: 3}
+    ],
     matchesList: [
       {
         
 
       }
     ],
-    
     tournamentList: [
+      {
+        name: 'Cool tournament',
+        startDate: '1990-04-05',
+        endDate: '1999-08-09',
+        sportId: '5',
+        numOfTeams: '99',   
+        id: 1
+      },
+      {
+        name: 'Nifty',
+        startDate: '1999-03-02',
+        endDate: '2000-06-05',
+        sportId: '2',
+        numOfTeams: '7',   
+        id: 2
+      },
+  
+    ]
 
-    {
-      name: '',
-      startDate: '',
-      endDate: '',
-      sportId: '',
-      numOfTeams: '',   
-      id: null
-    },
-
-  ],
-},
+  },
 
   getters:{
     userRole(state){
       return state.user.authorities[0].name === 'ROLE_HOST'
     },
-
   },
-  
+
 
   mutations: {
     SET_AUTH_TOKEN(state, token) {
@@ -75,7 +80,6 @@ export default new Vuex.Store({
       state.user = user;
       localStorage.setItem('user',JSON.stringify(user));
     },
-
     LOGOUT(state) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');

@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,11 +23,12 @@ public class JdbcTournamentDao implements TournamentDao {
         String sql = "INSERT INTO tournaments " +
                 "(tournament_name, num_of_teams, start_date, end_date, sport_id) " +
                 "VALUES (?, ?, ?, ?, ?) RETURNING tournament_id;";
-        int newId = jdbcTemplate.queryForObject(sql, Integer.class,
-                tournament.getTournamentName(), tournament.getNumOfTeams(), tournament.getStartDate(), tournament.getEndDate(), tournament.getSportId());
-
-
-        return getTournamentById(newId);
+        Integer newId = jdbcTemplate.queryForObject(sql, Integer.class,
+                tournament.getTournamentName(), tournament.getNumOfTeams(), Date.valueOf(tournament.getStartDate()), Date.valueOf(tournament.getEndDate()), tournament.getSportId());
+        if (newId != null) {
+            return getTournamentById(newId);
+        }
+        return null;
     }
 
     @Override
