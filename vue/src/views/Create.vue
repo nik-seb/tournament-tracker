@@ -18,4 +18,9 @@ export default {
 
 <style>
 
+h1{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
 </style>
