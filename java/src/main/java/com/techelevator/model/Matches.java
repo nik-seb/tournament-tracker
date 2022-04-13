@@ -3,6 +3,9 @@ package com.techelevator.model;
 import javax.validation.constraints.Min;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 public class Matches {
 
     @Min(value = 1, message = "Match ID Should Be a Positive Number.")
@@ -12,8 +15,8 @@ public class Matches {
     private int tournamentId;
 
 
-    private String date;
-    private String startTime;
+    private LocalDate date;
+    private LocalTime startTime;
 
     @Min(value = 1, message = "Home Team ID Should Be a Positive Number.")
     private int homeTeamId;
@@ -24,7 +27,7 @@ public class Matches {
 
     public Matches() {}
 
-    public Matches(int matchId, int tournamentId, String date, String startTime, int homeTeamId, int awayTeamId) {
+    public Matches(int matchId, int tournamentId, LocalDate date, LocalTime startTime, int homeTeamId, int awayTeamId) {
         this.matchId = matchId;
         this.tournamentId = tournamentId;
         this.date = date;
@@ -49,19 +52,19 @@ public class Matches {
         this.tournamentId = tournamentId;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public String getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 

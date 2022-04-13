@@ -20,6 +20,7 @@
 </div>
 <div id="future">
           <!-- create a v-if condition if date is greater than end date display -->
+          <div>
           <p id="upcoming-events"> Upcoming Events </p>
           <event-table class="upcoming-events" v-bind:filteredList="tournamentArray"/>  
 </div>
@@ -72,7 +73,18 @@ export default {
 .events{
   display: flex;
   flex-direction: row;
+<<<<<<< HEAD
   margin-left: 13%;
+=======
+  justify-content: space-evenly;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-weight: 55%;
+  font-size: 20px;
+  padding-top: 1%;
+  /* align-items: center; */
+  /* margin: 20px */
+  
+>>>>>>> 4799b333631cb2c5e57377e00b79a8ae143c4c54
 }
 
 #live-events{
@@ -83,8 +95,11 @@ export default {
   text-decoration-line: underline;
   text-decoration-style: double;
   text-decoration-skip-ink: none;
+<<<<<<< HEAD
   font-size: 175%;
   
+=======
+>>>>>>> 4799b333631cb2c5e57377e00b79a8ae143c4c54
 }
 
 #upcoming-events{
