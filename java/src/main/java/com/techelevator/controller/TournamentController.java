@@ -63,11 +63,11 @@ public class TournamentController {
                 return updatedTournament;
             } else {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tournament not found to update.");
-            }
         }
+    }
 
         @DeleteMapping("/tournaments/{id}")
-        public void deleteTournament ( @PathVariable int tournamentId) {
+        public void deleteTournament (@PathVariable int tournamentId) {
             if (!tournamentDao.deleteTournament(tournamentId)) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tournament not found to delete.");
             }
