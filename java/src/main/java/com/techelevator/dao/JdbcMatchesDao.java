@@ -44,7 +44,7 @@ public class JdbcMatchesDao implements MatchesDao {
     }
 
     @Override
-    public List<Matches> getMatchesByTournament(String tournamentId) {
+    public List<Matches> getMatchesByTournament(int tournamentId) {
         List<Matches> matches = new ArrayList<>();
         String sql = "SELECT match_id, tournament_id, start_date, start_time, home_team_id, away_team_id " +
                 " FROM matches " +
@@ -67,7 +67,7 @@ public class JdbcMatchesDao implements MatchesDao {
     }
 
     @Override
-    public void updateMatch(Matches match) {
+    public Matches updateMatch(int matchId) {
         String sql = "UPDATE matches " +
                 " SET tournament_id = ?, " +
                 " start_date = ?, " +
@@ -75,15 +75,21 @@ public class JdbcMatchesDao implements MatchesDao {
                 " home_team_id = ?, " +
                 " away_team_id = ? " +
                 " WHERE match_id = ?;";
-        jdbcTemplate.update(sql, match.getTournamentId(), match.getDate(), match.getStartTime(), match.getHomeTeamId(), match.getAwayTeamId());
 
+        Matches matches = new Matches();
+        jdbcTemplate.update(sql, matches.getTournamentId(), matches.getDate(), matches.getStartTime(), matches.getHomeTeamId(), matches.getAwayTeamId());
+        return getMatch(matchId);
     }
 
     @Override
-    public void deleteMatch(int matchId) {
+    public boolean deleteMatch(int matchId) {
         String sql = "DELETE FROM matches WHERE match_id = ?;";
         jdbcTemplate.update(sql, matchId);
-
+        if(getMatch(matchId) == null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private Matches mapRowToMatches(SqlRowSet results) {

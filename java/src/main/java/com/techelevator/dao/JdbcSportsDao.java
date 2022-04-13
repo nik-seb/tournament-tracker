@@ -1,6 +1,5 @@
 package com.techelevator.dao;
 
-import com.techelevator.model.Matches;
 import com.techelevator.model.Sports;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -32,8 +31,9 @@ public class JdbcSportsDao implements SportsDao {
     }
 
 
+
     @Override
-    public List<Sports> getAllSports(String sportName) {
+    public List<Sports> getAllSports() {
         List<Sports> sports = new ArrayList<>();
         SqlRowSet results = jdbcTemplate.queryForRowSet("SELECT sport_name " +
                 " FROM sports; ");
@@ -54,19 +54,34 @@ public class JdbcSportsDao implements SportsDao {
     }
 
     @Override
-    public void updateSport(Sports sport) {
+    public Sports updateSport(int sportId) {
         String sql = "UPDATE sports " +
                 " SET sport_name = ? " +
                 " WHERE sport_id = ?;";
-        jdbcTemplate.update(sql, sport.getSportName());
 
+        Sports sports = new Sports();
+        jdbcTemplate.update(sql, sports.getSportName());
+        return getSport(sportId);
     }
+
+
+
 
     @Override
-    public void deleteSport(int sportId) {
+    public boolean deleteSport(int sportId) {
         String sql = "DELETE FROM sports WHERE sport_id = ?;";
         jdbcTemplate.update(sql, sportId);
+
+        if (getSport(sportId) == null) {
+            return true;
+        } else {
+            return false;
+        }
+
+
     }
+
+
 
     private Sports mapRowToSports(SqlRowSet results) {
         Sports sport = new Sports();

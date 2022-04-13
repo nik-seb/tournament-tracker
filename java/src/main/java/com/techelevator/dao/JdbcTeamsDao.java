@@ -1,6 +1,5 @@
 package com.techelevator.dao;
 
-import com.techelevator.model.Matches;
 import com.techelevator.model.Teams;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -18,7 +17,8 @@ public class JdbcTeamsDao implements TeamsDao {
     private JdbcTemplate jdbcTemplate;
 
 
-    public JdbcTeamsDao() {}
+    public JdbcTeamsDao() {
+    }
 
     public JdbcTeamsDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -29,7 +29,7 @@ public class JdbcTeamsDao implements TeamsDao {
     public List<Teams> listAllTeams() {
         List<Teams> teams = new ArrayList<>();
         String sql = "SELECT * " +
-                     "FROM teams; ";
+                "FROM teams; ";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
         while (results.next()) {
             teams.add(mapRowToTeams(results));
@@ -39,13 +39,12 @@ public class JdbcTeamsDao implements TeamsDao {
     }
 
 
-
     @Override
     public Teams getTeamById(int teamId) {
         Teams team = new Teams();
         String sql = "SELECT team_id " +
-                     "FROM teams " +
-                     "WHERE team_id = ?; ";
+                "FROM teams " +
+                "WHERE team_id = ?; ";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, teamId);
         if (results.next()) {
             team = mapRowToTeams(results);
@@ -55,20 +54,18 @@ public class JdbcTeamsDao implements TeamsDao {
     }
 
 
-
-
     @Override
-    public List<Teams> getTeamsBySize(int teamSize) {
-        List<Teams> teams = new ArrayList<>();
+    public Teams getTeamSize(int teamSize) {
+        Teams team = new Teams();
         String sql = "SELECT team_size " +
                      "FROM teams " +
                      "WHERE team_size = ?; ";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, teamSize);
-        while (results.next()) {
-            teams.add(mapRowToTeams(results));
-        }
+        if (results.next()) {
+            team = mapRowToTeams(results);
 
-        return teams;
+        }
+        return team;
     }
 
 
@@ -81,23 +78,27 @@ public class JdbcTeamsDao implements TeamsDao {
     }
 
 
-//    @Override
-//    public void updateTeam(Teams team) {
-//        String sql = "UPDATE teams " +
-//                " SET team_size = ?;";
-//        jdbcTemplate.update(sql, team.getTeamSize());
-//
-//    }
+    @Override
+    public Teams updateTeam(int teamId) {
+        String sql = "UPDATE teams " +
+                " SET team_size = " +
+                " WHERE team_id = ?;";
+        Teams teams = new Teams();
+        jdbcTemplate.update(sql, teams.getTeamSize());
+        return getTeamById(teamId);
+    }
 
 
-        @Override
-        public void deleteTeam(int teamId) {
-            String sql = "DELETE FROM teams WHERE team_id = ?;";
-            jdbcTemplate.update(sql, teamId);
-
-        }
-
-
+    @Override
+    public boolean deleteTeam(int teamId) {
+        String sql = "DELETE FROM teams WHERE team_id = ?;";
+        jdbcTemplate.update(sql, teamId);
+        if(getTeamById(teamId) == null) {
+            return true;
+        } else {
+            return false;
+    }
+}
 
 
         private Teams mapRowToTeams (SqlRowSet results) {

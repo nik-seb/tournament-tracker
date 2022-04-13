@@ -7,9 +7,9 @@ import java.util.List;
 public interface TournamentDao {
 
 
-    public Tournament create(Tournament tournament);
-    public Tournament getTournamentById(int tournamentId);
-    public List<Tournament> getAllTournaments();
-    public Tournament updateTournament(int tournamentId);
-    public boolean deleteTournament(int tournamentId);
+    Tournament create(Tournament tournament);
+    Tournament getTournamentById(int tournamentId);
+    List<Tournament> getAllTournaments();
+    Tournament updateTournament(int tournamentId);
+    boolean deleteTournament(int tournamentId);
 }

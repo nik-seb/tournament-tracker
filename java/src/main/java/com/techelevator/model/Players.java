@@ -13,7 +13,7 @@ public class Players {
     @Min(value = 1, message = "User ID Should Be a Positive Number.")
     private int userId;
 
-    @NotBlank( message = "Player Name is Required.")
+    @NotBlank(message = "Player Name is Required.")
     private String playerName;
 
 
