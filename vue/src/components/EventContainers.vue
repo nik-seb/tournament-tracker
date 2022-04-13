@@ -72,7 +72,8 @@ export default {
 .events{
   display: flex;
   flex-direction: row;
-  margin-left: 13%;
+  margin-left: 3%;
+  margin-right: 3%;
 }
 
 #live-events{

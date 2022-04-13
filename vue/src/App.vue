@@ -6,7 +6,7 @@
       <router-link v-bind:to="{ name: 'login' }" v-if="$store.state.token == ''">Login</router-link>
     </div>
     <side-bar/>
-    <router-view />
+    <router-view id="main-view" />
   </div>
 </template>
 
@@ -31,7 +31,10 @@ export default{
   justify-content: right;
 }
 
-
+#main-view {
+   margin-left: 140px;
+   padding-left: 1rem;
+}
 
 </style>
 
