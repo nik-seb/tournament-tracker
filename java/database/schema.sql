@@ -1,6 +1,6 @@
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS users, player_team, matches, players, tournaments, teams, team_location, sports;
+DROP TABLE IF EXISTS users, player_team, matches, players, tournaments, teams, locations, sports;
 DROP SEQUENCE IF EXISTS seq_user_id;
 
 CREATE SEQUENCE seq_user_id
@@ -25,20 +25,17 @@ CREATE TABLE teams
 (
 	team_id SERIAL PRIMARY KEY,
 	team_name varchar(200) NOT NULL UNIQUE,
-	team_size int NOT NULL,
-    tournament_id int NOT NULL,
-    location varchar(200) NOT NULL,
-    CONSTRAINT fk_tournament_id FOREIGN KEY (tournament_id) REFERENCES tournaments (tournament_id),
-    CONSTRAINT fk_location  FOREIGN KEY (location) REFERENCES matches (location)
+	team_size int NOT NULL
+
 );
-CREATE TABLE team_location
+CREATE TABLE locations
 (
-	team_location SERIAL PRIMARY KEY,
-	team_id int NOT NULL,
+
+	location_id SERIAL PRIMARY KEY,
 	city varchar(200) NOT NULL,
-	State varchar(200),
-    country varchar(200),
-    CONSTRAINT fk_team_location  FOREIGN KEY (team_location) REFERENCES teams (location)
+	state varchar(200)
+
+
 );
 CREATE TABLE sports
 (	
