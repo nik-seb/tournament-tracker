@@ -2,29 +2,35 @@
 
     <body>
     <div>
+      <!-- title and pic should be moved to Home view; will need to move related CSS too -->
        <h1 id="company-name"> RANNS Tournament Displays™ </h1>
          <div class="tournament-picture">
               <img src="../assets/tournament_picture.jpg" alt="example of tournament picture">         
          </div> 
           <div class="events">
-             <p id="past-events"> Past Events </p>
-             <p id="live-events"> Current Events </p>
-             <p id="upcoming-events"> Upcoming Events </p>
-          </div>
-      <!-- use v commands/event listeners to link to each respective page -->
-         <div class="view-more">
-          <button id="view-past">View More</button>
-          <button id="view-current">View More</button>
-          <button id="view-upcoming">View More</button>
-        </div>   
+          <!-- create a v-if condition if date is less than end date display -->
+          <p id="past-events"> Past Events </p>
+            <event-table class="prior-events" />
+            
+          <!-- create a v-if condition if date is between start date and end date display -->
+
+          <p id="live-events"> Current Events </p>
+            <event-table class="live-events" />
+
+          <!-- create a v-if condition if date is greater than end date display -->
+          <p id="upcoming-events"> Upcoming Events </p>
+          <event-table class="upcoming-events" />  
    </div>   
+          </div>
+
  </body>
 </template>
 
 
 <script>
+import EventTable from './EventTable.vue';
 export default {
-
+  components: { EventTable }
 }
 </script>
 
