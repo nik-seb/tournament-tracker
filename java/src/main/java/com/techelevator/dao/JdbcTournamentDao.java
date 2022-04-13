@@ -88,6 +88,7 @@ public class JdbcTournamentDao implements TournamentDao {
 
 
     private Tournament mapRowToTourney(SqlRowSet row){
+
         Tournament tournament = new Tournament();
         tournament.setTournamentId(row.getInt("tournament_id"));
         tournament.setTournamentName(row.getString("tournament_name"));
