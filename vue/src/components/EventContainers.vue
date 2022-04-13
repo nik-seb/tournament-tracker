@@ -58,7 +58,7 @@ export default {
 .events{
   display: flex;
   flex-direction: row;
-  margin-left: 20%;
+  margin-left: 13%;
 }
 
 #live-events{
@@ -79,7 +79,7 @@ export default {
   text-decoration-style: double;
   text-decoration-skip-ink: none;
   font-size: 175%;
-  
+
 }
 
 #past-events{
@@ -97,6 +97,7 @@ export default {
 
 #past{
   margin-right: 10%;
+  padding-right: 5%;
 }
 
 #current{
