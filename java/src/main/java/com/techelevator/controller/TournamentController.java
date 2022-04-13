@@ -67,11 +67,7 @@ public class TournamentController {
     }
 
         @DeleteMapping("/tournaments/{id}")
-<<<<<<< HEAD
-        public void deleteTournament (@PathVariable int tournamentId) {
-=======
         public void deleteTournament ( @PathVariable ("id") int tournamentId) {
->>>>>>> 76900f7ac05276cbec41f5560beb981de065da3c
             if (!tournamentDao.deleteTournament(tournamentId)) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tournament not found to delete.");
             }
