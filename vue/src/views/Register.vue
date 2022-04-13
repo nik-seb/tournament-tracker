@@ -32,6 +32,8 @@
         v-model="user.confirmPassword"
         required
       />
+      <input id="isHost" type="checkbox" v-model="checkbox">
+      <label for="isHost">host</label>
       <router-link :to="{ name: 'login' }">Have an account?</router-link>
       <button class="btn btn-lg btn-primary btn-block" type="submit">
         Create Account
@@ -53,6 +55,9 @@ export default {
         confirmPassword: '',
         role: 'user',
       },
+      
+      //checkbox grants host or user access
+      checkbox: false,
       registrationErrors: false,
       registrationErrorMsg: 'There were problems registering this user.',
     };
@@ -62,7 +67,10 @@ export default {
       if (this.user.password != this.user.confirmPassword) {
         this.registrationErrors = true;
         this.registrationErrorMsg = 'Password & Confirm Password do not match.';
-      } else {
+      }else{
+        if(this.checkbox === true){
+          this.user.role = 'host'
+        }
         authService
           .register(this.user)
           .then((response) => {

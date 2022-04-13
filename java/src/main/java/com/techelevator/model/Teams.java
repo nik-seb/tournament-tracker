@@ -10,6 +10,15 @@ public class Teams {
 
     @Min(value = 1, message = "Team Size Should Be a Positive Number.")
     private int teamSize;
+    private String teamName;
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
 
 
     public Teams() {}
