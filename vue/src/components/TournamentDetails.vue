@@ -1,14 +1,9 @@
 <template>
   <div>
-      <h2>{{tournament.name}}</h2>
+      <h2>{{tournament.tournamentName}}</h2>
       <section id="tournament-info">
           <p>Sport: {{tournament.sportId}}</p>
-          <p>{{tournament.startDate}} - {{tournament.endDate}}</p>
-      </section>
-      <section id="participants">
-          <h3>Participants</h3>
-          <!-- need method to retrieve participants in tournament 
-          should display abbreviated list and click to view full list that shows teams and players on teams-->
+          <p>From {{tournament.startDate}} to {{tournament.endDate}}</p>
       </section>
   </div>
 </template>
@@ -32,7 +27,7 @@ export default {
             if (response.status == 200) {
                 let newTournament = {};
                 newTournament.id = response.data.tournamentId;
-                newTournament.name = response.data.name;
+                newTournament.tournamentName = response.data.tournamentName;
                 newTournament.startDate = response.data.startDate;
                 newTournament.endDate = response.data.endDate;
                 newTournament.sportId = response.data.sportId;
@@ -57,6 +52,9 @@ export default {
 </script>
 
 <style scoped>
+    h2 {
+        text-align: center;
+    }
     #tournament-info {
         text-align: center;
     }

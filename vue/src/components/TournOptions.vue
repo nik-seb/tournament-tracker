@@ -1,5 +1,5 @@
 <template>  
-  <div>
+  <div id='tourn-options'>
       <!-- show if player id associated with user isn't associated with tourn, else display "Leave" -->
       <button id="join">Join</button>
 
@@ -14,10 +14,14 @@
 
 <script>
 export default {
-
+  name: 'tournament-options'
 }
 </script>
 
 <style>
-
+  #tourn-options {
+    width: 50%;
+    display: flex;
+    justify-content: space-around;
+  }
 </style>
