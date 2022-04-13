@@ -15,6 +15,10 @@ export default {
     return axios.get(`/sports/${sportID}`);
   },
 
+  getAllTournaments() {
+    return axios.get('/tournaments');
+  },
+
   createTournament(tournament) {
     return axios.post('/tournaments', tournament);
   },

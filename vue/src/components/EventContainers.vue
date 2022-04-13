@@ -10,16 +10,16 @@
           <div class="events">
           <!-- create a v-if condition if date is less than end date display -->
           <p id="past-events"> Past Events </p>
-            <event-table class="prior-events" />
+            <event-table class="prior-events" v-bind:filteredList="tournamentArray"/>
             
           <!-- create a v-if condition if date is between start date and end date display -->
 
           <p id="live-events"> Current Events </p>
-            <event-table class="live-events" />
+            <event-table class="live-events" v-bind:filteredList="tournamentArray"/>
 
           <!-- create a v-if condition if date is greater than end date display -->
           <p id="upcoming-events"> Upcoming Events </p>
-          <event-table class="upcoming-events" />  
+          <event-table class="upcoming-events" v-bind:filteredList="tournamentArray"/>  
    </div>   
           </div>
 
@@ -29,8 +29,21 @@
 
 <script>
 import EventTable from './EventTable.vue';
+import TournamentService from '@/services/TournamentService.js'
 export default {
-  components: { EventTable }
+  components: { EventTable },
+  data(){
+    return {
+      tournamentArray: []
+    }
+  },
+  created() {
+    TournamentService.getAllTournaments().then((response) => {
+      if (response.status == 200) {
+        this.tournamentArray = response.data;
+      }
+    })
+  }
 }
 </script>
 
