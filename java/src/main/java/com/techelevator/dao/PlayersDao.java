@@ -5,20 +5,19 @@ import java.util.List;
 
 public interface PlayersDao {
 
-    List<Players> listAllPlayers();
 
+    List<Players> listAllPlayers();
     Players getPlayerById(int playerId);
+<<<<<<< HEAD
 
     List<Players> getPlayerByTeamId(int playerId);
 
+=======
+>>>>>>> 22d0f736014ae5e12b4f589ab8230e9090195707
     Players getPlayerByUserId(int userId);
-
-    Players getPlayerByPlayerName(String playerName);
-
+    Players getPlayerName(int playerId);
     Players createPlayer(Players player);
-
-    void updatePlayer(Players player);
-
-    void deletePlayer(int playerId);
+    Players updatePlayer(int playerId);
+    boolean deletePlayer(int playerId);
 
 }

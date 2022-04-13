@@ -36,7 +36,7 @@ public class TournamentController {
 
 
     @GetMapping("/tournaments/{id}")
-    public Tournament getTournamentById(@PathVariable int tournamentId) throws InterruptedException {
+    public Tournament getTournamentById(@PathVariable ("id") int tournamentId) throws InterruptedException {
 
         Tournament result = tournamentDao.getTournamentById(tournamentId);
         if (result == null) {
@@ -63,11 +63,11 @@ public class TournamentController {
                 return updatedTournament;
             } else {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tournament not found to update.");
-            }
         }
+    }
 
         @DeleteMapping("/tournaments/{id}")
-        public void deleteTournament ( @PathVariable int tournamentId) {
+        public void deleteTournament ( @PathVariable ("id") int tournamentId) {
             if (!tournamentDao.deleteTournament(tournamentId)) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tournament not found to delete.");
             }

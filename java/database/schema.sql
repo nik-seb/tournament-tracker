@@ -1,6 +1,6 @@
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS users, player_team, matches, players, tournaments, teams, sports;
+DROP TABLE IF EXISTS users, player_team, matches, players, tournaments, teams, team_location, sports;
 DROP SEQUENCE IF EXISTS seq_user_id;
 
 CREATE SEQUENCE seq_user_id

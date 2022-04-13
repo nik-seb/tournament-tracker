@@ -2,7 +2,7 @@
   <div>
       <tournament-details v-bind:tournamentID="$route.params.id" />
       <tourn-options />
-      <!-- TO-DO: add tournament bracket component and join/edit/invite buttons-->
+      <!-- TO-DO: add tournament bracket component-->
   </div>
 </template>
 

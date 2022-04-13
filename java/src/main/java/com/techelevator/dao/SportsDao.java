@@ -5,14 +5,12 @@ import com.techelevator.model.Sports;
 import java.util.List;
 
 public interface SportsDao {
+
+
     Sports getSport(int sportId);
-
-    List<Sports> getAllSports(String sportName);
-
+    List<Sports> getAllSports();
     Sports createSport(Sports sport);
-
-    void updateSport(Sports sport);
-
-    void deleteSport(int sportId);
+    Sports updateSport(int sportId);
+    boolean deleteSport(int sportId);
 
 }
