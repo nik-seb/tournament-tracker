@@ -8,6 +8,7 @@ public interface TeamsDao {
 
 
         List<Teams> listAllTeams();
+        List<Teams> getTeamsByTournamentId();
 
         Teams getTeamById(int teamId);
 

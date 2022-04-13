@@ -24,6 +24,19 @@ public class JdbcTeamsDao implements TeamsDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    @Override
+    public List<Teams> getTeamsByTournamentId() {
+        List<Teams> teams = new ArrayList<>();
+        String sql = "SELECT team_id, team_size, team_name " +
+                " FROM teams " +
+                " WHERE tournament_id = ?; ";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+        while (results.next()) {
+            teams.add(mapRowToTeams(results));
+
+        }
+        return teams;
+    }
 
     @Override
     public List<Teams> listAllTeams() {
