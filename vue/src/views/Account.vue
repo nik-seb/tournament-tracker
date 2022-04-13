@@ -1,9 +1,10 @@
 <template>
   <div id="account-details">
+      
       <form class="account">
           <h1>Account Settings</h1>
           <div class="account-error" role="alert" v-if="accountErrors">
-              {{accountErrorMsg}}
+              {{ accountErrorMsg }}
           </div>
           <label for="Change player username"></label>
           <p>The player username is different from your account username!</p>
