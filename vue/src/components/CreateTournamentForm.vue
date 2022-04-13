@@ -11,7 +11,7 @@
           </select>
           <p v-if="newTournament.sportId == 'newSport'">
               <label for="newSportName">New Sport Name:</label>
-              <input type="text" name="newSportName" id="newSportName" v-model="newSport.name">
+              <input type="text" name="newSportName" id="newSportName" v-model="newSport.sportName">
           </p>
           <label for="startDate">Start Date</label>
           <input type="date" name="startDate" v-model="newTournament.startDate">
@@ -37,12 +37,11 @@ export default {
                 numOfTeams: 0
             },
             newSport: {
-                name: ''
+                sportName: ''
             }
         }
     },
     created(){
-        console.log(this.$store.state.sportList);
         if (this.$store.state.sportList.length == 0) {
             TournamentService.getSportsList().then((response) => {
                 if (response.status == 200) {
@@ -54,29 +53,38 @@ export default {
     },
     methods: {
         createTournament() {
-            // if (this.newSport != '') {
-            //     this.createNewSport();
-            //     // TO-DO: set returned id from createNewSport as this tourn's sportId, or set through new GET by sport name
-            //         // must set unique constraint on sport name column if the latter
-            // }
-            this.$store.commit("ADD_TOURN_TO_LIST", this.newTournament);
-            TournamentService.createTournament(this.newTournament).then((response) => {
+            if (this.newSport.sportName != '') {
+                TournamentService.createSport(this.newSport).then((response) => {
                 if (response.status == 200) {
-                    const newID = Number(response.data.tournamentId);
-                    this.$router.push({name: 'view-tournament', params: {id: newID}});
-                } else {
-                    console.log(response);
+                    this.$store.commit("ADD_SPORT_TO_LIST", response.data);
+                    console.log(response.data.sportId + ' is sportid')
+                    this.newTournament.sportId = Number(response.data.sportId);
+                    // TO-DO: refactor the horrible thing below, too much copy-paste. be careful not to create tournament before sport id is retrieved
+                    this.$store.commit("ADD_TOURN_TO_LIST", this.newTournament);
+                    console.log(this.newTournament);
+                    TournamentService.createTournament(this.newTournament).then((responseT) => {
+                        if (responseT.status == 200) {
+                            const newID = Number(responseT.data.tournamentId);
+                            this.$router.push({name: 'view-tournament', params: {id: newID}});
+                        } else {
+                            console.log(responseT);
+                        }
+                    })
                 }
             })
-        },
-        // createNewSport() {
-        //     TournamentService.createNewSport(this.newSport).then((response) => {
-        //         if (response == 200) {
-        //             //something
-        //         }
-        //     });
-        //     this.$store.commit("ADD_SPORT_TO_LIST", this.newSport)
-        // }
+        
+            } else {
+                this.$store.commit("ADD_TOURN_TO_LIST", this.newTournament);
+                TournamentService.createTournament(this.newTournament).then((response) => {
+                    if (response.status == 200) {
+                        const newID = Number(response.data.tournamentId);
+                        this.$router.push({name: 'view-tournament', params: {id: newID}});
+                    } else {
+                        console.log(response);
+                    }
+                })
+            }
+        }
     }
 }
 </script>

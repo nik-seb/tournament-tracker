@@ -2,7 +2,7 @@
   <div>
       <h2>{{tournament.tournamentName}}</h2>
       <section id="tournament-info">
-          <p>Sport: {{tournament.sportId}}</p>
+          <p>{{tournament.sportName}}</p>
           <p>From {{tournament.startDate}} to {{tournament.endDate}}</p>
       </section>
   </div>
@@ -31,22 +31,18 @@ export default {
                 newTournament.startDate = response.data.startDate;
                 newTournament.endDate = response.data.endDate;
                 newTournament.sportId = response.data.sportId;
-                // newTournament.sportName = this.getSportName(response.data.sportId);
                 newTournament.numOfTeams = response.data.numOfTeams;
-                this.$store.commit("SET_ACTIVE_TOURNAMENT", newTournament);
-                this.tournament = newTournament;
+
+                TournamentService.getSportById(response.data.sportId).then((response) => {
+                if (response.status == 200) {
+                    console.log(response.data.sportName + ' is received from sportid query')
+                    newTournament.sportName = response.data.sportName;
+                    this.$store.commit("SET_ACTIVE_TOURNAMENT", newTournament);
+                    this.tournament = newTournament;
+                }
+                });
             }
         })
-    },
-    methods: {
-        // either this or find a better time to load sports into store, instead of just on create tournament
-        getSportName(id) {
-            TournamentService.getSportName(id).then((response) => {
-                if (response.status == 200) {
-                    return response.data.sportId;
-                }
-            });
-        }
     }
 }
 </script>
