@@ -1,14 +1,9 @@
 <template>
   <div>
-      <h2>{{tournament.name}}</h2>
+      <h2>{{tournament.tournamentName}}</h2>
       <section id="tournament-info">
-          <p>Sport: {{tournament.sportId}}</p>
-          <p>{{tournament.startDate}} - {{tournament.endDate}}</p>
-      </section>
-      <section id="participants">
-          <h3>Participants</h3>
-          <!-- need method to retrieve participants in tournament 
-          should display abbreviated list and click to view full list that shows teams and players on teams-->
+          <p>{{tournament.sportName}}</p>
+          <p>From {{tournament.startDate}} to {{tournament.endDate}}</p>
       </section>
   </div>
 </template>
@@ -32,31 +27,30 @@ export default {
             if (response.status == 200) {
                 let newTournament = {};
                 newTournament.id = response.data.tournamentId;
-                newTournament.name = response.data.name;
+                newTournament.tournamentName = response.data.tournamentName;
                 newTournament.startDate = response.data.startDate;
                 newTournament.endDate = response.data.endDate;
                 newTournament.sportId = response.data.sportId;
-                // newTournament.sportName = this.getSportName(response.data.sportId);
                 newTournament.numOfTeams = response.data.numOfTeams;
-                this.$store.commit("SET_ACTIVE_TOURNAMENT", newTournament);
-                this.tournament = newTournament;
+
+                TournamentService.getSportById(response.data.sportId).then((response) => {
+                if (response.status == 200) {
+                    console.log(response.data.sportName + ' is received from sportid query')
+                    newTournament.sportName = response.data.sportName;
+                    this.$store.commit("SET_ACTIVE_TOURNAMENT", newTournament);
+                    this.tournament = newTournament;
+                }
+                });
             }
         })
-    },
-    methods: {
-        // either this or find a better time to load sports into store, instead of just on create tournament
-        getSportName(id) {
-            TournamentService.getSportName(id).then((response) => {
-                if (response.status == 200) {
-                    return response.data.sportId;
-                }
-            });
-        }
     }
 }
 </script>
 
 <style scoped>
+    h2 {
+        text-align: center;
+    }
     #tournament-info {
         text-align: center;
     }

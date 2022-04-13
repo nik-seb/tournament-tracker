@@ -27,7 +27,7 @@ public class SportsController {
 
 
     @GetMapping("/sports/{id}")
-    public Sports getSport(@PathVariable int sportId) throws InterruptedException {
+    public Sports getSport(@PathVariable("id") int sportId) throws InterruptedException {
 
         Sports result = sportsDao.getSport(sportId);
         if (result == null) {
@@ -63,7 +63,7 @@ public class SportsController {
 
 
     @DeleteMapping("/sports/{id}")
-    public void deleteSport(@PathVariable int sportId) {
+    public void deleteSport(@PathVariable("id") int sportId) {
         if (!sportsDao.deleteSport(sportId)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Sport not found to delete.");
         }

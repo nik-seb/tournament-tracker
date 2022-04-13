@@ -1,41 +1,53 @@
 <template>
 
-    <body>
+  <div id="ev-container-body">
     <div>
       <!-- title and pic should be moved to Home view; will need to move related CSS too -->
-       <h1 id="company-name"> RANNS Tournament Displays™ </h1>
-         <div class="tournament-picture">
+        <h1 id="company-name"> RANNS Tournament Displays™ </h1>
+        <div class="tournament-picture">
               <img src="../assets/tournament_picture.jpg" alt="example of tournament picture">         
          </div> 
   <div class="events">
           <!-- create a v-if condition if date is less than end date display -->
           <div id="past">
           <p id="past-events"> Past Events </p>
-            <event-table class="prior-events" />
-         </div> 
-          <!-- create a v-if condition if date is between start date and end date display -->
+            <event-table class="past-events" v-bind:filteredList="tournamentArray"/>
+          </div>
           <div id="current">
-          <p id="live-events"> Current Events </p>
-            <event-table class="live-events" />
-          </div>
+            <p id="live-events"> Current Events </p>
+              <event-table class="live-events" v-bind:filteredList="tournamentArray"/>
+          </div>  
           <div id="future">
-          <!-- create a v-if condition if date is greater than end date display -->
-          <p id="upcoming-events"> Upcoming Events </p>
-          <event-table class="upcoming-events" />  
+            <p id="upcoming-events"> Upcoming Events </p>
+            <event-table class="upcoming-events" v-bind:filteredList="tournamentArray"/>  
           </div>
-  </div>   
-          </div>
+      </div>   
+    </div>
 
- </body>
+  </div>
 </template>
 
 
 <script>
 import EventTable from './EventTable.vue';
+import TournamentService from '@/services/TournamentService.js'
 export default {
-  components: { EventTable }
+  components: { EventTable },
+  data(){
+    return {
+      tournamentArray: []
+    }
+  },
+  created() {
+    TournamentService.getAllTournaments().then((response) => {
+      if (response.status == 200) {
+        this.tournamentArray = response.data;
+      }
+    })
+  }
 }
 </script>
+
 
 <style scoped>
 
@@ -58,7 +70,8 @@ export default {
 .events{
   display: flex;
   flex-direction: row;
-  margin-left: 13%;
+  margin-left: 3%;
+  margin-right: 3%;
 }
 
 #live-events{
@@ -97,7 +110,6 @@ export default {
 
 #past{
   margin-right: 10%;
-  padding-right: 5%;
 }
 
 #current{

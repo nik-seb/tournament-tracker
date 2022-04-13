@@ -32,8 +32,6 @@ export default new Vuex.Store({
       id: null
     },
     sportList: [
-      {sportName: "Cricket",
-      sportId: 3}
     ],
     matchesList: [
       {

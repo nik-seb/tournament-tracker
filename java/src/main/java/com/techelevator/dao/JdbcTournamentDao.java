@@ -91,6 +91,7 @@ public class JdbcTournamentDao implements TournamentDao {
 
         Tournament tournament = new Tournament();
         tournament.setTournamentId(row.getInt("tournament_id"));
+        tournament.setNumOfTeams(row.getInt("num_of_teams"));
         tournament.setTournamentName(row.getString("tournament_name"));
         tournament.setStartDate(row.getString("start_date"));
         tournament.setEndDate(row.getString("end_date"));
