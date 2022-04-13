@@ -94,13 +94,13 @@ public class JdbcTeamsDao implements TeamsDao {
     }
 
 
-    @Override
-    public void updateTeam(Teams team) {
-        String sql = "UPDATE teams " +
-                " SET team_size = ?;";
-        jdbcTemplate.update(sql, team.getTeamSize());
-
-    }
+//    @Override
+//    public void updateTeam(Teams team) {
+//        String sql = "UPDATE teams " +
+//                " SET team_size = ?;";
+//        jdbcTemplate.update(sql, team.getTeamSize());
+//
+//    }
 
 
         @Override

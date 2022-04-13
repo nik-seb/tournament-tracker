@@ -16,7 +16,7 @@ public interface TeamsDao {
 
         Teams createTeam(Teams team);
 
-        void updateTeam(Teams team);
+        //boolean updateTeam(Teams team);
 
         void deleteTeam(int teamId);
 
