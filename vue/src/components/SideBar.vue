@@ -34,6 +34,7 @@ aside li{
     padding-top: 50px;
     padding-bottom: 75%;   
     list-style: none; 
+    /* justify-content: right; */
     
 }
 
