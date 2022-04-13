@@ -19,7 +19,7 @@ export default {
 <style>
 
 #tourn-view-body {
-  margin-left: 100px;
+  margin-left: 140px;
 }
 
 #sections {

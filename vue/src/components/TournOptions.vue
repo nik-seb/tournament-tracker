@@ -22,6 +22,6 @@ export default {
   #tourn-options {
     width: 50%;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
   }
 </style>
