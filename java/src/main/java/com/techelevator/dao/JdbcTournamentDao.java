@@ -24,7 +24,7 @@ public class JdbcTournamentDao implements TournamentDao {
                 "(tournament_name, num_of_teams, start_date, end_date, sport_id) " +
                 "VALUES (?, ?, ?, ?, ?) RETURNING tournament_id;";
         Integer newId = jdbcTemplate.queryForObject(sql, Integer.class,
-                tournament.getTournamentName(), tournament.getNumOfTeams(), Date.valueOf(tournament.getStartDate()), Date.valueOf(tournament.getEndDate()), tournament.getSportId());
+                tournament.getTournamentName(), tournament.getNumOfTeams(), tournament.getStartDate(), tournament.getEndDate(), tournament.getSportId());
         if (newId != null) {
             return getTournamentById(newId);
         }
@@ -57,7 +57,7 @@ public class JdbcTournamentDao implements TournamentDao {
     }
 
     @Override
-    public Tournament updateTournament(int tournamentId) {
+    public Tournament updateTournament(Tournament tournament, int tournamentId) {
         String sql = "UPDATE tournaments " +
                 "SET tournament_id = ?, " +
                 "tournament_name = ?, " +
@@ -67,7 +67,6 @@ public class JdbcTournamentDao implements TournamentDao {
                 "sport_id = ? " +
                 "WHERE tournament_id = ?;";
 
-        Tournament tournament = new Tournament();
         jdbcTemplate.update(sql, tournament.getTournamentId(), tournament.getTournamentName(), tournament.getNumOfTeams(),
                 tournament.getStartDate(), tournament.getEndDate(), tournament.getSportId(), tournamentId);
         return getTournamentById(tournamentId);
@@ -87,13 +86,14 @@ public class JdbcTournamentDao implements TournamentDao {
 
 
 
+
     private Tournament mapRowToTourney(SqlRowSet row){
         Tournament tournament = new Tournament();
         tournament.setTournamentId(row.getInt("tournament_id"));
         tournament.setNumOfTeams(row.getInt("num_of_teams"));
         tournament.setTournamentName(row.getString("tournament_name"));
-        tournament.setStartDate(row.getString("start_date"));
-        tournament.setEndDate(row.getString("end_date"));
+        tournament.setStartDate(row.getDate("start_date").toLocalDate());
+        tournament.setEndDate(row.getDate("end_date").toLocalDate());
         tournament.setSportId(row.getInt("sport_id"));
         return tournament;
     }

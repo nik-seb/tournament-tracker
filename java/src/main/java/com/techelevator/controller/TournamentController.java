@@ -58,9 +58,9 @@ public class TournamentController {
         }
 
         @RequestMapping(path = "/tournaments/{id}", method = RequestMethod.PUT)
-        public Tournament putTournament(@PathVariable("id") int tournamentId, @RequestBody Tournament updatedTournament) throws TournamentNotFoundException {
+        public Tournament putTournament(@RequestBody Tournament updatedTournament, @PathVariable("id") int tournamentId) throws TournamentNotFoundException {
 
-            if (tournamentDao.updateTournament(tournamentId) != null) {
+            if (tournamentDao.updateTournament(updatedTournament, tournamentId) != null) {
                 return updatedTournament;
             } else {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tournament not found to update.");

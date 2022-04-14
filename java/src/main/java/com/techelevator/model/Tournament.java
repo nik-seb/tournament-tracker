@@ -4,8 +4,12 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+
 
 public class Tournament {
+
 
     @Min(value = 1, message = "Tournament ID Should Be a Positive Number.")
     private int tournamentId;
@@ -17,15 +21,15 @@ public class Tournament {
     private int numOfTeams;
 
 
-    private String startDate;
-    private String endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
     @Min(value = 1, message = "Sport ID Should Be a Positive Number.")
     private int sportId;
 
     public Tournament() {};
 
-    public Tournament(int tournamentId, String tournamentName, int numOfTeams, String startDate, String endDate, int sportId) {
+    public Tournament(int tournamentId, String tournamentName, int numOfTeams, LocalDate startDate, LocalDate endDate, int sportId) {
         this.tournamentId = tournamentId;
         this.tournamentName = tournamentName;
         this.numOfTeams = numOfTeams;
@@ -58,19 +62,19 @@ public class Tournament {
         this.numOfTeams = numOfTeams;
     }
 
-    public String getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public String getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
