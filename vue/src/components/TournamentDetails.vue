@@ -4,6 +4,7 @@
       <section id="tournament-info">
           <p>{{tournament.sportName}}</p>
           <p>From {{tournament.startDate}} to {{tournament.endDate}}</p>
+          <p>{{tournament.description}}</p>
       </section>
   </div>
 </template>
@@ -32,6 +33,7 @@ export default {
                 newTournament.endDate = response.data.endDate;
                 newTournament.sportId = response.data.sportId;
                 newTournament.numOfTeams = response.data.numOfTeams;
+                newTournament.description = response.data.description;
 
                 TournamentService.getSportById(response.data.sportId).then((response) => {
                 if (response.status == 200) {
