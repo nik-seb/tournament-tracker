@@ -57,6 +57,8 @@ CREATE TABLE tournaments
 	end_date date, 
 	sport_id int,
 	description VARCHAR(500),
+	num_of_rounds int,
+	tournament_type VARCHAR(200),
 	
 	CONSTRAINT fk_sport_id FOREIGN KEY (sport_id) REFERENCES sports (sport_id)
 	
@@ -71,6 +73,8 @@ CREATE TABLE matches
 	home_team_id int,
 	away_team_id int,
 	location_id int,
+	winning_team_id int,
+	round_number int,
 	
 	CONSTRAINT fk_tournament_id FOREIGN KEY (tournament_id) REFERENCES tournaments (tournament_id),
 	CONSTRAINT fk_home_team FOREIGN KEY (home_team_id) REFERENCES teams (team_id),

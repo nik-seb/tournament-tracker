@@ -11,6 +11,6 @@ public interface TournamentDao {
     Tournament create(Tournament tournament) throws TournamentNotFoundException;
     Tournament getTournamentById(int tournamentId) throws TournamentNotFoundException;
     List<Tournament> getAllTournaments();
-    Tournament updateTournament(int tournamentId) throws TournamentNotFoundException;
+    Tournament updateTournament(Tournament tournament, int tournamentId) throws TournamentNotFoundException;
     boolean deleteTournament(int tournamentId) throws TournamentNotFoundException;
 }
