@@ -22,10 +22,11 @@ public class Tournament {
 
     @Min(value = 1, message = "Sport ID Should Be a Positive Number.")
     private int sportId;
+    private String description;
 
     public Tournament() {};
 
-    public Tournament(int tournamentId, String tournamentName, int numOfTeams, String startDate, String endDate, int sportId) {
+    public Tournament(int tournamentId, String tournamentName, int numOfTeams, String startDate, String endDate, int sportId, String description) {
         this.tournamentId = tournamentId;
         this.tournamentName = tournamentName;
         this.numOfTeams = numOfTeams;
@@ -80,5 +81,13 @@ public class Tournament {
 
     public void setSportId(int sportId) {
         this.sportId = sportId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
