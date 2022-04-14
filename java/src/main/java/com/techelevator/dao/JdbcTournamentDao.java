@@ -70,7 +70,7 @@ public class JdbcTournamentDao implements TournamentDao {
 
         Tournament tournament = new Tournament();
         jdbcTemplate.update(sql, tournament.getTournamentId(), tournament.getTournamentName(), tournament.getNumOfTeams(),
-                tournament.getStartDate(), tournament.getEndDate(), tournament.getSportId(), tournamentId);
+                tournament.getStartDate(), tournament.getEndDate(), tournament.getSportId(), tournament.getDescription(), tournamentId);
         return getTournamentById(tournamentId);
     }
 
