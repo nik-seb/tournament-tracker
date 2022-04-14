@@ -1,6 +1,9 @@
 package com.techelevator.controller;
 
+import com.techelevator.dao.PlayersDao;
 import com.techelevator.dao.TeamsDao;
+import com.techelevator.exception.TeamNotFoundException;
+import com.techelevator.model.Players;
 import com.techelevator.model.Teams;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,13 +23,14 @@ import java.util.List;
 public class TeamsController {
 
     private final TeamsDao teamsDao;
+    private final PlayersDao playersDao;
 
 
-    public TeamsController(TeamsDao teamsDao) { this.teamsDao = teamsDao; }
+    public TeamsController(TeamsDao teamsDao, PlayersDao playersDao) { this.teamsDao = teamsDao; this.playersDao = playersDao; }
 
 
     @GetMapping("/teams")
-    public List<Teams> listAllTeams() throws InterruptedException {
+    public List<Teams> listAllTeams() throws TeamNotFoundException {
         return teamsDao.listAllTeams();
     }
 
@@ -43,8 +47,8 @@ public class TeamsController {
 
 
 
-    @GetMapping("/teams/teamSize")
-    public Teams getTeamSize(@PathVariable  int teamSize) throws InterruptedException {
+    @GetMapping("/teams/{id}/teamSize")
+    public Teams getTeamSize(@PathVariable ("id")  int teamSize) throws InterruptedException {
 
         Teams result = teamsDao.getTeamSize(teamSize);
         if (result == null) {
@@ -52,6 +56,10 @@ public class TeamsController {
         } else {
             return result;
         }
+    }
+    @GetMapping("/teams/{id}/players")
+    public List<Players> getPlayersByTeam(@PathVariable ("id") int teamId){
+        return playersDao.getPlayerByTeam(teamId);
     }
 
 

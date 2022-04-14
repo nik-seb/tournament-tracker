@@ -1,5 +1,6 @@
 package com.techelevator.controller;
 
+import com.fasterxml.jackson.databind.deser.DataFormatReaders;
 import com.techelevator.dao.MatchesDao;
 import com.techelevator.model.Matches;
 import org.springframework.data.repository.query.Param;
@@ -27,15 +28,9 @@ public class MatchesController {
     public MatchesController(MatchesDao matchesDao) { this.matchesDao = matchesDao; }
 
 
-    @GetMapping("/matches")
-    public List<Matches> getMatchesByDate(@PathVariable LocalDate date) throws InterruptedException {
-        return matchesDao.getMatchesByDate(date);
-    }
-
-
-    @GetMapping("/matches/{tournamentId}")
-    public List<Matches> getMatchesByTournament(@PathVariable int tournamentId) throws InterruptedException {
-        return matchesDao.getMatchesByTournament(tournamentId);
+    @RequestMapping(path = "/matches", method = RequestMethod.GET)
+    public List<Matches> getAllMatches(){
+        return matchesDao.getAllMatches();
     }
 
     @GetMapping("/matches/{id}")

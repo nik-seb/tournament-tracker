@@ -13,5 +13,6 @@ public interface TeamsDao {
       Teams createTeam(Teams team);
       Teams updateTeam(int teamId);
       boolean deleteTeam(int teamId);
+      List<Teams> getTeamsByTournamentId(int id);
 
 }
