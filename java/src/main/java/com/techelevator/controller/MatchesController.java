@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import com.techelevator.exception.MatchNotFoundException;
+import org.springframework.web.bind.annotation.*;
+
 
 import javax.validation.Valid;
 import java.time.LocalDate;
@@ -28,22 +30,22 @@ public class MatchesController {
 
 
     @GetMapping("/matches")
-    public List<Matches> getMatchesByDate(@PathVariable LocalDate date) throws InterruptedException {
+    public List<Matches> getMatchesByDate(@PathVariable LocalDate date) {
         return matchesDao.getMatchesByDate(date);
     }
 
 
     @GetMapping("/matches/{tournamentId}")
-    public List<Matches> getMatchesByTournament(@PathVariable int tournamentId) throws InterruptedException {
+    public List<Matches> getMatchesByTournament(@PathVariable int tournamentId) throws MatchNotFoundException {
         return matchesDao.getMatchesByTournament(tournamentId);
     }
 
     @GetMapping("/matches/{id}")
-    public Matches getMatch(@PathVariable int matchId) throws InterruptedException {
+    public Matches getMatch(@PathVariable int matchId) throws MatchNotFoundException {
 
         Matches result = matchesDao.getMatch(matchId);
         if (result == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No Match found with that id. ");
+            throw new MatchNotFoundException("No Match found with that id. ");
         } else {
             return result;
     }
@@ -57,21 +59,21 @@ public class MatchesController {
 
 
     @RequestMapping(path = "/matches/{id}", method = RequestMethod.PUT)
-    public Matches putMatch(@PathVariable ("id") int matchId, @RequestBody Matches updatedMatch) {
+    public Matches putMatch(@PathVariable ("id") int matchId, @RequestBody Matches updatedMatch) throws MatchNotFoundException {
 
         if (matchesDao.updateMatch(matchId) != null) {
             return updatedMatch;
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Matches not found to update.");
+            throw new MatchNotFoundException("Matches not found to update. ");
     }
 
 }
 
 
     @DeleteMapping("/matches/{id}")
-    public void deleteMatch(@PathVariable int matchId) {
+    public void deleteMatch(@PathVariable int matchId) throws MatchNotFoundException {
         if (!matchesDao.deleteMatch(matchId)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Matches not found to delete.");
+            throw new MatchNotFoundException("Matches not found to delete. ");
         }
 
     }

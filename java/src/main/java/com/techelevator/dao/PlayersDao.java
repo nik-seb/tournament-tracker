@@ -11,6 +11,8 @@ public interface PlayersDao {
     Players getPlayerByUserId(int userId);
     Players getPlayerName(int playerId);
     Players createPlayer(Players player);
+
+    // Players updatePlayer(Player updatedPlayer);
     Players updatePlayer(int playerId);
     boolean deletePlayer(int playerId);
 
