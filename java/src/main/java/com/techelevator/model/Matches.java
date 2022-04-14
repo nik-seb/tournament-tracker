@@ -23,17 +23,24 @@ public class Matches {
 
     @Min(value = 1, message = "Away Team ID Should Be a Positive Number.")
     private int awayTeamId;
+    private int locationId;
+    private int winningTeamId;
+    private int roundNumber;
 
 
     public Matches() {}
 
-    public Matches(int matchId, int tournamentId, LocalDate date, LocalTime startTime, int homeTeamId, int awayTeamId) {
+    public Matches(int matchId, int tournamentId, LocalDate date, LocalTime startTime, int homeTeamId, int awayTeamId,
+                   int locationId, int winningTeamId, int roundNumber) {
         this.matchId = matchId;
         this.tournamentId = tournamentId;
         this.date = date;
         this.startTime = startTime;
         this.homeTeamId = homeTeamId;
         this.awayTeamId = awayTeamId;
+        this.locationId = locationId;
+        this.winningTeamId = winningTeamId;
+        this.roundNumber = roundNumber;
     }
 
     public int getMatchId() {
@@ -84,9 +91,29 @@ public class Matches {
         this.awayTeamId = awayTeamId;
     }
 
+    public int getLocationId() {
+        return locationId;
+    }
 
+    public void setLocationId(int locationId) {
+        this.locationId = locationId;
+    }
 
+    public int getWinningTeamId() {
+        return winningTeamId;
+    }
 
+    public void setWinningTeamId(int winningTeamId) {
+        this.winningTeamId = winningTeamId;
+    }
+
+    public int getRoundNumber() {
+        return roundNumber;
+    }
+
+    public void setRoundNumber(int roundNumber) {
+        this.roundNumber = roundNumber;
+    }
 }
 
 

@@ -52,6 +52,19 @@ public class JdbcPlayersDao implements PlayersDao {
         }
             return player;
     }
+    @Override
+    public List<Players> getPlayerByTeam(int teamId){
+        List<Players> teamPlayers = new ArrayList<>();
+        String sql = "SELECT player_id, user_id, player_name " +
+                "FROM players " +
+                "JOIN player_team USING(player_id) " +
+                "WHERE team_id = ?;";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, teamId);
+        while(results.next()){
+            teamPlayers.add(mapRowToPlayers(results));
+        }
+        return teamPlayers;
+    }
 
 
 
@@ -90,12 +103,17 @@ public class JdbcPlayersDao implements PlayersDao {
     @Override
     public Players createPlayer(Players player) {
         String sql = "INSERT INTO players (user_id, player_name) VALUES (?, ?) RETURNING player_id;";
-        int newPlayerId = jdbcTemplate.queryForObject(sql, int.class,  player.getUserId(),  player.getPlayerName());
+        int newPlayerId = jdbcTemplate.queryForObject(sql, Integer.class,  player.getUserId(),  player.getPlayerName());
         Players newPlayer = getPlayerById(newPlayerId);
         return newPlayer;
 
     }
 
+
+
+
+
+    // void updatePlayer(Player updatedPlayer);
     @Override
     public Players updatePlayer(int playerId) {
         String sql = "UPDATE players " +
