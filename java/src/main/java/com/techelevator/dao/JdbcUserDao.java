@@ -1,5 +1,6 @@
 package com.techelevator.dao;
 
+import com.techelevator.model.User;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
@@ -102,6 +103,7 @@ public class JdbcUserDao implements UserDao {
 
         return userCreated;
     }
+
 
     private User mapRowToUser(SqlRowSet rs) {
         User user = new User();
