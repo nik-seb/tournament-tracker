@@ -29,6 +29,7 @@ export default new Vuex.Store({
       endDate: '',
       sportId: '',
       numOfTeams: '',
+      description: '',
       id: null
     },
     sportList: [
