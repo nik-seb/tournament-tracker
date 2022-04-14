@@ -7,6 +7,7 @@ import Register from '../views/Register.vue'
 import store from '../store/index'
 import ViewTournament from '../views/ViewTournament'
 import Create from '../views/Create'
+import Account from '../views/Account'
 
 Vue.use(Router)
 
@@ -72,7 +73,16 @@ const router = new Router({
       meta: {
         requiresAuth: false
       }
+    },
+    {
+      path: "/account",
+      name: "account-details",
+      component: Account,
+      meta:{
+        requiresAuth: true
+      }
     }
+
   ]
 })
 

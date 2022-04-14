@@ -1,5 +1,6 @@
 package com.techelevator.dao;
 
+import com.techelevator.model.User;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
@@ -101,20 +102,6 @@ public class JdbcUserDao implements UserDao {
         int newUserId = (int) keyHolder.getKeys().get(id_column);
 
         return userCreated;
-    }
-
-    @Override
-    public User updateUserRole(User user, long userId, String role) {
-        user.setAuthorities(role);
-        String sql = "UPDATE users " +
-                "SET user_id = ? " +
-                "username = ? " +
-                "password = ?" +
-                "role = ? " +
-                "WHERE user_id = ?;";
-        jdbcTemplate.update(sql, user.getId(), user.getUsername(), user.getPassword(), role, userId);
-
-        return getUserById(userId);
     }
 
 

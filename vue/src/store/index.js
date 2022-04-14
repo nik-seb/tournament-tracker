@@ -29,11 +29,10 @@ export default new Vuex.Store({
       endDate: '',
       sportId: '',
       numOfTeams: '',
+      description: '',
       id: null
     },
     sportList: [
-      {sportName: "Cricket",
-      sportId: 3}
     ],
     matchesList: [
       {

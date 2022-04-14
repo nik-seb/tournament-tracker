@@ -16,5 +16,4 @@ public interface UserDao {
 
     boolean create(String username, String password, String role);
 
-    User updateUserRole(User user, long userId, String role);
 }
