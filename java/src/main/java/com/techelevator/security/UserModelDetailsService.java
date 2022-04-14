@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,9 +40,12 @@ public class UserModelDetailsService implements UserDetailsService {
         if (!user.isActivated()) {
             throw new UserNotActivatedException("User " + lowercaseLogin + " was not activated");
         }
-        List<GrantedAuthority> grantedAuthorities = user.getAuthorities().stream()
-                .map(authority -> new SimpleGrantedAuthority(authority.getName()))
-                .collect(Collectors.toList());
+        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+
+        if (user.getRole() != null) {
+            grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole()));
+        }
+
         return new org.springframework.security.core.userdetails.User(user.getUsername(),
                 user.getPassword(),
                 grantedAuthorities);

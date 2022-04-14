@@ -14,15 +14,20 @@ public class User {
    private String password;
    @JsonIgnore
    private boolean activated;
-   private Set<Authority> authorities = new HashSet<>();
+//   private Set<Authority> authorities = new HashSet<>();
+   private String role;
+
 
    public User() { }
 
-   public User(Long id, String username, String password, String authorities) {
+   //need to add authority into constructor if this doesn't work
+
+   public User(Long id, String username, String password, String role) {
       this.id = id;
       this.username = username;
       this.password = password;
-      if(authorities != null) this.setAuthorities(authorities);
+//      if(authorities != null) this.setAuthorities(authorities);
+      this.role = role;
       this.activated = true;
    }
 
@@ -58,21 +63,28 @@ public class User {
       this.activated = activated;
    }
 
-   public Set<Authority> getAuthorities() {
-      return authorities;
+   public String getRole() {
+      return role;
    }
 
-   public void setAuthorities(Set<Authority> authorities) {
-      this.authorities = authorities;
+   public void setRole(String role) {
+      this.role = role;
    }
+//   public Set<Authority> getAuthorities() {
+//      return authorities;
+//   }
+//
+//   public void setAuthorities(Set<Authority> authorities) {
+//      this.authorities = authorities;
+//   }
 
-   public void setAuthorities(String authorities) {
-      String[] roles = authorities.split(",");
-      for(String role : roles) {
-         String authority = role.contains("ROLE_") ? role : "ROLE_" + role;
-         this.authorities.add(new Authority(authority));
-      }
-   }
+////   public void setAuthorities(String authorities) {
+////      String[] roles = authorities.split(",");
+////      for(String role : roles) {
+////         String authority = role.contains("ROLE_") ? role : "ROLE_" + role;
+////         this.authorities.add(new Authority(authority));
+////      }
+//   }
 
    @Override
    public boolean equals(Object o) {
@@ -83,12 +95,14 @@ public class User {
               activated == user.activated &&
               Objects.equals(username, user.username) &&
               Objects.equals(password, user.password) &&
-              Objects.equals(authorities, user.authorities);
+              Objects.equals(role, user.role);
+
+               //change back to authorities if broken
    }
 
    @Override
    public int hashCode() {
-      return Objects.hash(id, username, password, activated, authorities);
+      return Objects.hash(id, username, password, activated, role);
    }
 
    @Override
@@ -97,7 +111,7 @@ public class User {
               "id=" + id +
               ", username='" + username + '\'' +
               ", activated=" + activated +
-              ", authorities=" + authorities +
+              ", authorities=" + role +
               '}';
    }
 }
