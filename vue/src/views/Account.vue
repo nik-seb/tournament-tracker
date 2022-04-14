@@ -6,39 +6,63 @@
           <div class="account-error" role="alert" v-if="accountErrors">
               {{ accountErrorMsg }}
           </div>
-          <label for="Change player username"></label>
-          <p>The player username is different from your account username!</p>
-          <input type="text"
-          id="user-name"
-          placeholder="username"
-          v-model="user.username">
+          <label for="Change role"></label>
+          <div>
+              <p>Current User status: {{$store.state.user.role}} </p> 
+          </div>
+          <p>Interested in switching roles so you can now create a tournament?</p>
+          <p>Hit the button below to enable host privileges!</p>
 
-          <input id="host" type="checkbox"
-           v-model="checkbox">
-          <label for="host"> Enable Host Privilege</label>
+           
+            <!-- confirm button -->
+            <button class="isHost" v-on:click.prevent="updateAccount()"> Enable Host</button>
+
       </form>
 
-      
+      <!-- import auth services and add update to auth service -->
+      <!-- display button if only user role -->
   </div>
 </template>
 
+
 <script>
-export default {
+import authService from '../services/AuthService';export default {
 name: 'account',
+props: ['userId'],
 data(){
     return{
-        user: {
-           role: "user"
-        },
-
-
-
+           id: 0, 
+           role: "",
 
      checkbox: false,
      accountErrors: false,
      accountErrorMsg: "There were problems changing this account's details.",
+
   }
-}
+    
+},
+    methods: {
+
+      updateAccount(){    
+          const account = {
+              id: this.$store.state.user.id,
+              role: "ROLE_HOST"
+          };
+
+        if(confirm('Are you sure about this?')){
+        
+        authService.updateAccount(account).then(response => {
+        
+         if(response.status === 200){
+             alert('testing')
+          this.$store.state.user.role = 'ROLE_HOST'
+          this.$store.commit('SET_USER', this.$store.state.user)
+
+         
+            }
+        })}
+    }
+   }
 
 
 
