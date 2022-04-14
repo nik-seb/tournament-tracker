@@ -56,6 +56,7 @@ CREATE TABLE tournaments
 	start_date date NOT NULL, 
 	end_date date, 
 	sport_id int,
+	description VARCHAR(500),
 	
 	CONSTRAINT fk_sport_id FOREIGN KEY (sport_id) REFERENCES sports (sport_id)
 	
