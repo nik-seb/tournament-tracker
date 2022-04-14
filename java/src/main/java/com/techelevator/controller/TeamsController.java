@@ -52,7 +52,7 @@ public class TeamsController {
 
 
     @GetMapping("/teams/{id}/teamSize")
-    public Teams getTeamSize(@PathVariable ("id")  int teamSize) throws InterruptedException {
+    public Teams getTeamSize(@PathVariable ("id")  int teamSize) throws TeamNotFoundException {
 
         Teams result = teamsDao.getTeamSize(teamSize);
         if (result == null) {
