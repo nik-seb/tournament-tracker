@@ -5,6 +5,12 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
+import com.techelevator.model.User;
+import com.techelevator.model.Authority;
+import com.techelevator.FunctionalTests.*;
+import com.techelevator.dao.JdbcUserDaoTests;
+import com.techelevator.controller.MatchesController;
+import com.techelevator.dao.JdbcMatchesDao;
 
 import java.time.LocalTime;
 import java.util.List;
@@ -32,7 +38,7 @@ public class JdbcMatchesTests extends BaseDaoTests {
     }
 
     @Test
-    public void getMatch_returns_correct_matches_for_id() {
+    public void getMatch_returns_correct_match_for_id() {
         Matches match = sut.getMatch(1);
         Assert.assertNotNull("getMatches returned null", match);
         assertMatchesMatch("getMatches return wrong or partial data", MATCHES_1, match);
@@ -43,8 +49,8 @@ public class JdbcMatchesTests extends BaseDaoTests {
     }
 
     @Test
-    public void getMatches_return_null_when_id_not_found() {
-        Matches match= sut.getMatch(96);
+    public void getMatch_return_null_when_id_not_found() {
+        Matches match = sut.getMatch(96);
         Assert.assertNotNull("getMatches failed to return null for id not in database", match);
     }
 
@@ -52,14 +58,14 @@ public class JdbcMatchesTests extends BaseDaoTests {
     @Test
     public void getMatchesByTournamentId_returns_list_of_all_matches_by_date() {
         List<Matches> matches = sut.getMatchesByTournament(3);
-        Assert.assertNotNull("getMatchesByTournamentId returns wrong number matches", matches);
-        assertMatchesMatch("getMatches return wrong or partial data", MATCHES_1, matches.get(2));
-        assertMatchesMatch("getMatches return wrong or partial data", MATCHES_2, matches.get(1));
+        Assert.assertNotNull("getMatchesByTournamentId returns wrong number of matches", matches);
+        assertMatchesMatch("getMatches returns wrong or partial data", MATCHES_1, matches.get(2));
+        assertMatchesMatch("getMatches returns wrong or partial data", MATCHES_2, matches.get(1));
 
         matches = sut.getMatchesByTournament(2);
-        Assert.assertNotNull("getMatchesByDateTournamentId returns wrong number matches", matches);
-        assertMatchesMatch("getMatches return wrong or partial data", MATCHES_3, matches.get(4));
-        assertMatchesMatch("getMatches return wrong or partial data", MATCHES_4, matches.get(3));
+        Assert.assertNotNull("getMatchesByDateTournamentId returns wrong number of matches", matches);
+        assertMatchesMatch("getMatches returns wrong or partial data", MATCHES_3, matches.get(4));
+        assertMatchesMatch("getMatches returns wrong or partial data", MATCHES_4, matches.get(3));
 
 
     }
@@ -69,7 +75,7 @@ public class JdbcMatchesTests extends BaseDaoTests {
     public void createMatch_return_matches_with_id_and_expected_values() {
         Matches createMatch = sut.createMatch(testMatches);
 
-        Assert.assertNotNull("create Match return null", createMatch);
+        Assert.assertNotNull("create Match returns null", createMatch);
 
         int newId = createMatch.getMatchId();
         Matches retrievedMatch = sut.getMatch(newId);
@@ -79,7 +85,7 @@ public class JdbcMatchesTests extends BaseDaoTests {
 
 
     @Test
-    public void updated_match_has_expected_values_when_retrieved() {
+    public void updatedMatch_has_expected_values_when_retrieved() {
         Matches match = sut.getMatch(1);
         match.setMatchId(2);
         match.setTournamentId(2);
@@ -90,7 +96,7 @@ public class JdbcMatchesTests extends BaseDaoTests {
     }
 
     @Test
-    public void deleted_match_cant_be_retrieved() {
+    public void deletedMatch_cant_be_retrieved() {
         sut.deleteMatch(1);
 
         Matches match  = sut.getMatch(1);
