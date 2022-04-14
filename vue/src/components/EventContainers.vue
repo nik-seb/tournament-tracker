@@ -6,20 +6,18 @@
         <h1 id="company-name"> RANNS Tournament Displays™ </h1>
         <div class="tournament-picture">
               <img src="../assets/tournament_picture.jpg" alt="example of tournament picture">         
-        </div> 
-        <div class="events">
+         </div> 
+  <div class="events">
+          <!-- create a v-if condition if date is less than end date display -->
           <div id="past">
-            <!-- create a v-if condition if date is less than end date display -->
-            <p id="past-events"> Past Events </p>
-              <event-table class="prior-events" v-bind:filteredList="tournamentArray"/>
+          <p id="past-events"> Past Events </p>
+            <event-table class="past-events" v-bind:filteredList="tournamentArray"/>
           </div>
-            <!-- create a v-if condition if date is between start date and end date display -->
           <div id="current">
             <p id="live-events"> Current Events </p>
               <event-table class="live-events" v-bind:filteredList="tournamentArray"/>
           </div>  
           <div id="future">
-            <!-- create a v-if condition if date is greater than end date display -->
             <p id="upcoming-events"> Upcoming Events </p>
             <event-table class="upcoming-events" v-bind:filteredList="tournamentArray"/>  
           </div>
@@ -94,7 +92,7 @@ export default {
   text-decoration-style: double;
   text-decoration-skip-ink: none;
   font-size: 175%;
-  
+
 }
 
 #past-events{

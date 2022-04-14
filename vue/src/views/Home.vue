@@ -13,6 +13,7 @@ export default {
 
 components:{
   EventContainers,
+
 },
 
   name: "home"

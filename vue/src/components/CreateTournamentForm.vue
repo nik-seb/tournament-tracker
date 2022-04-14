@@ -17,7 +17,9 @@
           <input type="date" name="startDate" v-model="newTournament.startDate">
           <label for="endDate">End Date</label>
           <input type="date" name="endDate" v-model="newTournament.endDate">
-          <button id="btn" type="submit">Create tournament</button>
+          <label for="tournamentDescription"> Description </label>
+          <input type="text" placeholder="Enter a brief description pertaining to the tournament you are entering in!" v-model="newTournament.description" >
+          <button id="btn" type="submit"> Create tournament </button>
       </form>
   </div>
 </template>
@@ -34,7 +36,9 @@ export default {
                 startDate: '',
                 endDate: '',
                 sportId: '',
-                numOfTeams: 0
+                numOfTeams: 0,
+                description: ''
+                
             },
             newSport: {
                 sportName: ''
