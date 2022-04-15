@@ -40,7 +40,7 @@ public class TeamsController {
     }
 
     @GetMapping("/teams/{id}")
-    public Teams getTeamById(@PathVariable int teamId) throws TeamNotFoundException {
+    public Teams getTeamById(@PathVariable ("id") int teamId) throws TeamNotFoundException {
 
         Teams result = teamsDao.getTeamById(teamId);
         if (result == null) {

@@ -19,15 +19,23 @@ public class TournamentService implements ServerTournamentService{
         this.matchesDao = matchesDao;
         this.teamsDao = teamsDao;
     }
+    public TournamentService(){
+
+    }
 
     @Override
-    public List<Matches> generateBracket(List<Teams> teams) {
+    public List<Matches> generateBracket(List<Teams> teams, int tournamentId) {
         List<Matches> allMatches = new ArrayList<>();
+        for(Teams teams1 : teams){
+            System.out.println(teams1.getTeamName() + ", ");
+        }
+        System.out.println("Original Teams: " + teams);
         int pow2 = 1;
-        while (pow2 > teams.size()){
+        while (pow2 < teams.size()){
             pow2 = pow2 * 2;
         }
         int remainder = pow2 - teams.size();
+        System.out.println("pow2:" + pow2);
 
         teams = shuffle(teams);
         List<Teams[]> pairs = new ArrayList<>();
@@ -39,20 +47,46 @@ public class TournamentService implements ServerTournamentService{
             teams.remove(0);
             pairs.add(pair);
         }
+
+        for(Teams[] teams1 : pairs){
+            System.out.println(teams1[0].getTeamName() + " vs " + teams1[1].getTeamName());
+        }
+        System.out.println("Shuffled Teams: " + pairs);
+        System.out.println("Number of Paired Teams: " + pairs.size());
     List<Teams> byes = teams;
         int round2NumberOfTeams = pow2/2;
         int numRounds = 1;
         int currentTeams = round2NumberOfTeams;
 
+        System.out.println("Teams not paired: ");
+        for(Teams teams1 : teams){
+            System.out.println(teams1.getTeamName() + ", ");
+        }
+
+
         while (currentTeams >= 2) {
             numRounds++;
             currentTeams = currentTeams / 2;
         }
-        return null;
+        System.out.println("Number of Rounds: " + numRounds);
+        int numMatches;
+        int numMatchesInclByes;
+
+        if (remainder == 0) {
+            numMatches = pow2 - 1;
+            numMatchesInclByes = numMatches;
+        } else {
+            numMatches = round2NumberOfTeams - 1 + pairs.size();
+            numMatchesInclByes = numMatches + byes.size();
+        }
+        System.out.println("Num of Matches: " + numMatches);
+        System.out.println("Num of Matches with byes: " + numMatchesInclByes);
+        return allMatches;
     }
 
     @Override
     public List<Matches> generateMatches(List<Teams> teams) {
+
     return null;
     }
 

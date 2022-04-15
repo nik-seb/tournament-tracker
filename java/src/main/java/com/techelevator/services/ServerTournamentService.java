@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ServerTournamentService {
 
-    List<Matches> generateBracket(List<Teams> teams);
+    List<Matches> generateBracket(List<Teams> teams, int tournamentId);
     List<Matches> generateMatches(List<Teams> teams);
     void advanceWinner();
     List<Teams> shuffle(List<Teams> teams);
