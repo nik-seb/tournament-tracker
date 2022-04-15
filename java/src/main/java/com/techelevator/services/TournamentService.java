@@ -1,5 +1,162 @@
 package com.techelevator.services;
 
-public class TournamentService {
+import com.techelevator.dao.MatchesDao;
+import com.techelevator.dao.TeamsDao;
+import com.techelevator.dao.TournamentDao;
+import com.techelevator.model.Matches;
+import com.techelevator.model.Teams;
 
+import java.util.ArrayList;
+import java.util.List;
+
+public class TournamentService implements ServerTournamentService{
+    private TournamentDao tournamentDao;
+    private MatchesDao matchesDao;
+    private TeamsDao teamsDao;
+
+    public TournamentService(TournamentDao tournamentDao, MatchesDao matchesDao, TeamsDao teamsDao) {
+        this.tournamentDao = tournamentDao;
+        this.matchesDao = matchesDao;
+        this.teamsDao = teamsDao;
+    }
+
+    @Override
+    public List<Matches> generateBracket(List<Teams> teams) {
+        List<Matches> allMatches = new ArrayList<>();
+        int pow2 = 1;
+        while (pow2 > teams.size()){
+            pow2 = pow2 * 2;
+        }
+        int remainder = pow2 - teams.size();
+
+        teams = shuffle(teams);
+        List<Teams[]> pairs = new ArrayList<>();
+        while(teams.size() > remainder){
+            Teams[] pair = new Teams[2];
+            pair[0] = teams.get(0);
+            teams.remove(0);
+            pair[1] = teams.get(0);
+            teams.remove(0);
+            pairs.add(pair);
+        }
+    List<Teams> byes = teams;
+        int round2NumberOfTeams = pow2/2;
+        int numRounds = 1;
+        int currentTeams = round2NumberOfTeams;
+
+        while (currentTeams >= 2) {
+            numRounds++;
+            currentTeams = currentTeams / 2;
+        }
+        return null;
+    }
+
+    @Override
+    public List<Matches> generateMatches(List<Teams> teams) {
+    return null;
+    }
+
+    @Override
+    public void advanceWinner() {
+
+    }
+
+    @Override
+    public List<Teams> shuffle(List<Teams> teams) {
+        for (int i = teams.size() - 1; i > 0 ; i--) {
+            int j = (int)Math.floor(Math.random() * (i + 1));
+            Teams temp = teams.get(i);
+            teams.remove(i);
+            teams.add(i, teams.get(j));
+            teams.remove(j);
+            teams.add(j, temp);
+        }
+        return teams;
+    }
 }
+
+/*
+//FIRST calculate byes and assign pairs for matches
+
+const originalTeamList = ['a1', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8', 'a9', 'a10', 'a11', 'a12', 'a13', 'a14', 'a15'];
+
+// calculate powers of 2 until equal or greater to number of teams
+let pow2 = 1;
+while (pow2 < originalTeamList.length) {
+	pow2 = pow2 * 2;
+}
+
+// subtract teams from the found power of 2 to find number of byes
+let remainder = pow2 - originalTeamList.length;
+
+console.log(pow2 + ' and remainder of ' + remainder)
+
+
+//Fisher-Yates algorithm for randomly shuffling a sequence
+function shuffle (list) {
+  for (let i = list.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const temp = list[i];
+    list[i] = list[j];
+    list[j] = temp;
+  }
+  return list;
+}
+
+const shuffledTeams = shuffle(originalTeamList);
+
+console.log(shuffledTeams)
+
+const pairs = [];
+
+// pop is destructive, so each team popped from the shuffle will be added to a new pair and removed from the original. when the length == number of byes, stop pairing
+while (shuffledTeams.length > remainder) {
+	let pair = [];
+  pair.push(shuffledTeams.pop());
+  pair.push(shuffledTeams.pop());
+  pairs.push(pair);
+}
+
+for (let i = 0; i < pairs.length; i++) {
+	console.log('pair ' + i + ': ' + pairs[i])
+}
+
+console.log(' and remainder: ' + shuffledTeams);
+const byes = shuffledTeams;
+
+// NEXT calculate how many rounds will be needed
+// round 2: num of teams will be nearest power of 2 below starting number (so pow2/2)
+// once num is a power of 2, each round will have half the previous num of teams
+// then add 1 to account for uneven first round
+
+const round2NumTeams = pow2/2; // will be true even if byes exist
+
+let numRounds = 1;
+let currentTeams = round2NumTeams;
+
+while (currentTeams >= 2) {
+	numRounds++;
+  currentTeams = currentTeams / 2;
+}
+
+console.log('rounds: ' + numRounds)
+
+// NEXT num of matches
+// formula for num of matches when num of teams is a power of 2: numTeams - 1
+// add the number of pairs to account for round 1 matches when original lineup wasn't a power of 2
+// optionally? add every bye as a ghost match
+	// possibly useful when determining second round
+
+let numMatches;
+let numMatchesInclByes;
+
+if (remainder == 0) {
+	numMatches = pow2 - 1;
+  numMatchesInclByes = numMatches;
+} else {
+	numMatches = round2NumTeams - 1 + pairs.length;
+  numMatchesInclByes = numMatches + byes.length;
+}
+
+console.log(numMatches, numMatchesInclByes)
+ */
