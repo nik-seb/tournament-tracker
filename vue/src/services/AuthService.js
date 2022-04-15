@@ -10,7 +10,7 @@ export default {
     return axios.post('/register', user)
   },
 
-  account(user){
+  updateAccount(user){
     return axios.put(`/account/${user.id}`, user)
   }
 }
