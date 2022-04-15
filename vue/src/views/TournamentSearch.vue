@@ -49,7 +49,9 @@ export default {
 
        
       users:[
-        {}
+        {
+          
+        }
       ]
     }
   },
@@ -73,7 +75,7 @@ td, th {
 }
 
 th {
-  background-color:black
+  background-color: rgb(0, 26, 255)
 }
 
 input, select {

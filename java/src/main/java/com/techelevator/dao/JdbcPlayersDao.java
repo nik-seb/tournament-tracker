@@ -25,11 +25,12 @@ public class JdbcPlayersDao implements PlayersDao {
     @Override
     public Players getPlayerById(int playerId) {
         Players player = new Players();
-        String sql = "SELECT player_id " +
+        String sql = "SELECT player_id, user_id, player_name " +
                      "FROM players " +
                      "WHERE player_id = ?; ";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, playerId);
-            if (results.next()) {
+
+        if (results.next()) {
                 player = mapRowToPlayers(results);
 
     }

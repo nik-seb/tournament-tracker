@@ -17,9 +17,6 @@ public class JdbcTeamsDao implements TeamsDao {
     private JdbcTemplate jdbcTemplate;
 
 
-    public JdbcTeamsDao() {
-    }
-
     public JdbcTeamsDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }

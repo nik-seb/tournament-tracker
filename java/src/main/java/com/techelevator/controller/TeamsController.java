@@ -38,8 +38,7 @@ public class TeamsController {
         return teamsDao.listAllTeams();
     }
 
-    @GetMapping("/teams/{id}")
-    public Teams getTeamById(@PathVariable int teamId) throws TeamNotFoundException {
+    public Teams getTeamById(@PathVariable ("id") int teamId) throws TeamNotFoundException {
 
         Teams result = teamsDao.getTeamById(teamId);
         if (result == null) {
@@ -61,6 +60,7 @@ public class TeamsController {
             return result;
         }
     }
+
     @GetMapping("/teams/{id}/players")
     public List<Players> getPlayersByTeam(@PathVariable ("id") int teamId){
         return playersDao.getPlayerByTeam(teamId);
