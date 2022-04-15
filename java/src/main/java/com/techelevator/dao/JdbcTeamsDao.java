@@ -1,6 +1,7 @@
 package com.techelevator.dao;
 
 import com.techelevator.model.Teams;
+import com.techelevator.model.Players;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
@@ -17,8 +18,6 @@ public class JdbcTeamsDao implements TeamsDao {
     private JdbcTemplate jdbcTemplate;
 
 
-    public JdbcTeamsDao() {
-    }
 
     public JdbcTeamsDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -114,9 +113,19 @@ public class JdbcTeamsDao implements TeamsDao {
         return tournamentTeams;
         }
 
+    @Override
+    public void addPlayersToTeam(Players player, int teamId) {
+
+        String sql = "INSERT INTO player_team (player_id, team_id) " +
+                     "VALUES                  ((SELECT player_id FROM players WHERE player_id = ?), " +
+                                             "(SELECT team_id FROM teams WHERE team_id = ?));";
+
+        jdbcTemplate.update(sql, player.getPlayerId(), teamId);
+
+    }
 
 
-        private Teams mapRowToTeams (SqlRowSet results) {
+    private Teams mapRowToTeams (SqlRowSet results) {
             Teams team = new Teams();
             team.setTeamId(results.getInt("team_id"));
             team.setTeamName(results.getString("team_name"));

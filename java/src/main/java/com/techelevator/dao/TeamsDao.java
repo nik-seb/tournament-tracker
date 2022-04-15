@@ -1,5 +1,6 @@
 package com.techelevator.dao;
 
+import com.techelevator.model.Players;
 import com.techelevator.model.Teams;
 import java.util.List;
 
@@ -14,5 +15,6 @@ public interface TeamsDao {
       Teams updateTeam(int teamId);
       boolean deleteTeam(int teamId);
       List<Teams> getTeamsByTournamentId(int id);
+      void addPlayersToTeam(Players players, int teamsId);
 
 }
