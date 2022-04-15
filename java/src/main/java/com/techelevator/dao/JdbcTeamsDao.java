@@ -18,8 +18,6 @@ public class JdbcTeamsDao implements TeamsDao {
     private JdbcTemplate jdbcTemplate;
 
 
-    public JdbcTeamsDao() {
-    }
 
     public JdbcTeamsDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -119,11 +117,10 @@ public class JdbcTeamsDao implements TeamsDao {
     public void addPlayersToTeam(Players player, int teamId) {
 
         String sql = "INSERT INTO player_team (player_id, team_id) " +
-                     "VALUES                  ((SELECT player_id FROM players WHERE player_id = ? ) " +
+                     "VALUES                  ((SELECT player_id FROM players WHERE player_id = ?), " +
                                              "(SELECT team_id FROM teams WHERE team_id = ?));";
 
         jdbcTemplate.update(sql, player.getPlayerId(), teamId);
-
 
     }
 

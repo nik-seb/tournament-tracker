@@ -94,7 +94,7 @@ public class TeamsController {
 
      }
 
-     @RequestMapping(path = "/teams/{id}/player", method = RequestMethod.PUT)
+     @RequestMapping(path = "/teams/{id}/player", method = RequestMethod.POST)
      public void playersToTeam(@PathVariable ("id") int teamId, @RequestBody Players players) throws TeamNotFoundException, PlayerNotFoundException {
             teamsDao.addPlayersToTeam(players, teamId);
 
