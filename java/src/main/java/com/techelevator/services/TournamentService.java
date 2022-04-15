@@ -39,6 +39,7 @@ public class TournamentService implements ServerTournamentService{
 
         teams = shuffle(teams);
         List<Teams[]> pairs = new ArrayList<>();
+
         while(teams.size() > remainder){
             Teams[] pair = new Teams[2];
             pair[0] = teams.get(0);
@@ -46,6 +47,7 @@ public class TournamentService implements ServerTournamentService{
             pair[1] = teams.get(0);
             teams.remove(0);
             pairs.add(pair);
+
         }
 
         for(Teams[] teams1 : pairs){
@@ -107,6 +109,12 @@ public class TournamentService implements ServerTournamentService{
         }
         return teams;
     }
+
+    @Override
+    public void endRound(List<Matches> matches) {
+
+    }
+
 }
 
 /*

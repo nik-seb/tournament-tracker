@@ -29,6 +29,10 @@ public class Matches {
 
 
     public Matches() {}
+    public Matches(int homeTeamId, int awayTeamId){
+        this.homeTeamId = homeTeamId;
+        this.awayTeamId = awayTeamId;
+    }
 
     public Matches(int matchId, int tournamentId, LocalDate date, LocalTime startTime, int homeTeamId, int awayTeamId,
                    int locationId, int winningTeamId, int roundNumber) {

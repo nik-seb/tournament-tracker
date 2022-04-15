@@ -11,6 +11,7 @@ public interface ServerTournamentService {
     List<Matches> generateMatches(List<Teams> teams);
     void advanceWinner();
     List<Teams> shuffle(List<Teams> teams);
+    void endRound(List<Matches> matches);
 
 
 }

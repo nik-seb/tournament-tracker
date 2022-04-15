@@ -9,6 +9,7 @@ import com.techelevator.exception.TournamentNotFoundException;
 import com.techelevator.model.Matches;
 import com.techelevator.model.Teams;
 import com.techelevator.model.Tournament;
+import com.techelevator.services.TournamentService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,13 +32,15 @@ public class TournamentController {
     private final TournamentDao tournamentDao;
     private final MatchesDao matchesDao;
     private final TeamsDao teamsDao;
+    private final TournamentService tournamentService;
 
 
 
-    public TournamentController(TournamentDao tournamentDao, MatchesDao matchesDao, TeamsDao teamsDao) {
+    public TournamentController(TournamentDao tournamentDao, MatchesDao matchesDao, TeamsDao teamsDao, TournamentService tournamentService) {
         this.tournamentDao = tournamentDao;
         this.matchesDao = matchesDao;
         this.teamsDao = teamsDao;
+        this.tournamentService = tournamentService;
     }
 
     @RequestMapping(path = "/tournaments/{id}/teams", method = RequestMethod.GET)
@@ -101,6 +104,8 @@ public class TournamentController {
 
             tournamentDao.addTeamsToTournaments(teams, tournamentId);
         }
+
+
 
     }
 
