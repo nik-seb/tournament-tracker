@@ -16,7 +16,6 @@ export default {
     name: "tournament-details",
     props: {
         tournamentID: Number
-        // TO-DO: Fix error: Invalid prop: type check failed for prop "tournamentID". Expected Number with value 6, got String with value "6".
     },
     data(){
         return {
