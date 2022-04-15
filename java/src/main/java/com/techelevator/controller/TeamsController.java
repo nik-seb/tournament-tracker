@@ -2,6 +2,7 @@ package com.techelevator.controller;
 
 import com.techelevator.dao.PlayersDao;
 import com.techelevator.dao.TeamsDao;
+import com.techelevator.exception.PlayerNotFoundException;
 import com.techelevator.exception.TeamNotFoundException;
 import com.techelevator.model.Players;
 import com.techelevator.model.Teams;
@@ -90,6 +91,12 @@ public class TeamsController {
       if (!teamsDao.deleteTeam(teamId)) {
            throw new TeamNotFoundException("Team not found to delete.");
          }
+
+     }
+
+     @RequestMapping(path = "/teams/{id}/player", method = RequestMethod.POST)
+     public void playersToTeam(@PathVariable ("id") int teamId, @RequestBody Players players) throws TeamNotFoundException, PlayerNotFoundException {
+            teamsDao.addPlayersToTeam(players, teamId);
 
      }
 
