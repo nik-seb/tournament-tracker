@@ -75,7 +75,7 @@ const router = new Router({
       }
     },
     {
-      path: "/account",
+      path: "/account/:id",
       name: "account-details",
       component: Account,
       meta:{
