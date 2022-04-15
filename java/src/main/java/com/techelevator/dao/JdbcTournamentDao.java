@@ -1,5 +1,7 @@
 package com.techelevator.dao;
 
+import com.techelevator.exception.TeamNotFoundException;
+import com.techelevator.model.Teams;
 import com.techelevator.model.Tournament;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -91,7 +93,10 @@ public class JdbcTournamentDao implements TournamentDao {
        }
     }
 
+    @Override
+    public void addTeamToTournament(Teams teams, int tournamentId) throws TeamNotFoundException {
 
+    }
 
 
     private Tournament mapRowToTourney(SqlRowSet row){
