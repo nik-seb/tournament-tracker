@@ -11,6 +11,6 @@ export default {
   },
 
   account(user){
-    return axios.put('/account', user)
+    return axios.put(`/account/${user.id}`, user)
   }
 }

@@ -19,10 +19,17 @@ import java.time.LocalDate;
 
 public class JdbcMatchesTests extends BaseDaoTests {
 
-    private static final Matches MATCHES_1 = new Matches(1,1, LocalDate.parse("2022-01-01"), LocalTime.parse("12:00"), 1, 5);
-    private static final Matches MATCHES_2 = new Matches(2,2, LocalDate.parse("2022-01-02"), LocalTime.parse("12:00"), 2, 6);
-    private static final Matches MATCHES_3 = new Matches(3,3, LocalDate.parse("2022-01-03"), LocalTime.parse("12:00"), 3, 7);
-    private static final Matches MATCHES_4 = new Matches(4,4, LocalDate.parse("2022-01-04"), LocalTime.parse("12:00"), 4, 8);
+//    private static final Matches MATCHES_1 = new Matches(1,1, LocalDate.parse("2022-01-01"), LocalTime.parse("12:00"), 1, 5);
+//    private static final Matches MATCHES_2 = new Matches(2,2, LocalDate.parse("2022-01-02"), LocalTime.parse("12:00"), 2, 6);
+//    private static final Matches MATCHES_3 = new Matches(3,3, LocalDate.parse("2022-01-03"), LocalTime.parse("12:00"), 3, 7);
+//    private static final Matches MATCHES_4 = new Matches(4,4, LocalDate.parse("2022-01-04"), LocalTime.parse("12:00"), 4, 8);
+
+
+    private static final Matches MATCHES_1 = new Matches(1,1, LocalDate.parse("2022-01-01"), LocalTime.parse("12:00"), 1, 5, 1, 1, 2);
+    private static final Matches MATCHES_2 = new Matches(2,2, LocalDate.parse("2022-01-02"), LocalTime.parse("12:00"), 2, 6, 2, 2, 2);
+    private static final Matches MATCHES_3 = new Matches(3,3, LocalDate.parse("2022-01-03"), LocalTime.parse("12:00"), 3, 7, 7, 3, 3);
+    private static final Matches MATCHES_4 = new Matches(4,4, LocalDate.parse("2022-01-04"), LocalTime.parse("12:00"), 4, 8, 8, 4, 4);
+
 
 
     private Matches testMatches;
@@ -34,11 +41,18 @@ public class JdbcMatchesTests extends BaseDaoTests {
     public void setup() {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         sut = new JdbcMatchesDao(jdbcTemplate);
-        testMatches = new Matches(96, 97, LocalDate.now(), LocalTime.now(), 98, 99);
+        testMatches = new Matches(96, 97, LocalDate.now(), LocalTime.now(), 98, 99, 100, 101, 102);
+
+
+
+//    public void setup() {
+//        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+//        sut = new JdbcMatchesDao(jdbcTemplate);
+//        testMatches = new Matches(96, 97, LocalDate.now(), LocalTime.now(), 98, 99);
     }
 
     @Test
-    public void getMatch_returns_correct_match_for_id() {
+    public void getMatch_returns_correct_matches_for_id() {
         Matches match = sut.getMatch(1);
         Assert.assertNotNull("getMatches returned null", match);
         assertMatchesMatch("getMatches return wrong or partial data", MATCHES_1, match);
@@ -49,8 +63,8 @@ public class JdbcMatchesTests extends BaseDaoTests {
     }
 
     @Test
-    public void getMatch_return_null_when_id_not_found() {
-        Matches match = sut.getMatch(96);
+    public void getMatches_return_null_when_id_not_found() {
+        Matches match= sut.getMatch(96);
         Assert.assertNotNull("getMatches failed to return null for id not in database", match);
     }
 
@@ -58,14 +72,14 @@ public class JdbcMatchesTests extends BaseDaoTests {
     @Test
     public void getMatchesByTournamentId_returns_list_of_all_matches_by_date() {
         List<Matches> matches = sut.getMatchesByTournament(3);
-        Assert.assertNotNull("getMatchesByTournamentId returns wrong number of matches", matches);
-        assertMatchesMatch("getMatches returns wrong or partial data", MATCHES_1, matches.get(2));
-        assertMatchesMatch("getMatches returns wrong or partial data", MATCHES_2, matches.get(1));
+        Assert.assertNotNull("getMatchesByTournamentId returns wrong number matches", matches);
+        assertMatchesMatch("getMatches return wrong or partial data", MATCHES_1, matches.get(2));
+        assertMatchesMatch("getMatches return wrong or partial data", MATCHES_2, matches.get(1));
 
         matches = sut.getMatchesByTournament(2);
-        Assert.assertNotNull("getMatchesByDateTournamentId returns wrong number of matches", matches);
-        assertMatchesMatch("getMatches returns wrong or partial data", MATCHES_3, matches.get(4));
-        assertMatchesMatch("getMatches returns wrong or partial data", MATCHES_4, matches.get(3));
+        Assert.assertNotNull("getMatchesByDateTournamentId returns wrong number matches", matches);
+        assertMatchesMatch("getMatches return wrong or partial data", MATCHES_3, matches.get(4));
+        assertMatchesMatch("getMatches return wrong or partial data", MATCHES_4, matches.get(3));
 
 
     }
@@ -75,7 +89,7 @@ public class JdbcMatchesTests extends BaseDaoTests {
     public void createMatch_return_matches_with_id_and_expected_values() {
         Matches createMatch = sut.createMatch(testMatches);
 
-        Assert.assertNotNull("create Match returns null", createMatch);
+        Assert.assertNotNull("create Match return null", createMatch);
 
         int newId = createMatch.getMatchId();
         Matches retrievedMatch = sut.getMatch(newId);
@@ -85,7 +99,7 @@ public class JdbcMatchesTests extends BaseDaoTests {
 
 
     @Test
-    public void updatedMatch_has_expected_values_when_retrieved() {
+    public void updated_match_has_expected_values_when_retrieved() {
         Matches match = sut.getMatch(1);
         match.setMatchId(2);
         match.setTournamentId(2);
@@ -96,7 +110,7 @@ public class JdbcMatchesTests extends BaseDaoTests {
     }
 
     @Test
-    public void deletedMatch_cant_be_retrieved() {
+    public void deleted_match_cant_be_retrieved() {
         sut.deleteMatch(1);
 
         Matches match  = sut.getMatch(1);

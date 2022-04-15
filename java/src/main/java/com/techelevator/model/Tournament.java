@@ -4,8 +4,12 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+
 
 public class Tournament {
+
 
     @Min(value = 1, message = "Tournament ID Should Be a Positive Number.")
     private int tournamentId;
@@ -17,22 +21,29 @@ public class Tournament {
     private int numOfTeams;
 
 
-    private String startDate;
-    private String endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
     @Min(value = 1, message = "Sport ID Should Be a Positive Number.")
     private int sportId;
     private String description;
+    private int numOfRounds;
+    private String tournamentType;
 
     public Tournament() {};
 
-    public Tournament(int tournamentId, String tournamentName, int numOfTeams, String startDate, String endDate, int sportId, String description) {
+
+    public Tournament(int tournamentId, String tournamentName, int numOfTeams,
+                      LocalDate startDate, LocalDate endDate, int sportId, String description, int numOfRounds, String tournamentType) {
         this.tournamentId = tournamentId;
         this.tournamentName = tournamentName;
         this.numOfTeams = numOfTeams;
         this.startDate = startDate;
         this.endDate = endDate;
         this.sportId = sportId;
+        this.description = description;
+        this.numOfRounds = numOfRounds;
+        this.tournamentType = tournamentType;
     }
 
     public int getTournamentId() {
@@ -59,19 +70,19 @@ public class Tournament {
         this.numOfTeams = numOfTeams;
     }
 
-    public String getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public String getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
@@ -89,5 +100,20 @@ public class Tournament {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+    public int getNumOfRounds() {
+        return numOfRounds;
+    }
+
+    public void setNumOfRounds(int numOfRounds) {
+        this.numOfRounds = numOfRounds;
+    }
+
+    public String getTournamentType() {
+        return tournamentType;
+    }
+
+    public void setTournamentType(String tournamentType) {
+        this.tournamentType = tournamentType;
     }
 }

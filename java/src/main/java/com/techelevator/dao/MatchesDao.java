@@ -9,6 +9,7 @@ public interface MatchesDao {
 
 
     Matches getMatch(int matchId);
+    List<Matches> getAllMatches();
     List<Matches> getMatchesByDate(LocalDate date);
     List<Matches> getMatchesByTournament(int tournamentId);
     Matches createMatch(Matches match);
