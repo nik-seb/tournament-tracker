@@ -33,56 +33,24 @@
     </table>
   </div>
 </template>
-
 <script>
-  // import TournamentDetails from '../components/TournamentDetails.vue'
+  // import TournamentDetails from "@/components/TournamentDetails.vue";
 export default {
   data() {
     return {
-      filter: {
-         tournamentName: '',
-         sportName: '',
-         startDate: '',
-         endDate: '',
-         description: '',
+      tournament: {
+         tournamentName: 'aeaeaear',
+         sportName: 'etertsb',
+         startDate: '444444',
+         endDate: '5555555',
+         description: 'cesrtrttttttttttttttttttttttttttttttttttttttt',
       },
-
-       
       users:[
         {}
       ]
     }
   },
-   
 }
 </script>
-
-<style scoped>
-table {
-  margin-top: 20px;
-  border-collapse: collapse;
-  width: 100px;
-  /* text-emphasis-color: ; */
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
-  
-}
-td, th {
-  border:goldenrod 1px; 
-  text-align: left;
-  padding:8px;
-}
-
-th {
-  background-color:black
-}
-
-input, select {
-  font-size: 16px;
-}
-
-
-/* tr.disabled {
-color:darkred
-
-} */
+<style>
 </style>

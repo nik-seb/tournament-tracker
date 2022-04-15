@@ -57,6 +57,7 @@ export default new Vuex.Store({
         numOfTeams: '7',   
         id: 2
       },
+
   
     ]
 
@@ -64,7 +65,7 @@ export default new Vuex.Store({
 
   getters:{
     userRole(state){
-      return state.user.authorities[0].name === 'ROLE_HOST'
+      return state.user.role === 'ROLE_HOST'
     },
   },
 
@@ -97,6 +98,8 @@ export default new Vuex.Store({
     },
     ADD_TOURN_TO_LIST(state, tourn) {
       state.tournamentList.push(tourn);
-    }
+    },
+  
+
   }
 })

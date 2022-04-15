@@ -8,6 +8,7 @@ import store from '../store/index'
 import ViewTournament from '../views/ViewTournament'
 import Create from '../views/Create'
 import Account from '../views/Account'
+import BrowseTournaments from '../views/BrowseTournaments'
 
 Vue.use(Router)
 
@@ -75,11 +76,19 @@ const router = new Router({
       }
     },
     {
-      path: "/account",
+      path: "/account/:id",
       name: "account-details",
       component: Account,
       meta:{
         requiresAuth: true
+      }
+    },
+    {
+      path: "/browse/tournaments",
+      name: "browse-tournaments",
+      component: BrowseTournaments,
+      meta: {
+        requiresAuth: false
       }
     }
 
