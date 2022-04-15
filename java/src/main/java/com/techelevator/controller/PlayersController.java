@@ -2,6 +2,7 @@ package com.techelevator.controller;
 
 import com.techelevator.dao.PlayersDao;
 import com.techelevator.model.Players;
+import com.techelevator.model.Tournament;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,8 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import com.techelevator.exception.PlayerNotFoundException;
+import org.springframework.web.bind.annotation.*;
+
 
 import javax.validation.Valid;
 import java.util.List;
@@ -29,27 +32,32 @@ public class PlayersController {
 
 
     @GetMapping("/players")
-    public List<Players> listAllPlayers() throws InterruptedException {
+    public List<Players> listAllPlayers() {
         return playersDao.listAllPlayers();
     }
 
+
+
+
+
+
     @GetMapping("/players/{id}")
-    public Players getPlayerById(@PathVariable int playerId) throws InterruptedException {
+    public Players getPlayerById(@PathVariable int playerId) throws PlayerNotFoundException {
 
         Players result = playersDao.getPlayerById(playerId);
         if (result == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No Player found with that id. ");
+            throw new PlayerNotFoundException("No Player found with that id. ");
         } else {
             return result;
         }
 
     }
         @GetMapping("/players/{userId}")
-        public Players getPlayerByUserId(@PathVariable ("userId") int userId) throws InterruptedException {
+        public Players getPlayerByUserId(@PathVariable ("userId") int userId) throws PlayerNotFoundException{
 
             Players result = playersDao.getPlayerByUserId(userId);
             if (result == null) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No Player found with that user id. ");
+                throw new PlayerNotFoundException("No Player found with that user id. ");
             } else {
                 return result;
             }
@@ -57,11 +65,11 @@ public class PlayersController {
         }
 
             @GetMapping("/players/{playerId}")
-            public Players getPlayerName(@PathVariable int playerId) throws InterruptedException {
+            public Players getPlayerName(@PathVariable int playerId) throws PlayerNotFoundException {
 
                 Players result = playersDao.getPlayerName(playerId);
                 if (result == null) {
-                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No Player with that name. ");
+                    throw new PlayerNotFoundException("No Player with that name. ");
                 } else {
                     return result;
                 }
@@ -76,21 +84,21 @@ public class PlayersController {
 
 
     @RequestMapping(path = "/players/{id}", method = RequestMethod.PUT)
-    public Players putPlayer(@PathVariable ("id") int playerId, @RequestBody Players updatedPlayer) {
+    public Players putPlayer(@PathVariable ("id") int playerId, @RequestBody Players updatedPlayer) throws PlayerNotFoundException {
 
         if (playersDao.updatePlayer(playerId) != null) {
             return updatedPlayer;
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Player not found to update.");
+            throw new PlayerNotFoundException("Player not found to update. ");
         }
 
     }
 
 
     @DeleteMapping("/players/{id}")
-    public void deletePlayer(@PathVariable int playerId) {
+    public void deletePlayer(@PathVariable int playerId) throws PlayerNotFoundException {
         if (!playersDao.deletePlayer(playerId)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Player not found to delete.");
+            throw new PlayerNotFoundException("Player not found to delete. ");
         }
 
     }

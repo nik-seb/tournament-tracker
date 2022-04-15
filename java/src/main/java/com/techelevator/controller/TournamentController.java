@@ -1,8 +1,12 @@
 package com.techelevator.controller;
 
+import com.techelevator.dao.MatchesDao;
+import com.techelevator.dao.TeamsDao;
 import com.techelevator.dao.TournamentDao;
 import com.techelevator.exception.AuthorizationException;
 import com.techelevator.exception.TournamentNotFoundException;
+import com.techelevator.model.Matches;
+import com.techelevator.model.Teams;
 import com.techelevator.model.Tournament;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,12 +28,27 @@ import java.util.List;
 public class TournamentController {
 
     private final TournamentDao tournamentDao;
+    private final MatchesDao matchesDao;
+    private final TeamsDao teamsDao;
 
 
 
-    public TournamentController(TournamentDao tournamentDao) {
+    public TournamentController(TournamentDao tournamentDao, MatchesDao matchesDao, TeamsDao teamsDao) {
         this.tournamentDao = tournamentDao;
+        this.matchesDao = matchesDao;
+        this.teamsDao = teamsDao;
     }
+
+    @RequestMapping(path = "/tournaments/{id}/teams", method = RequestMethod.GET)
+    public List<Teams> getTournamentTeams(@PathVariable ("id") int tournamentId){
+
+        return teamsDao.getTeamsByTournamentId(tournamentId);
+    }
+    @RequestMapping(path = "tournaments/{id}/matches", method = RequestMethod.GET)
+    public List<Matches> getTournamentMatches(@PathVariable ("id") int tournamentId){
+        return matchesDao.getMatchesByTournament(tournamentId);
+    }
+
 
 
     @RequestMapping(path = "/tournaments", method = RequestMethod.GET)
@@ -58,9 +77,9 @@ public class TournamentController {
         }
 
         @RequestMapping(path = "/tournaments/{id}", method = RequestMethod.PUT)
-        public Tournament putTournament(@PathVariable("id") int tournamentId, @RequestBody Tournament updatedTournament) throws TournamentNotFoundException {
+        public Tournament putTournament(@RequestBody Tournament updatedTournament, @PathVariable("id") int tournamentId) throws TournamentNotFoundException {
 
-            if (tournamentDao.updateTournament(tournamentId) != null) {
+            if (tournamentDao.updateTournament(updatedTournament, tournamentId) != null) {
                 return updatedTournament;
             } else {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tournament not found to update.");

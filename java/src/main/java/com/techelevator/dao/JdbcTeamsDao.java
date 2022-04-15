@@ -55,7 +55,7 @@ public class JdbcTeamsDao implements TeamsDao {
     @Override
     public Teams getTeamById(int teamId) {
         Teams team = new Teams();
-        String sql = "SELECT team_id " +
+        String sql = "SELECT team_id, team_name, team_size " +
                 "FROM teams " +
                 "WHERE team_id = ?; ";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, teamId);
@@ -68,12 +68,12 @@ public class JdbcTeamsDao implements TeamsDao {
 
 
     @Override
-    public Teams getTeamSize(int teamSize) {
+    public Teams getTeamSize(int teamId) {
         Teams team = new Teams();
         String sql = "SELECT team_size " +
                      "FROM teams " +
-                     "WHERE team_size = ?; ";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, teamSize);
+                     "WHERE team_id = ?; ";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, teamId);
         if (results.next()) {
             team = mapRowToTeams(results);
 
@@ -84,8 +84,8 @@ public class JdbcTeamsDao implements TeamsDao {
 
     @Override
     public Teams createTeam(Teams team) {
-        String sql = "INSERT INTO teams (team_size) VALUES (?) RETURNING team_id;";
-        int newTeamId = jdbcTemplate.queryForObject(sql, int.class, team.getTeamSize());
+        String sql = "INSERT INTO teams (team_name, team_size) VALUES (?, ?) RETURNING team_id;";
+        int newTeamId = jdbcTemplate.queryForObject(sql, Integer.class, team.getTeamName(), team.getTeamSize());
         Teams newTeam = getTeamById(newTeamId);
         return newTeam;
     }
@@ -117,6 +117,7 @@ public class JdbcTeamsDao implements TeamsDao {
         String sql = "SELECT team_id, team_name, team_size " +
                 "FROM teams " +
                 "JOIN tournament_teams USING(team_id) " +
+                "JOIN tournaments USING (tournament_id) " +
                 "WHERE tournament_id = ?;";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
@@ -131,6 +132,7 @@ public class JdbcTeamsDao implements TeamsDao {
         private Teams mapRowToTeams (SqlRowSet results) {
             Teams team = new Teams();
             team.setTeamId(results.getInt("team_id"));
+            team.setTeamName(results.getString("team_name"));
             team.setTeamSize(results.getInt("team_size"));
             return team;
         }

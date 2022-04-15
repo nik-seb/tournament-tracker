@@ -2,7 +2,7 @@
          <aside>    
             <nav>
                 <ul class="sidebar-nav">
-                    <router-link v-bind:to="{name: 'create-tournament'}"><li>Create Tournament</li></router-link>
+                    <li v-if="this.$store.state.user.role == 'ROLE_HOST'"><router-link v-bind:to="{name: 'create-tournament'}">Create Tournament</router-link></li>
                     <li>Display Tournaments</li>
                     <li>Display Matches</li>
                     <li>Manage Tournaments</li>

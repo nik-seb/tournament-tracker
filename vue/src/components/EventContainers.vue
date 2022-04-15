@@ -2,12 +2,7 @@
 
   <div id="ev-container-body">
     <div>
-      <!-- title and pic should be moved to Home view; will need to move related CSS too -->
-        <h1 id="company-name"> RANNS Tournament Displays™ </h1>
-        <div class="tournament-picture">
-              <img src="../assets/tournament_picture.jpg" alt="example of tournament picture">         
-         </div> 
-  <div class="events">
+        <div class="events">
           <!-- create a v-if condition if date is less than end date display -->
           <div id="past">
           <p id="past-events"> Past Events </p>
@@ -21,7 +16,7 @@
             <p id="upcoming-events"> Upcoming Events </p>
             <event-table class="upcoming-events" v-bind:filteredList="tournamentArray"/>  
           </div>
-      </div>   
+        </div>   
     </div>
 
   </div>
@@ -50,22 +45,6 @@ export default {
 
 
 <style scoped>
-
-#company-name{
-  display: flex;
-  justify-content: center;
-  font-style: oblique;
-  font-weight: 80%;
-}
-
-.tournament-picture {
-
-  max-height: 500px;
-  padding-left: 5%;
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-}
 
 .events{
   display: flex;

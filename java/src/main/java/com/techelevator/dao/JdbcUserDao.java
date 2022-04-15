@@ -100,8 +100,21 @@ public class JdbcUserDao implements UserDao {
                 }
                 , keyHolder) == 1;
         int newUserId = (int) keyHolder.getKeys().get(id_column);
-
         return userCreated;
+    }
+
+    @Override
+    public User updateAccount(User user) {
+
+
+        String sql = "UPDATE users " +
+                     "SET  role = ? " +
+                     "WHERE user_id = ?;";
+
+        jdbcTemplate.update(sql, user.getRole(), user.getId());
+
+        return getUserById(user.getId());
+
     }
 
 
@@ -110,7 +123,7 @@ public class JdbcUserDao implements UserDao {
         user.setId(rs.getLong("user_id"));
         user.setUsername(rs.getString("username"));
         user.setPassword(rs.getString("password_hash"));
-        user.setAuthorities(rs.getString("role"));
+        user.setRole(rs.getString("role"));
         user.setActivated(true);
         return user;
     }
