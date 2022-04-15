@@ -85,7 +85,7 @@ public class PlayersController {
     @RequestMapping(path = "/players/{id}", method = RequestMethod.PUT)
     public Players putPlayer(@PathVariable ("id") int playerId, @RequestBody Players updatedPlayer) throws PlayerNotFoundException {
 
-        if (playersDao.updatePlayer(playerId) != null) {
+        if (playersDao.updatePlayer(updatedPlayer) != null) {
             return updatedPlayer;
         } else {
             throw new PlayerNotFoundException("Player not found to update. ");
