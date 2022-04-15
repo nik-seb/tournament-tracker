@@ -13,9 +13,12 @@
 </template>
 
 <script>
+import Modify from 'ModifyTournament.vue'
 export default {
-  name: 'tournament-options'
-}
+  name: 'tournament-options',
+  Modify
+};
+
 </script>
 
 <style>

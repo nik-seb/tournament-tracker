@@ -21,6 +21,10 @@ export default {
   createTournament(tournament) {
     return axios.post('/tournaments', tournament);
   },
+  
+  modifyTournament(tournament) {
+    return axios.post('/tournaments{id}', tournament);
+  },
 
   getTournamentDetails(tournamentID) {
       return axios.get(`/tournaments/${tournamentID}`);
