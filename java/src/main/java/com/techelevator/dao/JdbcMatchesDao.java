@@ -92,9 +92,6 @@ public class JdbcMatchesDao implements MatchesDao {
                 " start_date = ?, " +
                 " start_time = ?, " +
                 " home_team_id = ?, " +
-                " away_team_id = ? " +
-                " location_id = ? " +
-                " winning_team_id = ? " +
                 " away_team_id = ?, " +
                 " location_id = ?, " +
                 " winning_team_id = ?, " +

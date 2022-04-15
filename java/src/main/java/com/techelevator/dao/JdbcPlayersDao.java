@@ -116,14 +116,13 @@ public class JdbcPlayersDao implements PlayersDao {
 
     // void updatePlayer(Player updatedPlayer);
     @Override
-    public Players updatePlayer(int playerId) {
+    public Players updatePlayer(Players updatedPlayer) {
         String sql = "UPDATE players " +
                 " SET user_id = ?, " +
-                " player_name = ?, " +
+                " player_name = ? " +
                 " WHERE player_id = ?;";
-        Players players = new Players();
-        jdbcTemplate.update(sql, players.getUserId(), players.getPlayerName());
-        return getPlayerById(playerId);
+        jdbcTemplate.update(sql, updatedPlayer.getUserId(), updatedPlayer.getPlayerName(), updatedPlayer.getPlayerId());
+        return getPlayerById(updatedPlayer.getPlayerId());
     }
 
         @Override
