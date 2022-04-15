@@ -4,6 +4,7 @@ import com.techelevator.dao.MatchesDao;
 import com.techelevator.dao.TeamsDao;
 import com.techelevator.dao.TournamentDao;
 import com.techelevator.exception.AuthorizationException;
+import com.techelevator.exception.TeamNotFoundException;
 import com.techelevator.exception.TournamentNotFoundException;
 import com.techelevator.model.Matches;
 import com.techelevator.model.Teams;
@@ -92,6 +93,13 @@ public class TournamentController {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tournament not found to delete.");
             }
 
+        }
+
+        @RequestMapping(path = "tournaments/{id}/teams", method = RequestMethod.POST)
+        public void addTeamsToTournament(@PathVariable ("id") int tournamentId, @RequestBody Teams teams)
+                                        throws TournamentNotFoundException, TeamNotFoundException {
+
+            tournamentDao.addTeamsToTournaments(teams, tournamentId);
         }
 
     }
