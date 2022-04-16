@@ -1,7 +1,9 @@
 <template>
   <div id='tourn-view-body'>
       <tournament-details v-bind:tournamentID="Number($route.params.id)" />
-      <tourn-options /> 
+      <tourn-options v-bind:tournamentID="Number($route.params.id)"/> 
+      <router-view />
+       <!--view will link to the given options as a child route  -->
       <div id="sections"> <div id="participants"> <participants v-bind:tournamentID="Number($route.params.id)" /></div> <div id="bracket"> <bracket v-bind:tournamentID="Number($route.params.id)" /> </div> </div>
   </div>
 </template>
