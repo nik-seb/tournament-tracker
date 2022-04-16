@@ -43,6 +43,7 @@ public class TournamentController {
         this.tournamentService = tournamentService;
     }
 
+    // get teams by tournament ID
     @RequestMapping(path = "/tournaments/{id}/teams", method = RequestMethod.GET)
     public List<Teams> getTournamentTeams(@PathVariable ("id") int tournamentId){
 
