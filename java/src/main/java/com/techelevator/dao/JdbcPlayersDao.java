@@ -37,12 +37,10 @@ public class JdbcPlayersDao implements PlayersDao {
 }
 
 
-
-
     @Override
     public Players getPlayerByUserId(int userId) {
         Players player = new Players();
-        String sql = "SELECT user_id " +
+        String sql = "SELECT player_id, user_id, player_name " +
                      "FROM players " +
                      "WHERE user_id = ?; ";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
@@ -64,24 +62,6 @@ public class JdbcPlayersDao implements PlayersDao {
             teamPlayers.add(mapRowToPlayers(results));
         }
         return teamPlayers;
-    }
-
-
-
-
-   @Override
-    public Players getPlayerName(int playerId) {
-
-        Players player = new Players();
-        String sql = "SELECT player_name " +
-                     "FROM players " +
-                     "WHERE player_id = ?; ";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, playerId);
-            if (results.next()) {
-            player = mapRowToPlayers(results);
-
-        }
-        return player;
     }
 
 

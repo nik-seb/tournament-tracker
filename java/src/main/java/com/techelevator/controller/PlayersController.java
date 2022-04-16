@@ -35,13 +35,8 @@ public class PlayersController {
         return playersDao.listAllPlayers();
     }
 
-
-
-
-
-
     @GetMapping("/players/{id}")
-    public Players getPlayerById(@PathVariable int playerId) throws PlayerNotFoundException {
+    public Players getPlayerById(@PathVariable ("id")  int playerId) throws PlayerNotFoundException {
 
         Players result = playersDao.getPlayerById(playerId);
         if (result == null) {
@@ -51,7 +46,7 @@ public class PlayersController {
         }
 
     }
-        @GetMapping("/players/{userId}")
+        @GetMapping("/players/user/{userId}")
         public Players getPlayerByUserId(@PathVariable ("userId") int userId) throws PlayerNotFoundException{
 
             Players result = playersDao.getPlayerByUserId(userId);
@@ -62,18 +57,6 @@ public class PlayersController {
             }
 
         }
-
-            @GetMapping("/players/{playerId}")
-            public Players getPlayerName(@PathVariable int playerId) throws PlayerNotFoundException {
-
-                Players result = playersDao.getPlayerName(playerId);
-                if (result == null) {
-                    throw new PlayerNotFoundException("No Player with that name. ");
-                } else {
-                    return result;
-                }
-            }
-
 
 
     @RequestMapping(path = "/players", method = RequestMethod.POST)
