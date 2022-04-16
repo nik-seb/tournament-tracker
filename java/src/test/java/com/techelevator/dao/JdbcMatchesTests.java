@@ -5,6 +5,12 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
+import com.techelevator.model.User;
+import com.techelevator.model.Authority;
+import com.techelevator.FunctionalTests.*;
+import com.techelevator.dao.JdbcUserDaoTests;
+import com.techelevator.controller.MatchesController;
+import com.techelevator.dao.JdbcMatchesDao;
 
 import java.time.LocalTime;
 import java.util.List;

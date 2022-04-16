@@ -82,14 +82,18 @@ export default new Vuex.Store({
             invitationStatus: 'REJECTED'
           }
 
-        ]
+        ],
 
 
 
       // everything above this line may be junk
 
+    inviteForm: {
+      tournamentName: '',
+      teamName: ''
+  }
   },
-
+ 
   getters:{
     userRole(state){
       return state.user.role === 'ROLE_HOST'
@@ -98,6 +102,7 @@ export default new Vuex.Store({
 
 
   mutations: {
+    
     SET_AUTH_TOKEN(state, token) {
       state.token = token;
       localStorage.setItem('token', token);
@@ -126,7 +131,8 @@ export default new Vuex.Store({
     ADD_TOURN_TO_LIST(state, tourn) {
       state.tournamentList.push(tourn);
     },
-  
-
+    SAVE_FORM(state, form) {
+      state.inviteForm = form;
+    }
   }
 })

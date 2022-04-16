@@ -1,6 +1,9 @@
 <template>
   
+  <p>Please fill out the form below to invite the desired recipient to participate in your tournament!</p>
 
+
+    
 
 </template>
 
@@ -19,7 +22,7 @@ export default {
                 teamId: 1,
                 organizerId: 1,
                 inviteStatus: ''
-                
+
             }
         }
     },
