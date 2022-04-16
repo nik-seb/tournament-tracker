@@ -76,7 +76,7 @@
   </div>
 </template>
 <script>
-  // import TournamentDetails from "@/components/TournamentDetails.vue";
+//import TournamentDetails from "@/components/TournamentDetails.vue";
 export default {
   data() {
     return {

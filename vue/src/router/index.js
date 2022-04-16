@@ -9,6 +9,7 @@ import ViewTournament from '../views/ViewTournament'
 import Create from '../views/Create'
 import Account from '../views/Account'
 import BrowseTournaments from '../views/BrowseTournaments'
+import Invite from '@/views/Invite'
 
 Vue.use(Router)
 
@@ -90,7 +91,12 @@ const router = new Router({
       meta: {
         requiresAuth: false
       }
-    }
+    },
+  {
+    path: "/invite",
+    name: "invite-form",
+    component: Invite,
+}
 
   ]
 })
