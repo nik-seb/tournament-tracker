@@ -57,11 +57,14 @@ public class InvitationsController {
 
 
     //below method is good to go, it's been tested
+
     @RequestMapping(path = "/organizer/{id}", method = RequestMethod.GET)
     public List<Invitation> getInvByOrganizerId(@PathVariable("id")int organizerId)throws InvitationFailedException{
 
         return invitationDao.getInvitationsByOrganizer(organizerId);
     }
+
+    //below method is good to go it's been tested
 
     @RequestMapping(path = "/status", method = RequestMethod.PUT)
     public Invitation updateInvitationStatus(@RequestBody Invitation invitation)throws InvitationNotFoundException{
