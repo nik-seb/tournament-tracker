@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 public class MatchNotFoundException extends Exception {
 
+
     public MatchNotFoundException(String message) {super(message);}
 
     public MatchNotFoundException(){ this("Match not found.");}
