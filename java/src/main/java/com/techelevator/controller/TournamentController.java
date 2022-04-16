@@ -104,6 +104,11 @@ public class TournamentController {
 
             tournamentDao.addTeamsToTournaments(teams, tournamentId);
         }
+        @RequestMapping(path = "tournaments/{id}/bracket", method = RequestMethod.POST)
+        public void createBracket(@PathVariable ("id") int tournamentId){
+            List<Teams> teams1 = teamsDao.getTeamsByTournamentId(tournamentId);
+            tournamentService.generateBracket(teams1, tournamentId);
+        }
 
 
 

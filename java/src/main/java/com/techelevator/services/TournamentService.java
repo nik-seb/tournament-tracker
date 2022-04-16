@@ -5,10 +5,13 @@ import com.techelevator.dao.TeamsDao;
 import com.techelevator.dao.TournamentDao;
 import com.techelevator.model.Matches;
 import com.techelevator.model.Teams;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
+@Component
 public class TournamentService implements ServerTournamentService{
     private TournamentDao tournamentDao;
     private MatchesDao matchesDao;
@@ -41,14 +44,20 @@ public class TournamentService implements ServerTournamentService{
         List<Teams[]> pairs = new ArrayList<>();
 
         while(teams.size() > remainder){
+            Matches match = new Matches();
             Teams[] pair = new Teams[2];
             pair[0] = teams.get(0);
+            match.setHomeTeamId(pair[0].getTeamId());
             teams.remove(0);
             pair[1] = teams.get(0);
+            match.setAwayTeamId(pair[1].getTeamId());
             teams.remove(0);
             pairs.add(pair);
-
+            match.setTournamentId(tournamentId);
+            allMatches.add(match);
+            matchesDao.createMatch(match, tournamentId);
         }
+        System.out.println("All Matches: " + allMatches);
 
         for(Teams[] teams1 : pairs){
             System.out.println(teams1[0].getTeamName() + " vs " + teams1[1].getTeamName());
@@ -83,11 +92,13 @@ public class TournamentService implements ServerTournamentService{
         }
         System.out.println("Num of Matches: " + numMatches);
         System.out.println("Num of Matches with byes: " + numMatchesInclByes);
+
         return allMatches;
     }
 
     @Override
     public List<Matches> generateMatches(List<Teams> teams) {
+
 
     return null;
     }
@@ -112,6 +123,7 @@ public class TournamentService implements ServerTournamentService{
 
     @Override
     public void endRound(List<Matches> matches) {
+
 
     }
 

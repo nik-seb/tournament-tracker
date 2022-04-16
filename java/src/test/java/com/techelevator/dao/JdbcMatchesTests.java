@@ -67,7 +67,7 @@ public class JdbcMatchesTests extends BaseDaoTests {
 
     @Test
     public void createMatch_return_matches_with_id_and_expected_values() {
-        Matches createMatch = sut.createMatch(testMatches);
+        Matches createMatch = sut.createMatch(testMatches, 97);
 
         Assert.assertNotNull("create Match return null", createMatch);
 

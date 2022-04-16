@@ -75,16 +75,20 @@ public class JdbcMatchesDao implements MatchesDao {
     }
 
     @Override
-    public Matches createMatch(Matches match) {
+    public Matches createMatch(Matches match, int tournamentId) {
         String sql = "INSERT INTO matches (tournament_id, start_date, start_time, home_team_id, away_team_id, " +
                 "location_id, winning_team_id, round_number) " +
                 " VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING match_id;";
-        int newMatchId = jdbcTemplate.queryForObject(sql, Integer.class,
+        Integer newMatchId = jdbcTemplate.queryForObject(sql, Integer.class,
                 match.getTournamentId(), match.getDate(), match.getStartTime(), match.getHomeTeamId(), match.getAwayTeamId(),
                 match.getLocationId(), match.getWinningTeamId(), match.getRoundNumber());
         Matches newMatch = getMatch(newMatchId);
         return newMatch;
     }
+//    public Matches createBracketMatch(Matches matches, int tournamentId){
+//        String sql = "INSERT INTO matches (tournament_id, home_team_id, away_team_id) " +
+//                "VALUES (?, ?, ?);";
+//    }
 
     @Override
     public Matches updateMatch(int matchId) {

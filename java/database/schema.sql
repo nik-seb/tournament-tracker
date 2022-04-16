@@ -68,8 +68,8 @@ CREATE TABLE matches
 (
 	match_id SERIAL PRIMARY KEY,
 	tournament_id int NOT NULL, 
-	start_date date NOT NULL, 
-	start_time time NOT NULL, 
+	start_date date,
+	start_time time,
 	home_team_id int,
 	away_team_id int,
 	location_id int,
@@ -128,6 +128,18 @@ VALUES				 ('New York', 'New York City'),
 					 ('Texas', 'Houston'),
 					 ('Texas', 'El Paso'),
 					 ('Georgia', 'Atlanta');
+
+
+INSERT INTO teams(team_name, team_size)
+VALUES          ("one", 1),
+                ("two", 2),
+                ("three", 3),
+                ("four", 4),
+                ("five", 5),
+                ("six", 6),
+                ("seven", 7),
+                ("eight", 8),
+                ("nine", 9);
 
 
 COMMIT TRANSACTION; 

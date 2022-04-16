@@ -1,5 +1,8 @@
 package com.techelevator.service;
 
+import com.techelevator.dao.MatchesDao;
+import com.techelevator.dao.TeamsDao;
+import com.techelevator.dao.TournamentDao;
 import com.techelevator.model.Teams;
 import com.techelevator.services.TournamentService;
 
@@ -7,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TournamentServiceTests {
-
 
     public static void main(String[] args) {
         TournamentService tournamentService = new TournamentService();
