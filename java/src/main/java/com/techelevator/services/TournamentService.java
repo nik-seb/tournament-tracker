@@ -8,6 +8,7 @@ import com.techelevator.model.Teams;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -40,7 +41,8 @@ public class TournamentService implements ServerTournamentService{
         int remainder = pow2 - teams.size();
         System.out.println("pow2:" + pow2);
 
-        teams = shuffle(teams);
+        Collections.shuffle(teams);
+//        teams = shuffle(teams);
         List<Teams[]> pairs = new ArrayList<>();
 
         while(teams.size() > remainder){
@@ -55,7 +57,7 @@ public class TournamentService implements ServerTournamentService{
             pairs.add(pair);
             match.setTournamentId(tournamentId);
             allMatches.add(match);
-            matchesDao.createMatch(match, tournamentId);
+
         }
         System.out.println("All Matches: " + allMatches);
 
@@ -97,7 +99,9 @@ public class TournamentService implements ServerTournamentService{
     }
 
     @Override
-    public List<Matches> generateMatches(List<Teams> teams) {
+    public List<Matches> generateMatchesByRound(List<Teams> teams) {
+        List<Matches> matchesByRound = new ArrayList<>();
+        
 
 
     return null;
@@ -108,18 +112,6 @@ public class TournamentService implements ServerTournamentService{
 
     }
 
-    @Override
-    public List<Teams> shuffle(List<Teams> teams) {
-        for (int i = teams.size() - 1; i > 0 ; i--) {
-            int j = (int)Math.floor(Math.random() * (i + 1));
-            Teams temp = teams.get(i);
-            teams.remove(i);
-            teams.add(i, teams.get(j));
-            teams.remove(j);
-            teams.add(j, temp);
-        }
-        return teams;
-    }
 
     @Override
     public void endRound(List<Matches> matches) {

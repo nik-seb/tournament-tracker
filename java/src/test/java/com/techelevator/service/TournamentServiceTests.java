@@ -35,10 +35,10 @@ public class TournamentServiceTests {
         teamsList.add(six);
         teamsList.add(seven);
         teamsList.add(eight);
-        teamsList.add(nine);
-        teamsList.add(ten);
-        teamsList.add(eleven);
-        teamsList.add(twelve);
+//        teamsList.add(nine);
+//        teamsList.add(ten);
+//        teamsList.add(eleven);
+//        teamsList.add(twelve);
 
 
         tournamentService.generateBracket(teamsList, 1);

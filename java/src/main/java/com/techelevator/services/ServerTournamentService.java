@@ -9,9 +9,8 @@ import java.util.List;
 public interface ServerTournamentService {
 
     List<Matches> generateBracket(List<Teams> teams, int tournamentId);
-    List<Matches> generateMatches(List<Teams> teams);
+    List<Matches> generateMatchesByRound(List<Teams> teams);
     void advanceWinner();
-    List<Teams> shuffle(List<Teams> teams);
     void endRound(List<Matches> matches);
 
 
