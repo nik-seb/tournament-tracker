@@ -5,8 +5,11 @@ import com.techelevator.dao.TeamsDao;
 import com.techelevator.dao.TournamentDao;
 import com.techelevator.model.Matches;
 import com.techelevator.model.Teams;
+import com.techelevator.model.Tournament;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -18,14 +21,14 @@ public class TournamentService implements ServerTournamentService{
     private MatchesDao matchesDao;
     private TeamsDao teamsDao;
 
+    @Autowired
     public TournamentService(TournamentDao tournamentDao, MatchesDao matchesDao, TeamsDao teamsDao) {
         this.tournamentDao = tournamentDao;
         this.matchesDao = matchesDao;
         this.teamsDao = teamsDao;
     }
-    public TournamentService(){
 
-    }
+
 
     @Override
     public List<Matches> generateBracket(List<Teams> teams, int tournamentId) {
@@ -56,10 +59,18 @@ public class TournamentService implements ServerTournamentService{
             teams.remove(0);
             pairs.add(pair);
             match.setTournamentId(tournamentId);
+            match.setLocationId(1);
+            match.setWinningTeamId(pair[1].getTeamId());
             allMatches.add(match);
+            System.out.println("Away Team: " + match.getAwayTeamId() + "Home Team: " + match.getHomeTeamId());
+            matchesDao.createMatch(match, tournamentId);
+
 
         }
         System.out.println("All Matches: " + allMatches);
+//        for(Matches match : allMatches){
+//            matchesDao.createMatch(match, tournamentId);
+//        }
 
         for(Teams[] teams1 : pairs){
             System.out.println(teams1[0].getTeamName() + " vs " + teams1[1].getTeamName());
@@ -101,11 +112,42 @@ public class TournamentService implements ServerTournamentService{
     @Override
     public List<Matches> generateMatchesByRound(List<Teams> teams) {
         List<Matches> matchesByRound = new ArrayList<>();
-        
+
 
 
     return null;
     }
+//    public void testRun(){
+//        List<Teams> teamsList = new ArrayList<>();
+//        Teams one = new Teams(1, "one", 4);
+//        Teams two = new Teams(2, "two", 4);
+//        Teams three = new Teams(3, "three", 4);
+//        Teams four = new Teams(4, "four", 4);
+//        Teams five = new Teams(5, "five", 4);
+//        Teams six = new Teams(6, "six", 4);
+//        Teams seven = new Teams(7, "seven", 4);
+//        Teams eight = new Teams(8, "eight", 4);
+//        Teams nine = new Teams(9, "nine", 4);
+//        Teams ten = new Teams(10, "ten", 4);
+//        Teams eleven = new Teams(11, "eleven", 4);
+//        Teams twelve = new Teams(12, "twelve", 4);
+//
+//        teamsList.add(one);
+//        teamsList.add(two);
+//        teamsList.add(three);
+//        teamsList.add(four);
+//        teamsList.add(five);
+//        teamsList.add(six);
+//        teamsList.add(seven);
+//        teamsList.add(eight);
+////        teamsList.add(nine);
+////        teamsList.add(ten);
+////        teamsList.add(eleven);
+////        teamsList.add(twelve);
+//
+//
+//        generateBracket(teamsList, 1);
+//    }
 
     @Override
     public void advanceWinner() {

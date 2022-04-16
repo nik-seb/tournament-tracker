@@ -79,7 +79,9 @@ CREATE TABLE matches
 	CONSTRAINT fk_tournament_id FOREIGN KEY (tournament_id) REFERENCES tournaments (tournament_id),
 	CONSTRAINT fk_home_team FOREIGN KEY (home_team_id) REFERENCES teams (team_id),
 	CONSTRAINT fk_away_team FOREIGN KEY (away_team_id) REFERENCES teams (team_id),
-	CONSTRAINT fk_location FOREIGN KEY (location_id) REFERENCES locations (location_id)
+	CONSTRAINT fk_location FOREIGN KEY (location_id) REFERENCES locations (location_id),
+	CONSTRAINT fk_winning_team_id FOREIGN KEY (winning_team_id) REFERENCES teams (team_id)
+
 );
 CREATE TABLE player_team
 (
@@ -140,6 +142,10 @@ VALUES          ('one', 1),
                 ('seven', 7),
                 ('eight', 8),
                 ('nine', 9);
+                ('ten', 10),
+                ('eleven', 11),
+                ('twelve', 12);
+
 
 
 COMMIT TRANSACTION; 

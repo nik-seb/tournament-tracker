@@ -1,5 +1,6 @@
 package com.techelevator.dao;
 
+import com.techelevator.exception.MatchNotFoundException;
 import com.techelevator.model.Matches;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -82,8 +83,8 @@ public class JdbcMatchesDao implements MatchesDao {
         Integer newMatchId = jdbcTemplate.queryForObject(sql, Integer.class,
                 match.getTournamentId(), match.getDate(), match.getStartTime(), match.getHomeTeamId(), match.getAwayTeamId(),
                 match.getLocationId(), match.getWinningTeamId(), match.getRoundNumber());
-        Matches newMatch = getMatch(newMatchId);
-        return newMatch;
+
+        return getMatch(newMatchId);
     }
 //    public Matches createBracketMatch(Matches matches, int tournamentId){
 //        String sql = "INSERT INTO matches (tournament_id, home_team_id, away_team_id) " +
@@ -124,8 +125,12 @@ public class JdbcMatchesDao implements MatchesDao {
         Matches match = new Matches();
         match.setMatchId(results.getInt("match_id"));
         match.setTournamentId(results.getInt("tournament_id"));
-        match.setDate(results.getDate("start_date").toLocalDate());
-        match.setStartTime(results.getTime("start_time").toLocalTime());
+        if(results.getDate("start_date") != null) {
+            match.setDate(results.getDate("start_date").toLocalDate());
+        }
+        if(results.getTime("start_time") != null) {
+            match.setStartTime(results.getTime("start_time").toLocalTime());
+        }
         match.setHomeTeamId(results.getInt("home_team_id"));
         match.setAwayTeamId(results.getInt("away_team_id"));
         match.setLocationId(results.getInt("location_id"));
