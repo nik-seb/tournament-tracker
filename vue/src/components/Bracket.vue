@@ -2,6 +2,7 @@
   <div>
       <h3>Bracket</h3>
       <p>Schedule TBD</p>
+      <button v-if="this.$store.state.user.role == 'ROLE_HOST'">Generate Bracket</button>
       <img src="../assets/tournament_picture.jpg" alt="example of tournament picture">
   </div>
 </template>
@@ -11,6 +12,11 @@ export default {
     name: 'bracket',
     props: {
         tournamentID: Number
+    },
+    methods: {
+        generateBracket() {
+            // call here
+        }
     },
     data () {
         return {

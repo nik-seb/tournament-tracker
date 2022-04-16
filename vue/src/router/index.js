@@ -10,6 +10,7 @@ import Create from '../views/Create'
 import Account from '../views/Account'
 import BrowseTournaments from '../views/BrowseTournaments'
 import JoinTournamentForm from '../components/JoinTournamentForm'
+import ManageBracket from '../views/ManageBracket'
 
 Vue.use(Router)
 
@@ -100,6 +101,14 @@ const router = new Router({
       component: BrowseTournaments,
       meta: {
         requiresAuth: false
+      }
+    },
+    {
+      path: "/tournaments/:id/bracket",
+      name: "manage-bracket",
+      component: ManageBracket,
+      meta: {
+        requiresAuth: true
       }
     }
 
