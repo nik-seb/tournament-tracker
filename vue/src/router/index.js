@@ -9,6 +9,7 @@ import ViewTournament from '../views/ViewTournament'
 import Create from '../views/Create'
 import Account from '../views/Account'
 import BrowseTournaments from '../views/BrowseTournaments'
+import JoinTournamentForm from '../components/JoinTournamentForm'
 
 Vue.use(Router)
 
@@ -65,7 +66,17 @@ const router = new Router({
       component: ViewTournament,
       meta: {
         requiresAuth: false
-      }
+      },
+      children: [
+        {
+          path: 'join',
+          name: 'join-tournament',
+          component: JoinTournamentForm,
+          meta: {
+            requiresAuth: true
+          }
+        }
+      ]
     },
     {
       path: "/create",
