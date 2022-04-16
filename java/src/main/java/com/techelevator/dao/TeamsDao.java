@@ -15,6 +15,7 @@ public interface TeamsDao {
       Teams updateTeam(int teamId);
       boolean deleteTeam(int teamId);
       List<Teams> getTeamsByTournamentId(int id);
+      public Teams getTeamByPlayerId(int playerId);
       void addPlayersToTeam(Players players, int teamsId);
 
 }
