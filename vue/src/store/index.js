@@ -58,8 +58,35 @@ export default new Vuex.Store({
         id: 2
       },
 
-  
-    ]
+    ],
+     // everything below this line may be junk
+
+        invitationList:[
+
+          {
+            tournamentId: 12,
+            teamId: 12,
+            organizerId: 12,
+            invitationStatus: 'ACCEPTED'
+          },
+          {
+            tournamentId: 11,
+            teamId: 11,
+            organizerId: 11,
+            invitationStatus: 'PENDING'
+          },
+          {
+            tournamentId: 13,
+            teamId: 13,
+            organizerId: 13,
+            invitationStatus: 'REJECTED'
+          }
+
+        ]
+
+
+
+      // everything above this line may be junk
 
   },
 

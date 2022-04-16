@@ -1,8 +1,7 @@
 <template>  
   <div id='tourn-options'>
       <!-- show if player id associated with user isn't associated with tourn, else display "Leave" -->
-      <button id="join">Join</button>
-
+      <button id="join" v-on:click ="submit.prevent" v-bind:to="{name: 'create-invite'}">Join</button>
       <!-- always show -->
       <button id="invite">Invite</button>
 
