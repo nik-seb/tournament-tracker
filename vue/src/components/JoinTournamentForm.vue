@@ -34,7 +34,8 @@ export default {
                 teamName: '',
                 teamId: 0,
                 teamSize: 1
-            }
+            },
+            tournament: this.$store.state.activeTournament
         }
     },
     created() {
@@ -77,9 +78,13 @@ export default {
             });
         },
         joinTournament () {
-            TournamentService.addParticipantToTournament(this.$store.state.activeTournament.id, this.team).then((response) => {
+            TournamentService.addParticipantToTournament(this.tournament.tournamentId, this.team).then((response) => {
                 if (response.status == 200) {
                     alert("You have joined the tournament!")
+                    this.tournament.numOfTeams++;
+                    TournamentService.modifyTournament(this.tournament).then((response) => {
+                        console.log(response);
+                    })
                 }
             })
         }

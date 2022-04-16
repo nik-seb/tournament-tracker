@@ -26,7 +26,7 @@ export default {
     created() {
         TournamentService.getParticipantsInTournament(this.tournamentID).then( (response) => {
                 if (response.status == 200) {
-                    this.participants.push(response.data);
+                    this.participants = response.data;
                 }
             }
         )

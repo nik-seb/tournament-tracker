@@ -15,7 +15,18 @@
 <script>
 export default {
   name: 'tournament-options',
-  props: {tournamentID: Number}
+  props: {tournamentID: Number},
+  // computed() {
+  //       playerHasJoinedTeam() {
+  //           let teamsList;
+  //           TournamentService.getParticipantsInTournament(this.tournamentID).then( (response) => {
+  //               if (response.status == 200) {
+  //                   teamsList = response.data;
+  //                   if (teamsList.filter((team)))
+  //               }
+  //           })
+  //       }
+  //   }
 }
 </script>
 

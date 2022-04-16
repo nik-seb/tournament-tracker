@@ -30,7 +30,7 @@ export default new Vuex.Store({
       sportId: '',
       numOfTeams: '',
       description: '',
-      id: null
+      tournamentId: null
     },
     sportList: [
     ],
