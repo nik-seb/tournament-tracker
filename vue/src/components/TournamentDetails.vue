@@ -26,7 +26,7 @@ export default {
         TournamentService.getTournamentDetails(this.tournamentID).then((response) => {
             if (response.status == 200) {
                 let newTournament = {};
-                newTournament.id = response.data.tournamentId;
+                newTournament.tournamentId = response.data.tournamentId;
                 newTournament.tournamentName = response.data.tournamentName;
                 newTournament.startDate = response.data.startDate;
                 newTournament.endDate = response.data.endDate;
