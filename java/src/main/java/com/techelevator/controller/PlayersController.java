@@ -1,7 +1,10 @@
 package com.techelevator.controller;
 
 import com.techelevator.dao.PlayersDao;
+import com.techelevator.dao.TeamsDao;
+import com.techelevator.exception.TeamNotFoundException;
 import com.techelevator.model.Players;
+import com.techelevator.model.Teams;
 import com.techelevator.model.Tournament;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,9 +27,11 @@ import java.util.List;
 public class PlayersController {
 
     private final PlayersDao playersDao;
+    private final TeamsDao teamsDao;
 
-    public PlayersController(PlayersDao playersDao) {
+    public PlayersController(PlayersDao playersDao, TeamsDao teamsDao) {
         this.playersDao = playersDao;
+        this.teamsDao = teamsDao;
     }
 
 
@@ -35,13 +40,8 @@ public class PlayersController {
         return playersDao.listAllPlayers();
     }
 
-
-
-
-
-
     @GetMapping("/players/{id}")
-    public Players getPlayerById(@PathVariable int playerId) throws PlayerNotFoundException {
+    public Players getPlayerById(@PathVariable ("id")  int playerId) throws PlayerNotFoundException {
 
         Players result = playersDao.getPlayerById(playerId);
         if (result == null) {
@@ -51,7 +51,7 @@ public class PlayersController {
         }
 
     }
-        @GetMapping("/players/{userId}")
+        @GetMapping("/players/user/{userId}")
         public Players getPlayerByUserId(@PathVariable ("userId") int userId) throws PlayerNotFoundException{
 
             Players result = playersDao.getPlayerByUserId(userId);
@@ -63,18 +63,15 @@ public class PlayersController {
 
         }
 
-            @GetMapping("/players/{playerId}")
-            public Players getPlayerName(@PathVariable int playerId) throws PlayerNotFoundException {
-
-                Players result = playersDao.getPlayerName(playerId);
-                if (result == null) {
-                    throw new PlayerNotFoundException("No Player with that name. ");
-                } else {
-                    return result;
-                }
-            }
-
-
+    @GetMapping("/players/{id}/team")
+    public Teams getPlayerTeam(@PathVariable ("id")  int playerId) throws TeamNotFoundException {
+        Teams result = teamsDao.getTeamByPlayerId(playerId);
+        if (result == null) {
+            throw new TeamNotFoundException("No Team found with that id. ");
+        } else {
+            return result;
+        }
+    }
 
     @RequestMapping(path = "/players", method = RequestMethod.POST)
     public Players postPlayer(@RequestBody Players newPlayer) {
