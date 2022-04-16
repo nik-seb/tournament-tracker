@@ -29,7 +29,8 @@ public class JdbcPlayersDao implements PlayersDao {
                      "FROM players " +
                      "WHERE player_id = ?; ";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, playerId);
-            if (results.next()) {
+
+        if (results.next()) {
                 player = mapRowToPlayers(results);
 
     }

@@ -101,7 +101,12 @@ const router = new Router({
       meta: {
         requiresAuth: false
       }
-    }
+    },
+  {
+    path: "/invite",
+    name: "invite-form",
+    component: Invite,
+}
 
   ]
 })

@@ -6,6 +6,7 @@
                     <li>Display Tournaments</li>
                     <li>Display Matches</li>
                     <li>Manage Tournaments</li>
+                    <li>Invite Form</li>
                     <li>Contact Us</li>
                 </ul>
             </nav>
