@@ -23,7 +23,7 @@ export default {
   },
   
   modifyTournament(tournament) {
-    return axios.put('/tournaments{id}', tournament);
+    return axios.put(`/tournaments/${tournament.tournamentId}`, tournament);
   },
 
   modifyTournament(tournament) {
