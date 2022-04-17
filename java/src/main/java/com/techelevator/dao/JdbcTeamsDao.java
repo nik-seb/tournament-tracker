@@ -56,8 +56,8 @@ public class JdbcTeamsDao implements TeamsDao {
     public Teams getTeamSize(int teamId) {
         Teams team = new Teams();
         String sql = "SELECT team_size " +
-                     "FROM teams " +
-                     "WHERE team_id = ?; ";
+                "FROM teams " +
+                "WHERE team_id = ?; ";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, teamId);
         if (results.next()) {
             team = mapRowToTeams(results);
@@ -97,7 +97,7 @@ public class JdbcTeamsDao implements TeamsDao {
             return false;
         }
     }
-        public List<Teams> getTeamsByTournamentId(int id){
+    public List<Teams> getTeamsByTournamentId(int id){
         List<Teams> tournamentTeams = new ArrayList<>();
         String sql = "SELECT team_id, team_name, team_size " +
                 "FROM teams " +
@@ -110,7 +110,7 @@ public class JdbcTeamsDao implements TeamsDao {
             tournamentTeams.add(mapRowToTeams(results));
         }
         return tournamentTeams;
-        }
+    }
 
         public Teams getTeamByPlayerId(int playerId){
             Teams team = new Teams();
@@ -147,4 +147,4 @@ public class JdbcTeamsDao implements TeamsDao {
         }
 
 
-    }
+}

@@ -8,6 +8,9 @@ public interface PlayersDao {
 
     List<Players> listAllPlayers();
     Players getPlayerById(int playerId);
+    List<Players> getPlayerByTeamId(int playerId);
+
+
     Players getPlayerByUserId(int userId);
     Players createPlayer(Players player);
 
