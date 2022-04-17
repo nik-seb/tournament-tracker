@@ -15,7 +15,7 @@ public class Matches {
     private int tournamentId;
 
 
-    private LocalDate date;
+    private LocalDate startDate;
     private LocalTime startTime;
 
     @Min(value = 1, message = "Home Team ID Should Be a Positive Number.")
@@ -38,7 +38,7 @@ public class Matches {
                    int locationId, int winningTeamId, int roundNumber) {
         this.matchId = matchId;
         this.tournamentId = tournamentId;
-        this.date = date;
+        this.startDate = date;
         this.startTime = startTime;
         this.homeTeamId = homeTeamId;
         this.awayTeamId = awayTeamId;
@@ -65,12 +65,12 @@ public class Matches {
         this.tournamentId = tournamentId;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
     }
 
     public LocalTime getStartTime() {

@@ -83,7 +83,7 @@ public class JdbcMatchesTests extends BaseDaoTests {
         Matches match = sut.getMatch(1);
         match.setMatchId(2);
         match.setTournamentId(2);
-        match.setDate(LocalDate.now());
+        match.setStartDate(LocalDate.now());
         match.setStartTime(LocalTime.now());
         match.getHomeTeamId();
         match.getAwayTeamId();
@@ -105,7 +105,7 @@ public class JdbcMatchesTests extends BaseDaoTests {
 
     private void assertMatchesMatch(String message, Matches expected, Matches actual) {
         Assert.assertEquals(message, expected.getMatchId(), actual.getMatchId());
-        Assert.assertEquals(message, expected.getDate().toString(), actual.getDate());
+        Assert.assertEquals(message, expected.getStartDate().toString(), actual.getStartDate());
         Assert.assertEquals(message, expected.getStartTime(), actual.getStartTime());
         Assert.assertEquals(message, expected.getTournamentId(), actual.getTournamentId());
         Assert.assertEquals(message, expected.getAwayTeamId(), actual.getAwayTeamId());

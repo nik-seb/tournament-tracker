@@ -58,14 +58,24 @@ public class MatchesController {
     @RequestMapping(path = "/matches/{id}", method = RequestMethod.PUT)
     public Matches putMatch(@PathVariable ("id") int matchId, @RequestBody Matches updatedMatch) throws MatchNotFoundException {
 
-        if (matchesDao.updateMatch(matchId) != null) {
+        if (matchesDao.updateMatch(updatedMatch) != null) {
             return updatedMatch;
         } else {
             throw new MatchNotFoundException("Matches not found to update. ");
+        }
+
     }
 
-}
+    @RequestMapping(path = "/matches/{id}/winner", method = RequestMethod.PUT)
+    public Matches setMatchWinner(@PathVariable ("id") int matchId, @RequestBody Matches updatedMatch) throws MatchNotFoundException {
 
+        if (matchesDao.setMatchWinner(updatedMatch) != null) {
+            return updatedMatch;
+        } else {
+            throw new MatchNotFoundException("Matches not found to update. ");
+        }
+
+    }
 
     @DeleteMapping("/matches/{id}")
     public void deleteMatch(@PathVariable int matchId) throws MatchNotFoundException {
