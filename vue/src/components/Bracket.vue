@@ -2,7 +2,7 @@
   <div>
       <h3>Bracket</h3>
       <p v-if="matches.length == 0">Schedule TBD</p>
-      <button v-if="this.$store.state.user.role == 'ROLE_HOST'">Generate Matches</button>
+      <button v-if="this.$store.state.user.role == 'ROLE_HOST'" v-on:click.prevent="generateBracket()">Generate Matches</button>
       <table id="schedule" v-if="matches.length > 0">
           <tr>
              <th>Home Team</th>
@@ -33,7 +33,11 @@ export default {
     },
     methods: {
         generateBracket() {
-            // call here
+            TournamentService.createBracketForTournament(this.tournamentID).then((response) => {
+                if (response.status == 200) {
+                        this.$router.push({name: "manage-bracket", params: {id: this.tournamentID, matches: response.data, tournamentID: this.tournamentID}});
+                    }
+            });
         }
     },
     created () {

@@ -107,6 +107,7 @@ const router = new Router({
       path: "/tournaments/:id/bracket",
       name: "manage-bracket",
       component: ManageBracket,
+      props: true, // for some reason passing props like this breaks the css and takes away left padding - but can't find another way to do it
       meta: {
         requiresAuth: true
       }

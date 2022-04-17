@@ -1,48 +1,37 @@
 <template>
     <div>
         <h2> Edit the matches for this bracket</h2>
-        <edit-match-form v-for="match in matches" v-bind:key="match.matchId" v-bind:Match="match"/>
+        <edit-match-form v-for="match in matchesList" v-bind:key="match.matchId" v-bind:Match="match"/>
         <button>Return to tournament page</button>
     </div>
 </template>
 
 <script>
 import EditMatchForm from '@/components/EditMatchForm.vue'
+import TournamentService from '@/services/TournamentService.js'
 export default {
     name: 'manage-bracket',
-    props: {tournamentID: Number},
+    props: {
+        tournamentID: Number,
+        matches: Array
+        },
     components: {
         EditMatchForm
     },
     created () {
-        // Get matches for tournament id
+        if (this.matches.length == 0) {
+            TournamentService.getMatchesByTournamentId(this.tournamentID).then((response) => {
+                if (response.status == 200) {
+                    this.matchesList = response.data;
+                }
+            })
+        } else {
+            this.matchesList = this.matches;
+        }
     },
     data () {
         return {
-            matches: [
-                {
-                    matchId: 1,
-                    tournamentId: 1,
-                    startDate: '2022-02-01',
-                    startTime: '12:10:00',
-                    homeTeamId: '1',
-                    awayTeamId: '2',
-                    locationId: '1',
-                    winningTeamId: null,
-                    roundNumber: '1'
-                },
-                {
-                    matchId: 2,
-                    tournamentId: 1,
-                    startDate: '2022-02-03',
-                    startTime: '08:00:00',
-                    homeTeamId: '3',
-                    awayTeamId: '4',
-                    locationId: '2',
-                    winningTeamId: null,
-                    roundNumber: '1'
-                }
-            ]
+            matchesList: []
         }
     }
 }
