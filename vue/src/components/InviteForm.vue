@@ -2,53 +2,125 @@
 <body>
    <header>
        <h1>Tournament</h1>
-       <p>Invite Form</p>
+    
     </header> 
 
        <nav>
            <a href=""></a>
        </nav>
 
-  <form action="invite-form" v-on:submit.prevent="saveForm">
-      <label for="tournamentName">Tournament Name</label>
-      <input class="tournament-name-input" type text="text" name="Tournament Name" v-model="inviteForm.tournamentName" />
-      <label for="teamName">Team Name</label>
-      <input class="team-name-input" type text="text" name="Team Name" v-model="inviteForm.TeamName" />
-      <input type="text">
-      <select name="" id="">
-          <option value=""></option>
-          <p>
-              <label for=""></label>
-              <input type="text">
-          </p>
+  <form id='invForm' action="invite-form" v-on:submit.prevent="createForm()">
+    
+      
+      <label for="tournamentNames">Tournament Names: </label>
+      <select id="tournamentName" name="tournamentName" v-model="inviteForm.tournamentId">
+      <option value='' disabled></option>
+      <option v-for="tournament in tournamentList" v-bind:key="tournament.tournamentId" v-bind:value="tournament.tournamentId">{{tournament.tournamentName}}</option>
       </select>
+
+    <!-- team addition  -->
+      <label for="teamName"> Team Names: </label>
+      <select id="teamName" name="teamName" v-model="inviteForm.teamId">
+      <option value='' disabled> </option>
+      <option v-for="team in teamList" v-bind:key="team.teamId" v-bind:value="team.teamId">{{ team.teamName }}</option>
+     
+      </select>
+    <!-- team addition  -->
+      
       <button>Save</button>
   </form>
+
   </body>
 </template>
 
 
 <script>
-//import TournamentDetails from @/components/TournamentDetails.vue
-
+import invitationService from '@/services/InvitationService.js'
+import TournamentService from '@/services/TournamentService.js'
 export default {
     name: "invite-form",
     data() {
         return {
-            InviteForm: {
-                tournamentName: '',
-                teamName: ''
-            }
+            inviteForm: {
+                invitationId: 0,
+                tournamentId: 0,
+                teamId: 0,
+                organizerId: 0,
+                inviteStatus: 'TBD'
+            },
+
+            tournamentList: [
+
+            ],
+
+            teamList:[
+
+            ],
         }
+
     },
 
- methods: {
-        saveForm() {
-            this.$store.commit('SAVE_FORM', this.form);
-            this.form = {
-                tournamentName: '',
-                teamName: ''
-            };
+    components:{
+        
+    },
+
+
+ created() {
+         
+             TournamentService.getAllTournaments().then(response => {
+
+                 if(response.status === 200){
+                     this.tournamentList = response.data
+                 }
+             })
+
+         this.inviteForm.tournamentId = this.$store.state.activeTournament.tournamentId;
+         this.inviteForm.organizerId = this.$store.state.user.id;
+
+
+
+            TournamentService.getAllTeams().then(response => {
+
+                if(response.status === 200){
+                    this.teamList = response.data 
+                }
+            })
+
+         },
+
+
+ 
+
+    methods: {
+
+        createForm() {
+ 
+           invitationService.createInvite(this.inviteForm).then(response => {
+
+
+               if(response.status === 200){
+                   alert("Invite Successful")
+                   this.$store.commit('SET_TEAM_LIST')
+                   this.inviteStatus = 'PENDING'
+                   this.$router.push({name: 'home'})
+               }else{
+                   console.log(response)
+               }
+           })
+
+          
+
+
+
+
+
+
+
+            // this.$store.commit('SAVE_FORM', this.form);
+            // this.form = {
+            //     tournamentName: '',
+            //     teamName: ''
+            // };
         }
     }
 }
@@ -57,13 +129,20 @@ export default {
 
 <style>
 
-.invitation-form input, .invitation-form button {
+#invForm{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-top: 2.5%;
+}
+
+/* .invitation-form input, .invitation-form button {
     margin: 10px;
     font-size: 1rem;
 
     display: flex;
     flex-direction: row;
     justify-content: center;
-}
+} */
 
 </style>

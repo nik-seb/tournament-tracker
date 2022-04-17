@@ -145,6 +145,13 @@ VALUES				 ('New York', 'New York City'),
 					 ('Texas', 'El Paso'),
 					 ('Georgia', 'Atlanta');
 
+INSERT INTO teams(team_name, team_size)
+VALUES			 ('Globo Gym', 8),
+				 ('Average Joes', 8),
+				 ('Wild Things', 14),
+				 ('Mean Machine', 25),
+				 ('Bush leauge', 12);
+
 
 COMMIT TRANSACTION;
 

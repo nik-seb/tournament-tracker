@@ -112,12 +112,14 @@ const router = new Router({
         requiresAuth: false
       }
     },
-  {
-    path: "/invite",
-    name: "invite-form",
-    component: Invite,
-}
-
+    {
+      path: "/invitations",
+      name: "create-invite",
+      component: Invite,  
+      meta: {
+        requiresAuth: true
+      }
+    }  
   ]
 })
 
