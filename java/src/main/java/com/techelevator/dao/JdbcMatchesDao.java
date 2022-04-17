@@ -78,11 +78,11 @@ public class JdbcMatchesDao implements MatchesDao {
     @Override
     public Matches createMatch(Matches match, int tournamentId) {
         String sql = "INSERT INTO matches (tournament_id, start_date, start_time, home_team_id, away_team_id, " +
-                "location_id, winning_team_id, round_number) " +
-                " VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING match_id;";
+                "round_number) " +
+                " VALUES (?, ?, ?, ?, ?, ?) RETURNING match_id;";
         Integer newMatchId = jdbcTemplate.queryForObject(sql, Integer.class,
                 match.getTournamentId(), match.getDate(), match.getStartTime(), match.getHomeTeamId(), match.getAwayTeamId(),
-                match.getLocationId(), match.getWinningTeamId(), match.getRoundNumber());
+                match.getRoundNumber());
 
         return getMatch(newMatchId);
     }

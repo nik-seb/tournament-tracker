@@ -21,6 +21,11 @@ public class TournamentService implements ServerTournamentService{
     private MatchesDao matchesDao;
     private TeamsDao teamsDao;
 
+    private List<Matches> allMatches = new ArrayList<>();
+    private int roundCounter = 1;
+    private int tournamentId;
+    private int totalNumOfMatches;
+
     @Autowired
     public TournamentService(TournamentDao tournamentDao, MatchesDao matchesDao, TeamsDao teamsDao) {
         this.tournamentDao = tournamentDao;
@@ -32,7 +37,7 @@ public class TournamentService implements ServerTournamentService{
 
     @Override
     public List<Matches> generateBracket(List<Teams> teams, int tournamentId) {
-        List<Matches> allMatches = new ArrayList<>();
+        this.tournamentId = tournamentId;
         for(Teams teams1 : teams){
             System.out.println(teams1.getTeamName() + ", ");
         }
@@ -61,16 +66,26 @@ public class TournamentService implements ServerTournamentService{
             match.setTournamentId(tournamentId);
             match.setLocationId(1);
             match.setWinningTeamId(pair[1].getTeamId());
+            match.setRoundNumber(1); // might want to refactor so we can reuse this for subsequent matches too
             allMatches.add(match);
             System.out.println("Away Team: " + match.getAwayTeamId() + "Home Team: " + match.getHomeTeamId());
             matchesDao.createMatch(match, tournamentId);
-
-
         }
-        System.out.println("All Matches: " + allMatches);
 //        for(Matches match : allMatches){
 //            matchesDao.createMatch(match, tournamentId);
 //        }
+
+        // generate placeholder bye "matches" for remaining unpaired teams
+        for (Teams team : teams) {
+            Matches match = new Matches();
+            match.setHomeTeamId(team.getTeamId());
+            match.setAwayTeamId(13);
+            match.setTournamentId(tournamentId);
+            allMatches.add(match);
+            matchesDao.createMatch(match, tournamentId);
+        }
+
+        System.out.println("All Matches: " + allMatches);
 
         for(Teams[] teams1 : pairs){
             System.out.println(teams1[0].getTeamName() + " vs " + teams1[1].getTeamName());
@@ -103,10 +118,29 @@ public class TournamentService implements ServerTournamentService{
             numMatches = round2NumberOfTeams - 1 + pairs.size();
             numMatchesInclByes = numMatches + byes.size();
         }
+        this.totalNumOfMatches = numMatchesInclByes;
         System.out.println("Num of Matches: " + numMatches);
         System.out.println("Num of Matches with byes: " + numMatchesInclByes);
 
+        // assign round number for subsequent matches
+        assignRounds(round2NumberOfTeams / 2);
         return allMatches;
+    }
+
+    private void assignRounds(int numMatchesInRound) {
+        roundCounter++;
+        for (int i = 0; i <= numMatchesInRound; i++) {
+            Matches match = new Matches();
+            match.setHomeTeamId(13);
+            match.setAwayTeamId(13);
+            match.setTournamentId(tournamentId);
+            match.setRoundNumber(roundCounter);
+            allMatches.add(match);
+            matchesDao.createMatch(match, tournamentId);
+        }
+        if (allMatches.size() < totalNumOfMatches) {
+            assignRounds(numMatchesInRound / 2);
+        }
     }
 
     @Override
