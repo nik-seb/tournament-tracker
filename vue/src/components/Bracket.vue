@@ -2,7 +2,7 @@
   <div>
       <h3>Bracket</h3>
       <p v-if="matches.length == 0">Schedule TBD</p>
-      <button v-if="this.$store.state.user.role == 'ROLE_HOST'" v-on:click.prevent="generateBracket()">Generate Matches</button>
+      <button v-if="this.$store.state.user.role == 'ROLE_HOST' && matches.length == 0" v-on:click.prevent="generateBracket()">Generate Matches</button>
       <table id="schedule" v-if="matches.length > 0">
           <tr>
              <th>Home Team</th>
@@ -45,11 +45,13 @@ export default {
         // THIS BREAKS IF I GIVE IT TOURNAMENT TEAMS 
         // need some more complex logic here to display differently if bye or tbd
         getTeamNameFromTeamList(teamId) {
+            console.log(teamId)
             const activeTeam = this.teams.find((team) => {
                 if (team.teamId == teamId) {
                     return true;
                 }
             });
+            console.log(activeTeam)
             return activeTeam.teamName;
         }
     },
@@ -127,30 +129,7 @@ export default {
                     teamName: 'BYE'
                 }
             ],
-            matches: [
-                {
-                    matchId: 1,
-                    tournamentId: 1,
-                    startDate: '2022-02-01',
-                    startTime: '12:10:00',
-                    homeTeamId: 1,
-                    awayTeamId: 2,
-                    locationId: 1,
-                    winningTeamId: 2,
-                    roundNumber: 1
-                },
-                {
-                    matchId: 2,
-                    tournamentId: 1,
-                    startDate: '2022-02-03',
-                    startTime: '08:00:00',
-                    homeTeamId: 5,
-                    awayTeamId: 8,
-                    locationId: 2,
-                    winningTeamId: null,
-                    roundNumber: 1
-                }
-            ]
+            matches: []
         }
     }
 }
