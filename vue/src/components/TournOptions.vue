@@ -4,7 +4,8 @@
       <router-link v-bind:to="{ name: 'join-tournament'}" v-bind:tournamentID="tournamentID"><button id="join">Join</button></router-link>
 
       <!-- always show -->
-      <button id="invite">Invite</button>
+
+     <router-link v-bind:to="{ name: 'create-invite'}" > <button id="invite">Invite</button></router-link>
 
       <!-- show both if user is organizer and tournament is associated with their id -->
       <button id="modify">Modify</button>

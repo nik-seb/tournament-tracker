@@ -32,14 +32,39 @@ export default new Vuex.Store({
       description: '',
       tournamentId: null
     },
-    sportList: [
-    ],
-    matchesList: [
-      {
-        
 
+    teamList:[
+      {
+        teamName: "test team1",
+        teamSize: 10,
+        teamId: 1
+      },
+      {
+        teamName: "test team2",
+        teamSize: 10,
+        teamId: 2
+      },
+      {
+        teamName: "test team3",
+        teamSize: 10,
+        teamId: 3
+      },
+      {
+        teamName: "test team4",
+        teamSize: 10,
+        teamId: 4
       }
     ],
+
+    sportList: [
+    ],
+
+    matchesList: [
+      {
+      }
+      
+    ],
+
     tournamentList: [
       {
         name: 'Cool tournament',
@@ -88,10 +113,7 @@ export default new Vuex.Store({
 
       // everything above this line may be junk
 
-    inviteForm: {
-      tournamentName: '',
-      teamName: ''
-  }
+    
   },
  
   getters:{
@@ -133,6 +155,11 @@ export default new Vuex.Store({
     },
     SAVE_FORM(state, form) {
       state.inviteForm = form;
+    },
+    // above method 'SAVE_FORM might not be needed '
+
+    SET_TEAM_LIST(state, team){
+      state.teamList = team;
     }
   }
 })

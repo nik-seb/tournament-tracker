@@ -57,6 +57,10 @@ export default {
 
   addPlayerToTeam(teamID, player) {
     return axios.post(`/teams/${teamID}/player`, player);
+  },
+
+  getAllTeams(){
+    return axios.get('/teams');
   }
 
 }
