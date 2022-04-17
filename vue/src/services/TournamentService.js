@@ -35,7 +35,7 @@ export default {
   },
 
   getMatchesByTournamentId(tournamentID) {
-    return axios.get(`/matches/${tournamentID}`);
+    return axios.get(`/tournaments/${tournamentID}/matches`);
   },
 
   addParticipantToTournament(tournamentID, team) {

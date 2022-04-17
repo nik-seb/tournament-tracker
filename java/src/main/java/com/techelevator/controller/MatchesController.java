@@ -35,11 +35,7 @@ public class MatchesController {
         return matchesDao.getMatchesByDate(date);
     }
 
-
-    @GetMapping("/matches/{tournamentId}")
-    public List<Matches> getMatchesByTournament(@PathVariable int tournamentId) throws MatchNotFoundException {
-        return matchesDao.getMatchesByTournament(tournamentId);
-    }
+    //removed getmatchesbytournament due to ambiguous mapping with getMatch; equivalent method "getTournamentMatches" is in tournamentController
 
     @GetMapping("/matches/{id}")
     public Matches getMatch(@PathVariable int matchId) throws MatchNotFoundException {

@@ -41,29 +41,34 @@ export default {
         }
     },
     created () {
-        // get matches and fill matches array with data, then:
-        if (this.matches.length > 0) {
-            for (let match of this.matches) {
-                TournamentService.getTeamByTeamId(match.homeTeamId).then((response) => {
-                    if (response.status == 200) {
-                        match.homeTeamName = response.data.teamName;
+        TournamentService.getMatchesByTournamentId(this.tournamentID).then((response) => {
+                if (response.status == 200) {
+                    this.matches = response.data;
+                    if (this.matches.length > 0) {
+                        for (let match of this.matches) {
+                            TournamentService.getTeamByTeamId(match.homeTeamId).then((response) => {
+                                if (response.status == 200) {
+                                    match.homeTeamName = response.data.teamName;
+                                }
+                            })
+                            TournamentService.getTeamByTeamId(match.awayTeamId).then((response) => {
+                                if (response.status == 200) {
+                                    match.awayTeamName = response.data.teamName;
+                                } 
+                            })
+                            if (match.winningTeamId) {
+                                TournamentService.getTeamByTeamId(match.winningTeamId).then((response) => {
+                                if (response.status == 200) {
+                                    match.winningTeamName = response.data.teamName;
+                                }
+                            })
+                            }
+                            // add get for location name when that model/method is available
+                        }
                     }
-                })
-                TournamentService.getTeamByTeamId(match.awayTeamId).then((response) => {
-                    if (response.status == 200) {
-                        match.awayTeamName = response.data.teamName;
-                    }
-                })
-                if (match.winningTeamId) {
-                    TournamentService.getTeamByTeamId(match.winningTeamId).then((response) => {
-                    if (response.status == 200) {
-                        match.winningTeamName = response.data.teamName;
-                    }
-                })
                 }
-                // add get for location name when that model/method is available
-            }
-        }
+            });
+        
     },
     data () {
         return {
