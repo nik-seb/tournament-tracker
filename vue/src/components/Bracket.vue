@@ -1,13 +1,31 @@
 <template>
   <div>
       <h3>Bracket</h3>
-      <p>Schedule TBD</p>
-      <button v-if="this.$store.state.user.role == 'ROLE_HOST'">Generate Bracket</button>
-      <img src="../assets/tournament_picture.jpg" alt="example of tournament picture">
+      <p v-if="matches.length == 0">Schedule TBD</p>
+      <button v-if="this.$store.state.user.role == 'ROLE_HOST'">Generate Matches</button>
+      <table id="schedule" v-if="matches.length > 0">
+          <tr>
+             <th>Home Team</th>
+             <th>Away Team</th>
+             <th>Location</th>
+             <th>Start Date</th>
+             <th>Start Time</th>
+             <th>Winner</th>
+         </tr>
+         <tr v-for="match in matches" v-bind:key="match.matchId">
+            <td>{{match.homeTeamName}}</td>
+            <td>{{match.awayTeamName}}</td>
+            <td>{{match.locationId}}</td>
+            <td>{{match.startDate}}</td>
+            <td>{{match.startTime}}</td>
+            <td>{{(match.winningTeamName) ? match.winningTeamName : "TBD"}}</td>
+        </tr>
+      </table>
   </div>
 </template>
 
 <script>
+import TournamentService from "@/services/TournamentService.js";
 export default {
     name: 'bracket',
     props: {
@@ -16,6 +34,31 @@ export default {
     methods: {
         generateBracket() {
             // call here
+        }
+    },
+    created () {
+        // get matches and fill matches array with data, then:
+        if (this.matches.length > 0) {
+            for (let match of this.matches) {
+                TournamentService.getTeamByTeamId(match.homeTeamId).then((response) => {
+                    if (response.status == 200) {
+                        match.homeTeamName = response.data.teamName;
+                    }
+                })
+                TournamentService.getTeamByTeamId(match.awayTeamId).then((response) => {
+                    if (response.status == 200) {
+                        match.awayTeamName = response.data.teamName;
+                    }
+                })
+                if (match.winningTeamId) {
+                    TournamentService.getTeamByTeamId(match.winningTeamId).then((response) => {
+                    if (response.status == 200) {
+                        match.winningTeamName = response.data.teamName;
+                    }
+                })
+                }
+                // add get for location name when that model/method is available
+            }
         }
     },
     data () {
@@ -60,13 +103,26 @@ export default {
             ],
             matches: [
                 {
+                    matchId: 1,
                     tournamentId: 1,
-                    startDate: '',
-                    startTime: '',
-                    homeTeamId: '',
-                    awayTeamId: '',
-                    locationId: '',
-                    winningTeamId: null
+                    startDate: '2022-02-01',
+                    startTime: '12:10:00',
+                    homeTeamId: 1,
+                    awayTeamId: 2,
+                    locationId: 1,
+                    winningTeamId: 2,
+                    roundNumber: 1
+                },
+                {
+                    matchId: 2,
+                    tournamentId: 1,
+                    startDate: '2022-02-03',
+                    startTime: '08:00:00',
+                    homeTeamId: 5,
+                    awayTeamId: 8,
+                    locationId: 2,
+                    winningTeamId: null,
+                    roundNumber: 1
                 }
             ]
         }

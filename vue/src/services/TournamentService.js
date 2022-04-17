@@ -42,6 +42,10 @@ export default {
     return axios.get(`/players/${playerID}/team`);
   },
 
+  getTeamByTeamId(teamID) {
+    return axios.get(`/teams/${teamID}`);
+  },
+
   //get the player associated with the input user
   getUserPlayerID(userID) {
     return axios.get(`/players/user/${userID}`);
