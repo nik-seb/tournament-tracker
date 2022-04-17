@@ -6,8 +6,8 @@ export default {
         return axios.post('/invitations', invitation);
     },
 
-    getInviteByOrganizerId(){
-        
+    getInviteByOrganizerId(invitation){
+        return axios.get(`/invitations/teams/{}`,invitation)
     }
 
     
