@@ -12,7 +12,7 @@ public interface MatchesDao {
     List<Matches> getAllMatches();
     List<Matches> getMatchesByDate(LocalDate date);
     List<Matches> getMatchesByTournament(int tournamentId);
-    Matches createMatch(Matches match);
+    Matches createMatch(Matches match, int tournamentId);
     Matches updateMatch(int matchId);
     boolean deleteMatch(int matchId);
 }

@@ -8,7 +8,7 @@ import java.time.LocalTime;
 
 public class Matches {
 
-    @Min(value = 1, message = "Match ID Should Be a Positive Number.")
+
     private int matchId;
 
     @Min(value = 1, message = "Tournament ID Should Be a Positive Number.")
@@ -29,6 +29,10 @@ public class Matches {
 
 
     public Matches() {}
+    public Matches(int homeTeamId, int awayTeamId){
+        this.homeTeamId = homeTeamId;
+        this.awayTeamId = awayTeamId;
+    }
 
     public Matches(int matchId, int tournamentId, LocalDate date, LocalTime startTime, int homeTeamId, int awayTeamId,
                    int locationId, int winningTeamId, int roundNumber) {

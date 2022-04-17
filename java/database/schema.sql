@@ -68,8 +68,8 @@ CREATE TABLE matches
 (
 	match_id SERIAL PRIMARY KEY,
 	tournament_id int NOT NULL, 
-	start_date date NOT NULL, 
-	start_time time NOT NULL, 
+	start_date date,
+	start_time time,
 	home_team_id int,
 	away_team_id int,
 	location_id int,
@@ -79,7 +79,9 @@ CREATE TABLE matches
 	CONSTRAINT fk_tournament_id FOREIGN KEY (tournament_id) REFERENCES tournaments (tournament_id),
 	CONSTRAINT fk_home_team FOREIGN KEY (home_team_id) REFERENCES teams (team_id),
 	CONSTRAINT fk_away_team FOREIGN KEY (away_team_id) REFERENCES teams (team_id),
-	CONSTRAINT fk_location FOREIGN KEY (location_id) REFERENCES locations (location_id)
+	CONSTRAINT fk_location FOREIGN KEY (location_id) REFERENCES locations (location_id),
+	CONSTRAINT fk_winning_team_id FOREIGN KEY (winning_team_id) REFERENCES teams (team_id)
+
 );
 CREATE TABLE player_team
 (
@@ -128,6 +130,23 @@ VALUES				 ('New York', 'New York City'),
 					 ('Texas', 'Houston'),
 					 ('Texas', 'El Paso'),
 					 ('Georgia', 'Atlanta');
+
+
+INSERT INTO teams(team_name, team_size)
+VALUES          ('one', 1),
+                ('two', 2),
+                ('three', 3),
+                ('four', 4),
+                ('five', 5),
+                ('six', 6),
+                ('seven', 7),
+                ('eight', 8),
+                ('nine', 9),
+                ('ten', 10),
+                ('eleven', 11),
+                ('twelve', 12),
+                ('BYE', 0);
+
 
 
 COMMIT TRANSACTION; 

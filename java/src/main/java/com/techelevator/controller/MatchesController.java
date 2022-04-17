@@ -53,9 +53,9 @@ public class MatchesController {
 
 }
 
-    @RequestMapping(path = "/matches", method = RequestMethod.POST)
-    public Matches postMatch(@RequestBody Matches newMatch) {
-        return matchesDao.createMatch(newMatch);
+    @RequestMapping(path = "tournaments/{id}/matches", method = RequestMethod.POST)
+    public Matches postMatch(@RequestBody Matches newMatch, @PathVariable ("id") int tournamentId) {
+        return matchesDao.createMatch(newMatch, tournamentId);
     }
 
 
