@@ -21,9 +21,9 @@ public class TournamentService implements ServerTournamentService{
     private MatchesDao matchesDao;
     private TeamsDao teamsDao;
 
-    private List<Matches> allMatches = new ArrayList<>();
-    private List<Matches> createdMatches = new ArrayList<>(); // matches returned from matchesDao.createMatch
-    private int roundCounter = 1;
+    private List<Matches> allMatches;
+    private List<Matches> createdMatches; // matches returned from matchesDao.createMatch
+    private int roundCounter;
     private int tournamentId;
     private int totalNumOfMatches;
 
@@ -38,6 +38,9 @@ public class TournamentService implements ServerTournamentService{
 
     @Override
     public List<Matches> generateBracket(List<Teams> teams, int tournamentId) {
+        roundCounter = 1; // could set this differently in a generate matches call, then just set roundCounter in initial matches
+        createdMatches = new ArrayList<>();
+        allMatches = new ArrayList<>();
         this.tournamentId = tournamentId;
         for(Teams teams1 : teams){
             System.out.println(teams1.getTeamName() + ", ");
