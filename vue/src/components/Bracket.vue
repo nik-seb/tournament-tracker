@@ -13,12 +13,14 @@
              <th>Winner</th>
          </tr>
          <tr v-for="match in matches" v-bind:key="match.matchId">
-            <td>{{match.homeTeamName}}</td>
-            <td>{{match.awayTeamName}}</td>
+            <td>{{getTeamNameFromTeamList(match.homeTeamId)}}</td>
+            <td>{{getTeamNameFromTeamList(match.awayTeamId)}}</td>
             <td>{{match.locationId}}</td>
             <td>{{match.startDate}}</td>
             <td>{{match.startTime}}</td>
             <td>{{(match.winningTeamName) ? match.winningTeamName : "TBD"}}</td>
+            <!-- <td v-for="team in tournamentTeams" v-bind:key="team.teamId">{{team.teamName}}></td> -->
+            <!-- THIS THING WORKS FINE WITH TOURNAMENT TEAMS^^^^^^ -->
         </tr>
       </table>
   </div>
@@ -29,7 +31,8 @@ import TournamentService from "@/services/TournamentService.js";
 export default {
     name: 'bracket',
     props: {
-        tournamentID: Number
+        tournamentID: Number,
+        tournamentTeams: Array
     },
     methods: {
         generateBracket() {
@@ -38,6 +41,16 @@ export default {
                         this.$router.push({name: "manage-bracket", params: {id: this.tournamentID, matches: response.data, tournamentID: this.tournamentID}});
                     }
             });
+        },
+        // THIS BREAKS IF I GIVE IT TOURNAMENT TEAMS 
+        // need some more complex logic here to display differently if bye or tbd
+        getTeamNameFromTeamList(teamId) {
+            const activeTeam = this.teams.find((team) => {
+                if (team.teamId == teamId) {
+                    return true;
+                }
+            });
+            return activeTeam.teamName;
         }
     },
     created () {
@@ -108,6 +121,10 @@ export default {
                 {
                     teamId: 7,
                     teamName: 'Blackbirds'
+                },
+                {
+                    teamId: 13,
+                    teamName: 'BYE'
                 }
             ],
             matches: [

@@ -14,7 +14,7 @@ export default {
     props: {
         tournamentID: Number,
         matches: Array
-        },
+    },
     components: {
         EditMatchForm
     },
@@ -37,6 +37,11 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
+div {
+    margin-left: 140px;
+    padding: 1em;
+}
 
 </style>

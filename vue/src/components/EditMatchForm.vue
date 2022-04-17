@@ -9,8 +9,8 @@
             <label for="date">Select a time for this match: </label>
             <input type="time" v-bind:id="'time' + match.matchId" value="time" v-model="match.startTime">
 
-            <label for="location">Select a location for this match: </label>
-            <input type="location" v-bind:id="'location' + match.matchId" value="location" v-model="match.locationId">
+            <!-- <label for="location">Select a location for this match: </label>
+            <input type="location" v-bind:id="'location' + match.matchId" value="location" v-model="match.locationId"> -->
 
             <input type="submit" value="Confirm match details">
         </form>
@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import TournamentService from '@/services/TournamentService.js';
+
 export default {
     name: 'edit-match-form',
     props: {
@@ -31,7 +33,12 @@ export default {
     },
     methods: {
         saveMatch() {
-            // put request for match
+            TournamentService.updateMatch(this.match.matchId).then(response => {
+                if (response.status == 200) {
+                    console.log('updated!')
+                    // something to indicate change, like add checkbox to the DOM
+                }
+            })
         }
     }
 }
