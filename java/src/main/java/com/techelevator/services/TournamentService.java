@@ -22,6 +22,7 @@ public class TournamentService implements ServerTournamentService{
     private TeamsDao teamsDao;
 
     private List<Matches> allMatches = new ArrayList<>();
+    private List<Matches> createdMatches = new ArrayList<>(); // matches returned from matchesDao.createMatch
     private int roundCounter = 1;
     private int tournamentId;
     private int totalNumOfMatches;
@@ -69,7 +70,7 @@ public class TournamentService implements ServerTournamentService{
             match.setRoundNumber(1); // might want to refactor so we can reuse this for subsequent matches too
             allMatches.add(match);
             System.out.println("Away Team: " + match.getAwayTeamId() + "Home Team: " + match.getHomeTeamId());
-            matchesDao.createMatch(match, tournamentId);
+            createdMatches.add(matchesDao.createMatch(match, tournamentId));
         }
 //        for(Matches match : allMatches){
 //            matchesDao.createMatch(match, tournamentId);
@@ -81,8 +82,9 @@ public class TournamentService implements ServerTournamentService{
             match.setHomeTeamId(team.getTeamId());
             match.setAwayTeamId(13);
             match.setTournamentId(tournamentId);
+            match.setRoundNumber(1);
             allMatches.add(match);
-            matchesDao.createMatch(match, tournamentId);
+            createdMatches.add(matchesDao.createMatch(match, tournamentId));
         }
 
         System.out.println("All Matches: " + allMatches);
@@ -94,6 +96,7 @@ public class TournamentService implements ServerTournamentService{
         System.out.println("Number of Paired Teams: " + pairs.size());
     List<Teams> byes = teams;
         int round2NumberOfTeams = pow2/2;
+        System.out.println("round1numofteams is " + round2NumberOfTeams);
         int numRounds = 1;
         int currentTeams = round2NumberOfTeams;
 
@@ -123,20 +126,21 @@ public class TournamentService implements ServerTournamentService{
         System.out.println("Num of Matches with byes: " + numMatchesInclByes);
 
         // assign round number for subsequent matches
+        System.out.println("round 2 num of teams / 2 is " + round2NumberOfTeams / 2);
         assignRounds(round2NumberOfTeams / 2);
-        return allMatches;
+        return createdMatches;
     }
 
     private void assignRounds(int numMatchesInRound) {
         roundCounter++;
-        for (int i = 0; i <= numMatchesInRound; i++) {
+        for (int i = 1; i <= numMatchesInRound; i++) {
             Matches match = new Matches();
             match.setHomeTeamId(13);
             match.setAwayTeamId(13);
             match.setTournamentId(tournamentId);
             match.setRoundNumber(roundCounter);
             allMatches.add(match);
-            matchesDao.createMatch(match, tournamentId);
+            createdMatches.add(matchesDao.createMatch(match, tournamentId));
         }
         if (allMatches.size() < totalNumOfMatches) {
             assignRounds(numMatchesInRound / 2);

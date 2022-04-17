@@ -144,7 +144,8 @@ VALUES          ('one', 1),
                 ('nine', 9),
                 ('ten', 10),
                 ('eleven', 11),
-                ('twelve', 12);
+                ('twelve', 12),
+                ('BYE', 0);
 
 
 

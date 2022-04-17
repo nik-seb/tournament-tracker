@@ -45,7 +45,7 @@ public class TournamentController {
         this.tournamentService = tournamentService;
     }
 
-    // get teams by tournament ID
+    // get teams by tournament ID - tested, ok
     @RequestMapping(path = "/tournaments/{id}/teams", method = RequestMethod.GET)
     public List<Teams> getTournamentTeams(@PathVariable ("id") int tournamentId){
 
@@ -108,35 +108,9 @@ public class TournamentController {
             tournamentDao.addTeamsToTournaments(teams, tournamentId);
         }
         @RequestMapping(path = "tournaments/{id}/bracket", method = RequestMethod.POST)
-        public void createBracket(@PathVariable ("id") int tournamentId){
-            List<Teams> teamsList = new ArrayList<>();
-            Teams one = new Teams(1, "one", 4);
-            Teams two = new Teams(2, "two", 4);
-            Teams three = new Teams(3, "three", 4);
-            Teams four = new Teams(4, "four", 4);
-            Teams five = new Teams(5, "five", 4);
-            Teams six = new Teams(6, "six", 4);
-            Teams seven = new Teams(7, "seven", 4);
-            Teams eight = new Teams(8, "eight", 4);
-            Teams nine = new Teams(9, "nine", 4);
-            Teams ten = new Teams(10, "ten", 4);
-            Teams eleven = new Teams(11, "eleven", 4);
-            Teams twelve = new Teams(12, "twelve", 4);
-
-            teamsList.add(one);
-            teamsList.add(two);
-            teamsList.add(three);
-            teamsList.add(four);
-            teamsList.add(five);
-            teamsList.add(six);
-            teamsList.add(seven);
-            teamsList.add(eight);
-            teamsList.add(nine);
-            teamsList.add(ten);
-            teamsList.add(eleven);
-            teamsList.add(twelve);
-//            List<Teams> teams1 = teamsDao.getTeamsByTournamentId(tournamentId);
-            tournamentService.generateBracket(teamsList, tournamentId);
+        public List<Matches> createBracket(@PathVariable ("id") int tournamentId){
+            List<Teams> teamsList = teamsDao.getTeamsByTournamentId(tournamentId);
+            return tournamentService.generateBracket(teamsList, tournamentId);
         }
 
 
