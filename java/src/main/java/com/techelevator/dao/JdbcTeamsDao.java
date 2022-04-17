@@ -18,7 +18,6 @@ public class JdbcTeamsDao implements TeamsDao {
     private JdbcTemplate jdbcTemplate;
 
 
-
     public JdbcTeamsDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -112,6 +111,20 @@ public class JdbcTeamsDao implements TeamsDao {
         }
         return tournamentTeams;
     }
+
+        public Teams getTeamByPlayerId(int playerId){
+            Teams team = new Teams();
+            String sql = "SELECT team_id, team_name, team_size " +
+                    "FROM teams " +
+                    "JOIN player_team USING(team_id) " +
+                    "WHERE player_id = ?;";
+
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, playerId);
+            if (results.next()) {
+                team = mapRowToTeams(results);
+            }
+            return team;
+        }
 
     @Override
     public void addPlayersToTeam(Players player, int teamId) {

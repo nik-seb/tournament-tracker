@@ -1,7 +1,7 @@
 <template>  
   <div id='tourn-options'>
       <!-- show if player id associated with user isn't associated with tourn, else display "Leave" -->
-      <button id="join">Join</button>
+      <router-link v-bind:to="{ name: 'join-tournament'}" v-bind:tournamentID="tournamentID"><button id="join">Join</button></router-link>
 
       <!-- always show -->
       <button id="invite">Invite</button>
@@ -15,9 +15,19 @@
 <script>
 export default {
   name: 'tournament-options',
- 
-};
-
+  props: {tournamentID: Number},
+  // computed() {
+  //       playerHasJoinedTeam() {
+  //           let teamsList;
+  //           TournamentService.getParticipantsInTournament(this.tournamentID).then( (response) => {
+  //               if (response.status == 200) {
+  //                   teamsList = response.data;
+  //                   if (teamsList.filter((team)))
+  //               }
+  //           })
+  //       }
+  //   }
+}
 </script>
 
 <style>

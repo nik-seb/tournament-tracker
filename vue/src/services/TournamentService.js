@@ -26,12 +26,41 @@ export default {
     return axios.put('/tournaments{id}', tournament);
   },
 
+  modifyTournament(tournament) {
+    return axios.put(`/tournaments/${tournament.tournamentId}`, tournament);
+  },
+
   getTournamentDetails(tournamentID) {
       return axios.get(`/tournaments/${tournamentID}`);
   },
 
-  getParticipantsInTournament() {
+  addParticipantToTournament(tournamentID, team) {
+    return axios.post(`tournaments/${tournamentID}/teams`, team);
+  },
 
+  getParticipantsInTournament(tournamentID) {
+      return axios.get(`tournaments/${tournamentID}/teams`);
+  },
+
+  getTeamOfPlayer(playerID) {
+    return axios.get(`/players/${playerID}/team`);
+  },
+
+  //get the player associated with the input user
+  getUserPlayerID(userID) {
+    return axios.get(`/players/user/${userID}`);
+  },
+
+  createNewPlayer(player) {
+    return axios.post('/players', player);
+  },
+
+  createNewTeam(team) {
+    return axios.post('/teams', team);
+  },
+
+  addPlayerToTeam(teamID, player) {
+    return axios.post(`/teams/${teamID}/player`, player);
   }
 
 }

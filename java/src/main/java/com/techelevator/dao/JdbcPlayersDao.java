@@ -25,11 +25,12 @@ public class JdbcPlayersDao implements PlayersDao {
     @Override
     public Players getPlayerById(int playerId) {
         Players player = new Players();
-        String sql = "SELECT player_id " +
+        String sql = "SELECT player_id, user_id, player_name " +
                      "FROM players " +
                      "WHERE player_id = ?; ";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, playerId);
-            if (results.next()) {
+
+        if (results.next()) {
                 player = mapRowToPlayers(results);
 
     }
@@ -56,7 +57,7 @@ public class JdbcPlayersDao implements PlayersDao {
     @Override
     public Players getPlayerByUserId(int userId) {
         Players player = new Players();
-        String sql = "SELECT user_id " +
+        String sql = "SELECT player_id, user_id, player_name " +
                      "FROM players " +
                      "WHERE user_id = ?; ";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
@@ -78,24 +79,6 @@ public class JdbcPlayersDao implements PlayersDao {
             teamPlayers.add(mapRowToPlayers(results));
         }
         return teamPlayers;
-    }
-
-
-
-
-   @Override
-    public Players getPlayerName(int playerId) {
-
-        Players player = new Players();
-        String sql = "SELECT player_name " +
-                     "FROM players " +
-                     "WHERE player_id = ?; ";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, playerId);
-            if (results.next()) {
-            player = mapRowToPlayers(results);
-
-        }
-        return player;
     }
 
 
@@ -129,14 +112,13 @@ public class JdbcPlayersDao implements PlayersDao {
 
     // void updatePlayer(Player updatedPlayer);
     @Override
-    public Players updatePlayer(int playerId) {
+    public Players updatePlayer(Players updatedPlayer) {
         String sql = "UPDATE players " +
                 " SET user_id = ?, " +
-                " player_name = ?, " +
+                " player_name = ? " +
                 " WHERE player_id = ?;";
-        Players players = new Players();
-        jdbcTemplate.update(sql, players.getUserId(), players.getPlayerName());
-        return getPlayerById(playerId);
+        jdbcTemplate.update(sql, updatedPlayer.getUserId(), updatedPlayer.getPlayerName(), updatedPlayer.getPlayerId());
+        return getPlayerById(updatedPlayer.getPlayerId());
     }
 
         @Override

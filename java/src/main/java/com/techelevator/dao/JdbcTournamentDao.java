@@ -70,9 +70,9 @@ public class JdbcTournamentDao implements TournamentDao {
                 "num_of_teams = ?, " +
                 "start_date = ?, " +
                 "end_date = ?, " +
-                "sport_id = ? " +
-                "description = ? " +
-                "num_of_rounds = ? " +
+                "sport_id = ?, " +
+                "description = ?, " +
+                "num_of_rounds = ?, " +
                 "tournament_type = ? " +
                 "WHERE tournament_id = ?;";
 

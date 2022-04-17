@@ -40,6 +40,7 @@ public class TournamentController {
         this.teamsDao = teamsDao;
     }
 
+    // get teams by tournament ID
     @RequestMapping(path = "/tournaments/{id}/teams", method = RequestMethod.GET)
     public List<Teams> getTournamentTeams(@PathVariable ("id") int tournamentId){
 
