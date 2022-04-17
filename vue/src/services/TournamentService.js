@@ -26,10 +26,6 @@ export default {
     return axios.put(`/tournaments/${tournament.tournamentId}`, tournament);
   },
 
-  modifyTournament(tournament) {
-    return axios.put(`/tournaments/${tournament.tournamentId}`, tournament);
-  },
-
   getTournamentDetails(tournamentID) {
       return axios.get(`/tournaments/${tournamentID}`);
   },

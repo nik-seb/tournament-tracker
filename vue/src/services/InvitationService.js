@@ -6,9 +6,11 @@ export default {
         return axios.post('/invitations', invitation);
     },
 
-    getInviteByOrganizerId(invitation){
-        return axios.get(`/invitations/teams/{}`,invitation)
+    sentInviteByOrganizerId(organizerId){
+        return axios.get(`/invitations/organizer/${organizerId}`);
     }
+
+
 
     
 
