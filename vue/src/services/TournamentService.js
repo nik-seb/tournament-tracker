@@ -22,12 +22,12 @@ export default {
     return axios.post('/tournaments', tournament);
   },
   
-  modifyTournament(tournament) {
-    return axios.put(`/tournaments/${tournament.tournamentId}`, tournament);
-  },
+  // modifyTournament(tournament) {
+  //   return axios.put('/tournaments{id}', tournament);
+  // },
 
   modifyTournament(tournament) {
-    return axios.put(`/tournaments/${tournament.tournamentId}`, tournament);
+    return axios.put(`/tournaments/${tournament.tournamentID}`, tournament);
   },
 
   getTournamentDetails(tournamentID) {
