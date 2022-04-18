@@ -30,6 +30,18 @@ export default {
       return axios.get(`/tournaments/${tournamentID}`);
   },
 
+  createBracketForTournament(tournamentID) {
+    return axios.post(`/tournaments/${tournamentID}/bracket`);
+  },
+
+  getMatchesByTournamentId(tournamentID) {
+    return axios.get(`/tournaments/${tournamentID}/matches`);
+  },
+
+  updateMatch(match) {
+    return axios.put(`/matches/${match.matchId}`, match);
+  },
+
   addParticipantToTournament(tournamentID, team) {
     return axios.post(`tournaments/${tournamentID}/teams`, team);
   },
@@ -40,6 +52,10 @@ export default {
 
   getTeamOfPlayer(playerID) {
     return axios.get(`/players/${playerID}/team`);
+  },
+
+  getTeamByTeamId(teamID) {
+    return axios.get(`/teams/${teamID}`);
   },
 
   //get the player associated with the input user

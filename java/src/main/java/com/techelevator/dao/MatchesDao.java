@@ -12,7 +12,8 @@ public interface MatchesDao {
     List<Matches> getAllMatches();
     List<Matches> getMatchesByDate(LocalDate date);
     List<Matches> getMatchesByTournament(int tournamentId);
-    Matches createMatch(Matches match);
-    Matches updateMatch(int matchId);
+    Matches createMatch(Matches match, int tournamentId);
+    Matches updateMatch(Matches match);
+    Matches setMatchWinner(Matches match);
     boolean deleteMatch(int matchId);
 }

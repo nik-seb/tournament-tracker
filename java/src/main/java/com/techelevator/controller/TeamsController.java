@@ -33,12 +33,14 @@ public class TeamsController {
 
     public TeamsController(TeamsDao teamsDao, PlayersDao playersDao) { this.teamsDao = teamsDao; this.playersDao = playersDao; }
 
-
+    //tested and ok
     @GetMapping("/teams")
     public List<Teams> listAllTeams() throws TeamNotFoundException {
         return teamsDao.listAllTeams();
     }
 
+    // tested and ok
+    @GetMapping("/teams/{id}")
     public Teams getTeamById(@PathVariable ("id") int teamId) throws TeamNotFoundException {
 
         Teams result = teamsDao.getTeamById(teamId);

@@ -8,14 +8,14 @@ import java.time.LocalTime;
 
 public class Matches {
 
-    @Min(value = 1, message = "Match ID Should Be a Positive Number.")
+
     private int matchId;
 
     @Min(value = 1, message = "Tournament ID Should Be a Positive Number.")
     private int tournamentId;
 
 
-    private LocalDate date;
+    private LocalDate startDate;
     private LocalTime startTime;
 
     @Min(value = 1, message = "Home Team ID Should Be a Positive Number.")
@@ -29,12 +29,16 @@ public class Matches {
 
 
     public Matches() {}
+    public Matches(int homeTeamId, int awayTeamId){
+        this.homeTeamId = homeTeamId;
+        this.awayTeamId = awayTeamId;
+    }
 
     public Matches(int matchId, int tournamentId, LocalDate date, LocalTime startTime, int homeTeamId, int awayTeamId,
                    int locationId, int winningTeamId, int roundNumber) {
         this.matchId = matchId;
         this.tournamentId = tournamentId;
-        this.date = date;
+        this.startDate = date;
         this.startTime = startTime;
         this.homeTeamId = homeTeamId;
         this.awayTeamId = awayTeamId;
@@ -61,12 +65,12 @@ public class Matches {
         this.tournamentId = tournamentId;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
     }
 
     public LocalTime getStartTime() {

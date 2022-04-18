@@ -66,6 +66,7 @@ export default {
                         this.team.teamId = response.data.teamId;
                         console.log(response.data)
                         TournamentService.addPlayerToTeam(this.team.teamId, this.player).then((response) => {
+                            // will need to manually increment team size when we fully implement teams
                             if (response.status == 200) {
                                 alert("You've been registered successfully");
                             } else {
