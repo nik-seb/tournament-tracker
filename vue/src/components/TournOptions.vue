@@ -2,16 +2,18 @@
   <div id='tourn-options'>
     <div v-if="isOpen">
       <!-- show if player id associated with user isn't associated with tourn, else display "Leave" -->
-      <router-link v-if="!playerHasJoinedTeam" v-bind:to="{ name: 'join-tournament'}" v-bind:tournamentID="tournamentID"><button id="join">Join</button></router-link>
+      <router-link v-bind:to="{ name: 'join-tournament'}" v-bind:tournamentID="tournamentID"><button id="join">Join</button></router-link>
       
       <!--broken version below  -->
      <!-- <router-link v-if="!playerHasJoinedTeam" v-bind:to="{ name: 'join-tournament'}" v-bind:tournamentID="tournamentID"><button id="join">Join</button></router-link> -->
 
+      <div v-if="this.$store.state.user.role == 'ROLE_HOST'">
       <!-- show unless bracket has been generated -->
      <router-link v-bind:to="{ name: 'create-invite'}" > <button id="invite">Invite</button></router-link>
       <!-- show both if user is organizer and tournament is associated with their id -->
       <router-link v-bind:to="{name: 'Modify-tournament'}"> <button id="Modify">Modify</button> </router-link>
       <button id="delete">Delete</button>
+      </div>
       </div>
       <div v-else>
         This tournament is not accepting new competitors.

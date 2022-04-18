@@ -2,8 +2,8 @@
   <div>
       <h3>Bracket</h3>
       <p v-if="matches.length == 0">Schedule TBD</p>
-      <router-link v-bind:to="{name: 'manage-bracket', params: {id: this.tournamentID, matches: this.matches, tournamentID: this.tournamentID}}"> <button v-if="this.$store.state.user.role == 'ROLE_HOST' && matches.length > 0">Edit Bracket</button></router-link>
-      <button v-if="this.$store.state.user.role == 'ROLE_HOST' && matches.length == 0" v-on:click.prevent="generateBracket()">Generate Matches</button>
+      <router-link v-bind:to="{name: 'manage-bracket', params: {id: this.tournamentID, matches: this.matches, tournamentID: this.tournamentID}}"> <button v-if="isHost && matches.length > 0">Edit Bracket</button></router-link>
+      <button v-if="isHost && matches.length == 0" v-on:click.prevent="generateBracket()">Generate Matches</button>
       <table id="schedule" v-if="matches.length > 0">
           <tr>
               <th>Round</th>
@@ -13,6 +13,7 @@
              <th>Start Date</th>
              <th>Start Time</th>
              <th>Winner</th>
+             <th></th>
          </tr>
          <tr v-for="match in sortedByMatchId" v-bind:key="match.matchId">
              <td>{{match.roundNumber}}</td>
@@ -21,7 +22,8 @@
             <td>{{match.locationId}}</td>
             <td>{{match.startDate}}</td>
             <td>{{match.startTime}}</td>
-            <td>{{getTeamNameFromTeamList(match.winningTeamId) ? match.winningTeamName : "TBD"}}</td>
+            <td>{{getTeamNameFromTeamList(match.winningTeamId) || "TBD"}}</td>
+            <td><button v-on:click="addWinner(match)">Add Winner</button></td>
         </tr>
       </table>
   </div>
@@ -49,6 +51,7 @@ export default {
                     return true;
                 }
             });
+            console.log(activeTeam)
             if (activeTeam) {
                 return activeTeam.teamName;
             }
@@ -62,6 +65,9 @@ export default {
                 return -1;
             }
             return 0;
+        },
+        addWinner(currentMatch) {
+            this.$router.push({name: 'winner-form', params: {id: currentMatch.matchId}})
         }
     },
     computed: {
@@ -85,6 +91,8 @@ export default {
     },
     data () {
         return {
+            isHost: this.$store.state.user.role == 'ROLE_HOST',
+            winnerForm: false,
             tournament: {
                 name: 'Cool tournament',
                 startDate: '1990-04-05',
