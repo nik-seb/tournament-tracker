@@ -32,14 +32,39 @@ export default new Vuex.Store({
       description: '',
       tournamentId: null
     },
-    sportList: [
-    ],
-    matchesList: [
-      {
-        
 
+    teamList:[
+      {
+        teamName: "test team1",
+        teamSize: 10,
+        teamId: 1
+      },
+      {
+        teamName: "test team2",
+        teamSize: 10,
+        teamId: 2
+      },
+      {
+        teamName: "test team3",
+        teamSize: 10,
+        teamId: 3
+      },
+      {
+        teamName: "test team4",
+        teamSize: 10,
+        teamId: 4
       }
     ],
+
+    sportList: [
+    ],
+
+    matchesList: [
+      {
+      }
+      
+    ],
+
     tournamentList: [
       {
         name: 'Cool tournament',
@@ -58,11 +83,39 @@ export default new Vuex.Store({
         id: 2
       },
 
-  
-    ]
+    ],
+     // everything below this line may be junk
 
+        invitationList:[
+
+          {
+            tournamentId: 12,
+            teamId: 12,
+            organizerId: 12,
+            invitationStatus: 'ACCEPTED'
+          },
+          {
+            tournamentId: 11,
+            teamId: 11,
+            organizerId: 11,
+            invitationStatus: 'PENDING'
+          },
+          {
+            tournamentId: 13,
+            teamId: 13,
+            organizerId: 13,
+            invitationStatus: 'REJECTED'
+          }
+
+        ],
+
+
+
+      // everything above this line may be junk
+
+    
   },
-
+ 
   getters:{
     userRole(state){
       return state.user.role === 'ROLE_HOST'
@@ -71,6 +124,7 @@ export default new Vuex.Store({
 
 
   mutations: {
+    
     SET_AUTH_TOKEN(state, token) {
       state.token = token;
       localStorage.setItem('token', token);
@@ -99,7 +153,13 @@ export default new Vuex.Store({
     ADD_TOURN_TO_LIST(state, tourn) {
       state.tournamentList.push(tourn);
     },
-  
+    SAVE_FORM(state, form) {
+      state.inviteForm = form;
+    },
+    // above method 'SAVE_FORM might not be needed '
 
+    SET_TEAM_LIST(state, team){
+      state.teamList = team;
+    }
   }
 })

@@ -21,10 +21,10 @@ public class JdbcMatchesDao implements MatchesDao {
     @Override
     public Matches getMatch(int matchId) {
         Matches match = new Matches();
-        String sql = "SELECT match_id, tournament_id, start_date, start_time, home_team_id, away_team_id, location_id, " +
-                "winning_team_id, round_number" +
+        String sql = "SELECT match_id, tournament_id, start_date, start_time, home_team_id, away_team_id, location_id " +
+                "winning_team_id, round_number " +
                 " FROM matches " +
-                " WHERE match_id = ?; ";
+                " WHERE match_id = ?;";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, matchId);
         if (results.next()) {
             match = mapRowToMatches(results);
@@ -35,9 +35,9 @@ public class JdbcMatchesDao implements MatchesDao {
     @Override
     public List<Matches> getAllMatches() {
         List<Matches> matches = new ArrayList<>();
-        String sql = "SELECT match_id, tournament_id, start_date, start_time, home_team_id, away_team_id, location_id, " +
-                "winning_team_id, round_number" +
-                " FROM matches;";
+        String sql = "SELECT match_id, tournament_id, start_date, start_time, home_team_id, away_team_id, location_id " +
+                "winning_team_id, round_number " +
+                "FROM matches ;";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
         while(results.next()){
             matches.add(mapRowToMatches(results));
@@ -51,9 +51,9 @@ public class JdbcMatchesDao implements MatchesDao {
     public List<Matches> getMatchesByDate(LocalDate date) {
         List<Matches> matches = new ArrayList<>();
         String sql = "SELECT match_id, tournament_id, start_date, start_time, home_team_id, away_team_id, location_id, " +
-                "winning_team_id, round_number" +
-                " FROM matches " +
-                " WHERE start_date = ?; ";
+                "winning_team_id, round_number " +
+                "FROM matches " +
+                "WHERE start_date = ?;";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, date);
         while (results.next()) {
             matches.add(mapRowToMatches(results));
@@ -64,10 +64,10 @@ public class JdbcMatchesDao implements MatchesDao {
     @Override
     public List<Matches> getMatchesByTournament(int tournamentId) {
         List<Matches> matches = new ArrayList<>();
-        String sql = "SELECT match_id, tournament_id, start_date, start_time, home_team_id, away_team_id, location_id, " +
-                "winning_team_id, round_number" +
-                " FROM matches " +
-                " WHERE tournament_id = ?; ";
+        String sql = "SELECT match_id, tournament_id, start_date, start_time, home_team_id, away_team_id, location_id " +
+                "winning_team_id, round_number " +
+                "FROM matches " +
+                "WHERE tournament_id = ?;";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, tournamentId);
         while (results.next()) {
             matches.add(mapRowToMatches(results));
@@ -76,6 +76,7 @@ public class JdbcMatchesDao implements MatchesDao {
     }
 
     @Override
+<<<<<<< HEAD
     public Matches createMatch(Matches match, int tournamentId) {
         String sql = "INSERT INTO matches (tournament_id, start_date, start_time, home_team_id, away_team_id, " +
                 "round_number) " +
@@ -106,12 +107,22 @@ public class JdbcMatchesDao implements MatchesDao {
         jdbcTemplate.update(sql, matches.getTournamentId(), matches.getStartDate(), matches.getStartTime(), matches.getHomeTeamId(), matches.getAwayTeamId(),
                             matches.getLocationId(), matches.getRoundNumber(), matches.getMatchId());
         return getMatch(matches.getMatchId());
+=======
+    public Matches createMatch(Matches match) {
+        String sql = "INSERT INTO matches (tournament_id, start_date, start_time, home_team_id, away_team_id " +
+                "location_id, winning_team_id, round_number) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING match_id;";
+        int newMatchId = jdbcTemplate.queryForObject(sql, Integer.class,
+                match.getTournamentId(), match.getDate(), match.getStartTime(), match.getHomeTeamId(), match.getAwayTeamId(),
+                match.getLocationId(), match.getWinningTeamId(), match.getRoundNumber());
+        Matches newMatch = getMatch(newMatchId);
+        return newMatch;
+>>>>>>> 01cfa1a25e4d93a88b4a07ff67d89d67c614c68f
     }
 
     @Override
     public Matches setMatchWinner(Matches matches) {
         String sql = "UPDATE matches " +
-                " SET tournament_id = ?, " +
                 " start_date = ?, " +
                 " start_time = ?, " +
                 " home_team_id = ?, " +
@@ -120,10 +131,17 @@ public class JdbcMatchesDao implements MatchesDao {
                 " round_number = ? " +
                 " winning_team_id = ? " +
                 " WHERE match_id = ?;";
+<<<<<<< HEAD
 
         jdbcTemplate.update(sql, matches.getTournamentId(), matches.getStartDate(), matches.getStartTime(), matches.getHomeTeamId(), matches.getAwayTeamId(),
                 matches.getLocationId(), matches.getRoundNumber(), matches.getWinningTeamId(), matches.getMatchId());
         return getMatch(matches.getMatchId());
+=======
+        Matches matches = new Matches();
+        jdbcTemplate.update(sql, matches.getTournamentId(), matches.getDate(), matches.getStartTime(), matches.getHomeTeamId(), matches.getAwayTeamId(),
+                            matches.getLocationId(), matches.getWinningTeamId(), matches.getRoundNumber(), matchId);
+        return getMatch(matchId);
+>>>>>>> 01cfa1a25e4d93a88b4a07ff67d89d67c614c68f
     }
 
     @Override

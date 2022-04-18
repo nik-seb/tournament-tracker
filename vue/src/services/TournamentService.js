@@ -21,7 +21,7 @@ export default {
   createTournament(tournament) {
     return axios.post('/tournaments', tournament);
   },
-
+  
   modifyTournament(tournament) {
     return axios.put(`/tournaments/${tournament.tournamentId}`, tournament);
   },
@@ -73,6 +73,10 @@ export default {
 
   addPlayerToTeam(teamID, player) {
     return axios.post(`/teams/${teamID}/player`, player);
+  },
+
+  getAllTeams(){
+    return axios.get('/teams');
   }
 
 }

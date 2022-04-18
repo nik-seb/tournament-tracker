@@ -7,10 +7,12 @@ import Register from '../views/Register.vue'
 import store from '../store/index'
 import ViewTournament from '../views/ViewTournament'
 import Create from '../views/Create'
+import Modify from '../views/Modify'
 import Account from '../views/Account'
 import BrowseTournaments from '../views/BrowseTournaments'
 import JoinTournamentForm from '../components/JoinTournamentForm'
 import ManageBracket from '../views/ManageBracket'
+import Invite from '../views/Invite'
 
 Vue.use(Router)
 
@@ -84,7 +86,15 @@ const router = new Router({
       name: "create-tournament",
       component: Create,
       meta: {
-        requiresAuth: false
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/Modify",
+      name: "Modify-tournament",
+      component: Modify,
+      meta: {
+        requiresAuth: true
       }
     },
     {
@@ -111,8 +121,15 @@ const router = new Router({
       meta: {
         requiresAuth: true
       }
+    },
+    {
+      path: "/invitations",
+      name: "create-invite",
+      component: Invite,  
+      meta: {
+        requiresAuth: true
+      }
     }
-
   ]
 })
 

@@ -39,7 +39,7 @@ public class SportsController {
         }
     }
 
-    
+
     @GetMapping("/sports")
     public List<Sports> getAllSports() {
         return sportsDao.getAllSports();

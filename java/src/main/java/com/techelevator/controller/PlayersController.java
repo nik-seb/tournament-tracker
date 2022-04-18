@@ -26,6 +26,7 @@ import java.util.List;
 @CrossOrigin
 public class PlayersController {
 
+
     private final PlayersDao playersDao;
     private final TeamsDao teamsDao;
 
@@ -98,4 +99,5 @@ public class PlayersController {
         }
 
     }
+
 }

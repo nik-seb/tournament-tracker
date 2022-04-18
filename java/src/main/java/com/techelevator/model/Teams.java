@@ -14,7 +14,11 @@ public class Teams {
 
     public Teams() {}
 
+<<<<<<< HEAD
     public Teams(int teamId, String teamName, int teamSize) {
+=======
+    public Teams(int teamId, int teamSize, String teamName) {
+>>>>>>> 01cfa1a25e4d93a88b4a07ff67d89d67c614c68f
         this.teamId = teamId;
         this.teamSize = teamSize;
         this.teamName = teamName;

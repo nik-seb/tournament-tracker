@@ -1,6 +1,6 @@
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS users, tournament_teams, player_team, matches, players, tournaments, teams, locations, sports;
+DROP TABLE IF EXISTS users, invitations, tournament_teams, player_team, matches, players, tournaments, teams, invitations, locations, sports;
 DROP SEQUENCE IF EXISTS seq_user_id;
 
 CREATE SEQUENCE seq_user_id
@@ -59,11 +59,26 @@ CREATE TABLE tournaments
 	description VARCHAR(500),
 	num_of_rounds int,
 	tournament_type VARCHAR(200),
+	organizer_id int,
 	
-	CONSTRAINT fk_sport_id FOREIGN KEY (sport_id) REFERENCES sports (sport_id)
+	CONSTRAINT fk_sport_id FOREIGN KEY (sport_id) REFERENCES sports (sport_id),
+	CONSTRAINT fk_organizer_id FOREIGN KEY (organizer_id) REFERENCES users (user_id)
 	
 );
-
+CREATE TABLE invitations
+(
+	invitation_id SERIAL PRIMARY KEY,
+	tournament_id int NOT NULL,
+	team_id int NOT NULL,
+	organizer_id int NOT NULL,
+	inv_status VARCHAR (100) NOT NULL,
+	
+	CONSTRAINT fk_tournament_id FOREIGN KEY (tournament_id) REFERENCES tournaments (tournament_id),
+	CONSTRAINT fk_team_id FOREIGN KEY (team_id) REFERENCES teams (team_id),
+	CONSTRAINT fk_organizer_id FOREIGN KEY (organizer_id) REFERENCES users (user_id)
+	
+	
+);
 CREATE TABLE matches
 (
 	match_id SERIAL PRIMARY KEY,
@@ -100,6 +115,7 @@ CREATE TABLE tournament_teams
 	CONSTRAINT fk_team_id FOREIGN KEY (team_id) REFERENCES teams (team_id),
 	CONSTRAINT fk_tournament_id FOREIGN KEY (tournament_id) REFERENCES tournaments (tournament_id)
 );
+
 
 INSERT INTO sports (sport_name)
 VALUES ('Basketball'),
@@ -147,6 +163,15 @@ VALUES          ('one', 1),
                 ('twelve', 12),
                 ('BYE', 0);
 
+INSERT INTO teams(team_name, team_size)
+VALUES			 ('Globo Gym', 8),
+				 ('Average Joes', 8),
+				 ('Wild Things', 14),
+				 ('Mean Machine', 25),
+				 ('Bush leauge', 12);
 
 
-COMMIT TRANSACTION; 
+COMMIT TRANSACTION;
+
+
+

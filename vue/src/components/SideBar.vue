@@ -2,10 +2,11 @@
          <aside>    
             <nav>
                 <ul class="sidebar-nav">
-                    <li v-if="this.$store.state.user.role == 'ROLE_HOST'"><router-link v-bind:to="{name: 'create-tournament'}">Create Tournament</router-link></li>
+                    <li v-if="this.$store.state.user.role == 'ROLE_HOST'"><router-link v-bind:to="{name: 'create-tournament' }">Create Tournament</router-link></li>
                     <li>Display Tournaments</li>
                     <li>Display Matches</li>
                     <li>Manage Tournaments</li>
+                    <li v-if="this.$store.state.user.role == 'ROLE_HOST'"><router-link v-bind:to="{name: 'create-invite' }">Invite Form</router-link></li>
                     <li>Contact Us</li>
                 </ul>
             </nav>
