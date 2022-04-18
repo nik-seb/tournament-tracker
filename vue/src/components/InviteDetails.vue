@@ -2,6 +2,7 @@
   <div class="inv">
       <h3>INVITES</h3>
           <ul>
+
               <li v-for="invitations in invites" v-bind:key="invitations.invitationId">{{ invitations }}</li>
               <li v-for="invitations in invites" v-bind:key="invitations.teamId">{{invitations.team}}</li>
           </ul>

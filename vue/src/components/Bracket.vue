@@ -13,6 +13,7 @@
              <th>Winner</th>
              <th></th>
          </tr>
+         
          <tr v-for="match in matches" v-bind:key="match.matchId">
             <td>{{getTeamNameFromTeamList(match.homeTeamId)}}</td>
             <td>{{getTeamNameFromTeamList(match.awayTeamId)}}</td>

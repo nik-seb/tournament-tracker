@@ -77,6 +77,8 @@ export default {
 
   getAllTeams(){
     return axios.get('/teams');
-  }
+  },
+
+  
 
 }
