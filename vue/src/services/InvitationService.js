@@ -8,8 +8,11 @@ export default {
 
     sentInviteByOrganizerId(organizerId){
         return axios.get(`/invitations/organizer/${organizerId}`);
-    }
+    },
 
+    receivedInviteByTeamId(teamId){
+        return axios.get(`/invitations/team/${teamId}`)
+    }
 
 
     

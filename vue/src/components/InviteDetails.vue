@@ -3,6 +3,7 @@
       <h3>INVITES</h3>
           <ul>
               <li v-for="invitations in invites" v-bind:key="invitations.invitationId">{{ invitations }}</li>
+              <li v-for="invitations in invites" v-bind:key="invitations.teamId">{{invitations.team}}</li>
           </ul>
   </div>
 </template>
@@ -17,7 +18,8 @@ export default {
 
        return{ 
         invites: [],
-        organizerId: this.$store.state.user.id
+        organizerId: this.$store.state.user.id,
+        teamId: 0
        }
 
 
@@ -25,14 +27,21 @@ export default {
 
     created(){
 
-
         invitationService.sentInviteByOrganizerId(this.organizerId).then(response => {
+            if(response.status == 200){
+                this.invites = response.data
+            }
+        })
+
+        invitationService.receivedInviteByTeamId().then(response =>{
 
             if(response.status == 200){
                 this.invites = response.data
             }
-
         })
+
+        
+
 
     }
 
