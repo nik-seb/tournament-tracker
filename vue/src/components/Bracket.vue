@@ -14,7 +14,7 @@
              <th>Start Time</th>
              <th>Winner</th>
          </tr>
-         <tr v-for="match in sortedByMatchId(matches)" v-bind:key="match.matchId">
+         <tr v-for="match in sortedByMatchId" v-bind:key="match.matchId">
              <td>{{match.roundNumber}}</td>
             <td>{{getTeamNameFromTeamList(match.homeTeamId)}}</td>
             <td>{{getTeamNameFromTeamList(match.awayTeamId)}}</td>
@@ -44,13 +44,11 @@ export default {
         },
         // need some more complex logic here to display differently if bye or tbd
         getTeamNameFromTeamList(teamId) {
-            console.log(teamId)
             const activeTeam = this.tournamentTeams.find((team) => {
                 if (team.teamId == teamId) {
                     return true;
                 }
             });
-            console.log(activeTeam)
             if (activeTeam) {
                 return activeTeam.teamName;
             }
@@ -64,9 +62,11 @@ export default {
                 return -1;
             }
             return 0;
-        },
-        sortedByMatchId (arr) {
-            return arr.sort(this.compareMatchId);
+        }
+    },
+    computed: {
+        sortedByMatchId () {
+            return this.matches.slice().sort(this.compareMatchId);
         }
     },
     created () {

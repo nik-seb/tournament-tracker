@@ -36,7 +36,6 @@ export default {
 
                 TournamentService.getSportById(response.data.sportId).then((response) => {
                 if (response.status == 200) {
-                    console.log(response.data.sportName + ' is received from sportid query')
                     newTournament.sportName = response.data.sportName;
                     this.$store.commit("SET_ACTIVE_TOURNAMENT", newTournament);
                     this.tournament = newTournament;
