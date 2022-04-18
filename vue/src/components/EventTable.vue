@@ -2,7 +2,9 @@
 
  <div>
 
-     <table>
+     <p v-show="filteredList.length == 0">No events for this time range.</p>
+
+     <table v-if="filteredList.length > 0">
          <tr>
              <th>Tournament</th>
              <th>Teams</th>

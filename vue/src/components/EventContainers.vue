@@ -6,15 +6,15 @@
           <!-- create a v-if condition if date is less than end date display -->
           <div id="past">
           <p id="past-events"> Past Events </p>
-            <event-table class="past-events" v-bind:filteredList="tournamentArray"/>
+            <event-table class="past-events" v-bind:filteredList="pastEventArray"/>
           </div>
           <div id="current">
             <p id="live-events"> Current Events </p>
-              <event-table class="live-events" v-bind:filteredList="tournamentArray"/>
+              <event-table class="live-events" v-bind:filteredList="currentEventArray"/>
           </div>  
           <div id="future">
             <p id="upcoming-events"> Upcoming Events </p>
-            <event-table class="upcoming-events" v-bind:filteredList="tournamentArray"/>  
+            <event-table class="upcoming-events" v-bind:filteredList="futureEventArray"/>  
           </div>
         </div>   
     </div>
@@ -30,7 +30,8 @@ export default {
   components: { EventTable },
   data(){
     return {
-      tournamentArray: []
+      tournamentArray: [],
+      currentDate: ''
     }
   },
   created() {
@@ -39,6 +40,40 @@ export default {
         this.tournamentArray = response.data;
       }
     })
+    this.currentDate = new Date();
+  },
+  computed: {
+    pastEventArray() {
+      const pastEvents = this.tournamentArray.filter((event) => {
+        let convertedDate = new Date(event.endDate)
+        if (convertedDate < this.currentDate) {
+          return true;
+        }
+        return false;
+      })
+      return pastEvents
+    },
+    futureEventArray() {
+      const futureEvents = this.tournamentArray.filter((event) => {
+        let convertedDate = new Date(event.startDate)
+        if (convertedDate > this.currentDate) {
+          return true;
+        }
+        return false;
+      })
+      return futureEvents;
+    },
+    currentEventArray() {
+      const currentEvents = this.tournamentArray.filter((event) => {
+        let convertedStartDate = new Date(event.startDate);
+        let convertedEndDate = new Date(event.endDate);
+        if (convertedStartDate <= this.currentDate && convertedEndDate >= this.currentDate) {
+          return true;
+        }
+        return false;
+      })
+      return currentEvents;
+    }
   }
 }
 </script>
