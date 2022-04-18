@@ -19,7 +19,7 @@ export default {
         EditMatchForm
     },
     created () {
-        if (this.matches.length == 0) {
+        if (!this.matches || this.matches.length == 0) {
             TournamentService.getMatchesByTournamentId(this.tournamentID).then((response) => {
                 if (response.status == 200) {
                     this.matchesList = response.data;

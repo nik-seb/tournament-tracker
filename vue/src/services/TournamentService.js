@@ -38,8 +38,8 @@ export default {
     return axios.get(`/tournaments/${tournamentID}/matches`);
   },
 
-  updateMatch(matchID) {
-    return axios.put(`/matches/${matchID}`);
+  updateMatch(match) {
+    return axios.put(`/matches/${match.matchId}`, match);
   },
 
   addParticipantToTournament(tournamentID, team) {

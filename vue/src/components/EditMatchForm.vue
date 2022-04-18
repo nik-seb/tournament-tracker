@@ -33,7 +33,7 @@ export default {
     },
     methods: {
         saveMatch() {
-            TournamentService.updateMatch(this.match.matchId).then(response => {
+            TournamentService.updateMatch(this.match).then(response => {
                 if (response.status == 200) {
                     console.log('updated!')
                     // something to indicate change, like add checkbox to the DOM

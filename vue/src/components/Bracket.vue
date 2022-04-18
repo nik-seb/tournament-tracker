@@ -11,6 +11,7 @@
              <th>Start Date</th>
              <th>Start Time</th>
              <th>Winner</th>
+             <th></th>
          </tr>
          <tr v-for="match in matches" v-bind:key="match.matchId">
             <td>{{getTeamNameFromTeamList(match.homeTeamId)}}</td>
@@ -19,6 +20,7 @@
             <td>{{match.startDate}}</td>
             <td>{{match.startTime}}</td>
             <td>{{(match.winningTeamName) ? match.winningTeamName : "TBD"}}</td>
+            <td><button>Edit match</button></td>
             <!-- <td v-for="team in tournamentTeams" v-bind:key="team.teamId">{{team.teamName}}></td> -->
             <!-- THIS THING WORKS FINE WITH TOURNAMENT TEAMS^^^^^^ -->
         </tr>
