@@ -5,18 +5,19 @@
                     once teams are fully implemented, display team size and link to team page
                 -->
           <ul>
-              <li v-for="team in participants" v-bind:key="team.teamId">{{team.teamName}}</li>
+              <li v-for="team in tournamentTeams" v-bind:key="team.teamId">{{team.teamName}}</li>
           </ul>
   </div>
 </template>
 
 <script>
-import TournamentService from "@/services/TournamentService.js";
+// import TournamentService from "@/services/TournamentService.js";
 
 export default {
     name: 'participants',
     props: {
-        tournamentID: Number
+        tournamentID: Number,
+        tournamentTeams: Array
     },
     data() {
         return {
@@ -24,12 +25,12 @@ export default {
         }
     },
     created() {
-        TournamentService.getParticipantsInTournament(this.tournamentID).then( (response) => {
-                if (response.status == 200) {
-                    this.participants = response.data;
-                }
-            }
-        )
+        // TournamentService.getParticipantsInTournament(this.tournamentID).then( (response) => {
+        //         if (response.status == 200) {
+        //             this.participants = response.data;
+        //         }
+        //     }
+        // )
     }
 }
 </script>

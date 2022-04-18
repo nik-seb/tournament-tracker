@@ -11,6 +11,7 @@ import Modify from '../views/Modify'
 import Account from '../views/Account'
 import BrowseTournaments from '../views/BrowseTournaments'
 import JoinTournamentForm from '../components/JoinTournamentForm'
+import ManageBracket from '../views/ManageBracket'
 import Invite from '../views/Invite'
 
 Vue.use(Router)
@@ -113,13 +114,22 @@ const router = new Router({
       }
     },
     {
+      path: "/tournaments/:id/bracket",
+      name: "manage-bracket",
+      component: ManageBracket,
+      props: true, // for some reason passing props like this breaks the css and takes away left padding - but can't find another way to do it
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
       path: "/invitations",
       name: "create-invite",
       component: Invite,  
       meta: {
         requiresAuth: true
       }
-    }  
+    }
   ]
 })
 

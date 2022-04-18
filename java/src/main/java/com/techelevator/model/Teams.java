@@ -12,15 +12,6 @@ public class Teams {
     private int teamSize;
     private String teamName;
 
-    public String getTeamName() {
-        return teamName;
-    }
-
-    public void setTeamName(String teamName) {
-        this.teamName = teamName;
-    }
-
-
     public Teams() {}
 
     public Teams(int teamId, int teamSize, String teamName) {
@@ -44,6 +35,13 @@ public class Teams {
 
     public void setTeamSize(int teamSize) {
         this.teamSize = teamSize;
+    }
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
     }
 
 

@@ -1,16 +1,91 @@
 <template>
   <div>
       <h3>Bracket</h3>
-      <p>Schedule TBD</p>
-      <img src="../assets/tournament_picture.jpg" alt="example of tournament picture">
+      <p v-if="matches.length == 0">Schedule TBD</p>
+      <button v-if="this.$store.state.user.role == 'ROLE_HOST' && matches.length == 0" v-on:click.prevent="generateBracket()">Generate Matches</button>
+      <table id="schedule" v-if="matches.length > 0">
+          <tr>
+             <th>Home Team</th>
+             <th>Away Team</th>
+             <th>Location</th>
+             <th>Start Date</th>
+             <th>Start Time</th>
+             <th>Winner</th>
+             <th></th>
+         </tr>
+         <tr v-for="match in matches" v-bind:key="match.matchId">
+            <td>{{getTeamNameFromTeamList(match.homeTeamId)}}</td>
+            <td>{{getTeamNameFromTeamList(match.awayTeamId)}}</td>
+            <td>{{match.locationId}}</td>
+            <td>{{match.startDate}}</td>
+            <td>{{match.startTime}}</td>
+            <td>{{(match.winningTeamName) ? match.winningTeamName : "TBD"}}</td>
+            <td><button>Edit match</button></td>
+            <!-- <td v-for="team in tournamentTeams" v-bind:key="team.teamId">{{team.teamName}}></td> -->
+            <!-- THIS THING WORKS FINE WITH TOURNAMENT TEAMS^^^^^^ -->
+        </tr>
+      </table>
   </div>
 </template>
 
 <script>
+import TournamentService from "@/services/TournamentService.js";
 export default {
     name: 'bracket',
     props: {
-        tournamentID: Number
+        tournamentID: Number,
+        tournamentTeams: Array
+    },
+    methods: {
+        generateBracket() {
+            TournamentService.createBracketForTournament(this.tournamentID).then((response) => {
+                if (response.status == 200) {
+                        this.$router.push({name: "manage-bracket", params: {id: this.tournamentID, matches: response.data, tournamentID: this.tournamentID}});
+                    }
+            });
+        },
+        // THIS BREAKS IF I GIVE IT TOURNAMENT TEAMS 
+        // need some more complex logic here to display differently if bye or tbd
+        getTeamNameFromTeamList(teamId) {
+            console.log(teamId)
+            const activeTeam = this.teams.find((team) => {
+                if (team.teamId == teamId) {
+                    return true;
+                }
+            });
+            console.log(activeTeam)
+            return activeTeam.teamName;
+        }
+    },
+    created () {
+        TournamentService.getMatchesByTournamentId(this.tournamentID).then((response) => {
+                if (response.status == 200) {
+                    this.matches = response.data;
+                    if (this.matches.length > 0) {
+                        for (let match of this.matches) {
+                            TournamentService.getTeamByTeamId(match.homeTeamId).then((response) => {
+                                if (response.status == 200) {
+                                    match.homeTeamName = response.data.teamName;
+                                }
+                            })
+                            TournamentService.getTeamByTeamId(match.awayTeamId).then((response) => {
+                                if (response.status == 200) {
+                                    match.awayTeamName = response.data.teamName;
+                                } 
+                            })
+                            if (match.winningTeamId) {
+                                TournamentService.getTeamByTeamId(match.winningTeamId).then((response) => {
+                                if (response.status == 200) {
+                                    match.winningTeamName = response.data.teamName;
+                                }
+                            })
+                            }
+                            // add get for location name when that model/method is available
+                        }
+                    }
+                }
+            });
+        
     },
     data () {
         return {
@@ -50,19 +125,13 @@ export default {
                 {
                     teamId: 7,
                     teamName: 'Blackbirds'
+                },
+                {
+                    teamId: 13,
+                    teamName: 'BYE'
                 }
             ],
-            matches: [
-                {
-                    tournamentId: 1,
-                    startDate: '',
-                    startTime: '',
-                    homeTeamId: '',
-                    awayTeamId: '',
-                    locationId: '',
-                    winningTeamId: null
-                }
-            ]
+            matches: []
         }
     }
 }
