@@ -6,6 +6,7 @@
       <button v-if="this.$store.state.user.role == 'ROLE_HOST' && matches.length == 0" v-on:click.prevent="generateBracket()">Generate Matches</button>
       <table id="schedule" v-if="matches.length > 0">
           <tr>
+              <th>Round</th>
              <th>Home Team</th>
              <th>Away Team</th>
              <th>Location</th>
@@ -13,7 +14,8 @@
              <th>Start Time</th>
              <th>Winner</th>
          </tr>
-         <tr v-for="match in matches" v-bind:key="match.matchId">
+         <tr v-for="match in sortedByMatchId(matches)" v-bind:key="match.matchId">
+             <td>{{match.roundNumber}}</td>
             <td>{{getTeamNameFromTeamList(match.homeTeamId)}}</td>
             <td>{{getTeamNameFromTeamList(match.awayTeamId)}}</td>
             <td>{{match.locationId}}</td>
@@ -53,6 +55,18 @@ export default {
                 return activeTeam.teamName;
             }
             return '';
+        },
+        compareMatchId(match1, match2) {
+            if (match1.matchId > match2.matchId) {
+                return 1;
+            }
+            if (match1.matchId < match2.matchId) {
+                return -1;
+            }
+            return 0;
+        },
+        sortedByMatchId (arr) {
+            return arr.sort(this.compareMatchId);
         }
     },
     created () {
