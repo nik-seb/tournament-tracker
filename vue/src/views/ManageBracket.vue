@@ -2,7 +2,7 @@
     <div>
         <h2> Edit the matches for this bracket</h2>
         <edit-match-form v-for="match in matchesList" v-bind:key="match.matchId" v-bind:Match="match"/>
-        <button>Return to tournament page</button>
+        <router-link :to="{name: 'view-tournament'}"><button>Return to tournament page</button></router-link>
     </div>
 </template>
 
