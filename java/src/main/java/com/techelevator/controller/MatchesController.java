@@ -38,16 +38,16 @@ public class MatchesController {
     //removed getmatchesbytournament due to ambiguous mapping with getMatch; equivalent method "getTournamentMatches" is in tournamentController
 
     @GetMapping("/matches/{id}")
-    public Matches getMatch(@PathVariable int matchId) throws MatchNotFoundException {
+    public Matches getMatch(@PathVariable ("id") int matchId) throws MatchNotFoundException {
 
         Matches result = matchesDao.getMatch(matchId);
         if (result == null) {
             throw new MatchNotFoundException("No Match found with that id. ");
         } else {
             return result;
-    }
+        }
 
-}
+    }
 
     @RequestMapping(path = "tournaments/{id}/matches", method = RequestMethod.POST)
     public Matches postMatch(@RequestBody Matches newMatch, @PathVariable ("id") int tournamentId) {
@@ -89,3 +89,4 @@ public class MatchesController {
 
 
 }
+

@@ -78,45 +78,48 @@ public class TournamentController {
     }
 
 
-        @RequestMapping(path = "/tournaments", method = RequestMethod.POST)
-        public Tournament postTournament(@RequestBody Tournament newTournament) throws TournamentNotFoundException {
-            return tournamentDao.create(newTournament);
-        }
+    @RequestMapping(path = "/tournaments", method = RequestMethod.POST)
+    public Tournament postTournament(@RequestBody Tournament newTournament) throws TournamentNotFoundException {
+        return tournamentDao.create(newTournament);
+    }
 
-        @RequestMapping(path = "/tournaments/{id}", method = RequestMethod.PUT)
-        public Tournament putTournament(@RequestBody Tournament updatedTournament, @PathVariable("id") int tournamentId) throws TournamentNotFoundException {
+    @RequestMapping(path = "/tournaments/{id}", method = RequestMethod.PUT)
+    public Tournament putTournament(@RequestBody Tournament updatedTournament, @PathVariable("id") int tournamentId) throws TournamentNotFoundException {
 
-            if (tournamentDao.updateTournament(updatedTournament, tournamentId) != null) {
-                return updatedTournament;
-            } else {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tournament not found to update.");
+        if (tournamentDao.updateTournament(updatedTournament, tournamentId) != null) {
+            return updatedTournament;
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tournament not found to update.");
         }
     }
 
-        @DeleteMapping("/tournaments/{id}")
-        public void deleteTournament ( @PathVariable ("id") int tournamentId) throws TournamentNotFoundException {
-            if (!tournamentDao.deleteTournament(tournamentId)) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tournament not found to delete.");
-            }
-
+    @DeleteMapping("/tournaments/{id}")
+    public void deleteTournament ( @PathVariable ("id") int tournamentId) throws TournamentNotFoundException {
+        if (!tournamentDao.deleteTournament(tournamentId)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tournament not found to delete.");
         }
-
-        @RequestMapping(path = "tournaments/{id}/teams", method = RequestMethod.POST)
-        public void addTeamsToTournament(@PathVariable ("id") int tournamentId, @RequestBody Teams teams)
-                                        throws TournamentNotFoundException, TeamNotFoundException {
-
-            tournamentDao.addTeamsToTournaments(teams, tournamentId);
-        }
-        @RequestMapping(path = "tournaments/{id}/bracket", method = RequestMethod.POST)
-        public List<Matches> createBracket(@PathVariable ("id") int tournamentId){
-            List<Teams> teamsList = teamsDao.getTeamsByTournamentId(tournamentId);
-            return tournamentService.generateBracket(teamsList, tournamentId);
-        }
-
-
-
 
     }
+
+    @RequestMapping(path = "tournaments/{id}/teams", method = RequestMethod.POST)
+    public void addTeamsToTournament(@PathVariable ("id") int tournamentId, @RequestBody Teams teams)
+            throws TournamentNotFoundException, TeamNotFoundException {
+
+        tournamentDao.addTeamsToTournaments(teams, tournamentId);
+    }
+    @RequestMapping(path = "tournaments/{id}/bracket", method = RequestMethod.POST)
+    public List<Matches> createBracket(@PathVariable ("id") int tournamentId){
+        List<Teams> teamsList = teamsDao.getTeamsByTournamentId(tournamentId);
+        return tournamentService.generateBracket(teamsList, tournamentId);
+    }
+
+
+
+
+}
+
+
+
 
 
 

@@ -37,7 +37,8 @@ export default {
                 endDate: '',
                 sportId: '',
                 numOfTeams: 0,
-                description: ''
+                description: '',
+                organizerId: this.$store.state.user.id
                 
             },
             newSport: {

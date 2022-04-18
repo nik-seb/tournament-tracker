@@ -39,11 +39,8 @@ public class TeamsController {
         return teamsDao.listAllTeams();
     }
 
-<<<<<<< HEAD
     // tested and ok
     @GetMapping("/teams/{id}")
-=======
->>>>>>> 01cfa1a25e4d93a88b4a07ff67d89d67c614c68f
     public Teams getTeamById(@PathVariable ("id") int teamId) throws TeamNotFoundException {
 
         Teams result = teamsDao.getTeamById(teamId);
