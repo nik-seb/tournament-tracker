@@ -35,41 +35,47 @@ public class MatchesController {
         return matchesDao.getMatchesByDate(date);
     }
 
-
-    @GetMapping("/matches/{tournamentId}")
-    public List<Matches> getMatchesByTournament(@PathVariable int tournamentId) throws MatchNotFoundException {
-        return matchesDao.getMatchesByTournament(tournamentId);
-    }
+    //removed getmatchesbytournament due to ambiguous mapping with getMatch; equivalent method "getTournamentMatches" is in tournamentController
 
     @GetMapping("/matches/{id}")
-    public Matches getMatch(@PathVariable int matchId) throws MatchNotFoundException {
+    public Matches getMatch(@PathVariable ("id") int matchId) throws MatchNotFoundException {
 
         Matches result = matchesDao.getMatch(matchId);
         if (result == null) {
             throw new MatchNotFoundException("No Match found with that id. ");
         } else {
             return result;
+        }
+
     }
 
-}
-
-    @RequestMapping(path = "/matches", method = RequestMethod.POST)
-    public Matches postMatch(@RequestBody Matches newMatch) {
-        return matchesDao.createMatch(newMatch);
+    @RequestMapping(path = "tournaments/{id}/matches", method = RequestMethod.POST)
+    public Matches postMatch(@RequestBody Matches newMatch, @PathVariable ("id") int tournamentId) {
+        return matchesDao.createMatch(newMatch, tournamentId);
     }
 
 
     @RequestMapping(path = "/matches/{id}", method = RequestMethod.PUT)
     public Matches putMatch(@PathVariable ("id") int matchId, @RequestBody Matches updatedMatch) throws MatchNotFoundException {
 
-        if (matchesDao.updateMatch(matchId) != null) {
+        if (matchesDao.updateMatch(updatedMatch) != null) {
             return updatedMatch;
         } else {
             throw new MatchNotFoundException("Matches not found to update. ");
+        }
+
     }
 
-}
+    @RequestMapping(path = "/matches/{id}/winner", method = RequestMethod.PUT)
+    public Matches setMatchWinner(@PathVariable ("id") int matchId, @RequestBody Matches updatedMatch) throws MatchNotFoundException {
 
+        if (matchesDao.setMatchWinner(updatedMatch) != null) {
+            return updatedMatch;
+        } else {
+            throw new MatchNotFoundException("Matches not found to update. ");
+        }
+
+    }
 
     @DeleteMapping("/matches/{id}")
     public void deleteMatch(@PathVariable int matchId) throws MatchNotFoundException {
@@ -83,3 +89,4 @@ public class MatchesController {
 
 
 }
+

@@ -13,15 +13,23 @@
             <!-- confirm button -->
             <button class="isHost" v-on:click.prevent="updateAccount()"> Enable Host</button>
             </div>
-
       </form>
 
+       <div>
+         <h3>Invites Sent</h3>  
+         <invite-details />
+         <p></p>
+
+      </div> 
   </div>
+  
 </template>
 
 
 <script>
 import authService from '../services/AuthService';
+import InviteDetails from '../components/InviteDetails.vue'
+
 export default {
     name: 'account',
     props: ['userId'],
@@ -55,6 +63,10 @@ export default {
 
             }
         }
+
+    },
+    components:{
+        InviteDetails
     }
 
 }
