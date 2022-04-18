@@ -2,6 +2,7 @@
   <div>
       <h3>Bracket</h3>
       <p v-if="matches.length == 0">Schedule TBD</p>
+      <router-link v-bind:to="{name: 'manage-bracket', params: {id: this.tournamentID, matches: this.matches, tournamentID: this.tournamentID}}"> <button v-if="this.$store.state.user.role == 'ROLE_HOST' && matches.length > 0">Edit Bracket</button></router-link>
       <button v-if="this.$store.state.user.role == 'ROLE_HOST' && matches.length == 0" v-on:click.prevent="generateBracket()">Generate Matches</button>
       <table id="schedule" v-if="matches.length > 0">
           <tr>
@@ -11,7 +12,6 @@
              <th>Start Date</th>
              <th>Start Time</th>
              <th>Winner</th>
-             <th></th>
          </tr>
          <tr v-for="match in matches" v-bind:key="match.matchId">
             <td>{{getTeamNameFromTeamList(match.homeTeamId)}}</td>
@@ -19,10 +19,7 @@
             <td>{{match.locationId}}</td>
             <td>{{match.startDate}}</td>
             <td>{{match.startTime}}</td>
-            <td>{{(match.winningTeamName) ? match.winningTeamName : "TBD"}}</td>
-            <td><button>Edit match</button></td>
-            <!-- <td v-for="team in tournamentTeams" v-bind:key="team.teamId">{{team.teamName}}></td> -->
-            <!-- THIS THING WORKS FINE WITH TOURNAMENT TEAMS^^^^^^ -->
+            <td>{{getTeamNameFromTeamList(match.winningTeamId) ? match.winningTeamName : "TBD"}}</td>
         </tr>
       </table>
   </div>
@@ -33,8 +30,7 @@ import TournamentService from "@/services/TournamentService.js";
 export default {
     name: 'bracket',
     props: {
-        tournamentID: Number,
-        tournamentTeams: Array
+        tournamentID: Number
     },
     methods: {
         generateBracket() {
@@ -44,45 +40,31 @@ export default {
                     }
             });
         },
-        // THIS BREAKS IF I GIVE IT TOURNAMENT TEAMS 
         // need some more complex logic here to display differently if bye or tbd
         getTeamNameFromTeamList(teamId) {
             console.log(teamId)
-            const activeTeam = this.teams.find((team) => {
+            const activeTeam = this.tournamentTeams.find((team) => {
                 if (team.teamId == teamId) {
                     return true;
                 }
             });
             console.log(activeTeam)
-            return activeTeam.teamName;
+            if (activeTeam) {
+                return activeTeam.teamName;
+            }
+            return '';
         }
     },
     created () {
+        console.log('teams: ' + this.tournamentTeams);
         TournamentService.getMatchesByTournamentId(this.tournamentID).then((response) => {
                 if (response.status == 200) {
                     this.matches = response.data;
-                    if (this.matches.length > 0) {
-                        for (let match of this.matches) {
-                            TournamentService.getTeamByTeamId(match.homeTeamId).then((response) => {
-                                if (response.status == 200) {
-                                    match.homeTeamName = response.data.teamName;
-                                }
-                            })
-                            TournamentService.getTeamByTeamId(match.awayTeamId).then((response) => {
-                                if (response.status == 200) {
-                                    match.awayTeamName = response.data.teamName;
-                                } 
-                            })
-                            if (match.winningTeamId) {
-                                TournamentService.getTeamByTeamId(match.winningTeamId).then((response) => {
-                                if (response.status == 200) {
-                                    match.winningTeamName = response.data.teamName;
-                                }
-                            })
-                            }
-                            // add get for location name when that model/method is available
+                    TournamentService.getParticipantsInTournament(this.$route.params.id).then(response => {
+                        if (response.status == 200) {
+                            this.tournamentTeams = response.data;
                         }
-                    }
+                    })            
                 }
             });
         
@@ -131,6 +113,7 @@ export default {
                     teamName: 'BYE'
                 }
             ],
+            tournamentTeams: [],
             matches: []
         }
     }

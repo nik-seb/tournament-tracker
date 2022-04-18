@@ -2,7 +2,7 @@
     <div>
         <h2> Edit the matches for this bracket</h2>
         <edit-match-form v-for="match in matchesList" v-bind:key="match.matchId" v-bind:Match="match"/>
-        <button>Return to tournament page</button>
+        <router-link v-bind:to="{name: 'view-tournament', params: {id: this.tournamentID}}"><button>Return to tournament page</button></router-link>
     </div>
 </template>
 
@@ -19,7 +19,9 @@ export default {
         EditMatchForm
     },
     created () {
-        if (!this.matches || this.matches.length == 0) {
+        console.log(this.matches)
+        this.matchesList = this.matches;
+        if (!this.matchesList || this.matchesList.length == 0) {
             TournamentService.getMatchesByTournamentId(this.tournamentID).then((response) => {
                 if (response.status == 200) {
                     this.matchesList = response.data;
