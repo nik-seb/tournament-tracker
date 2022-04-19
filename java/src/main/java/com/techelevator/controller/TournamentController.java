@@ -113,6 +113,10 @@ public class TournamentController {
         return tournamentService.generateBracket(teamsList, tournamentId);
     }
 
+    @RequestMapping(path = "tournaments/{id}/bracket/{roundNum}", method = RequestMethod.POST)
+    public List<Matches> updateBracket(@PathVariable ("id") int tournamentId, @PathVariable int roundNum, @RequestBody List<Teams> teams){
+        return tournamentService.updateBracket(teams, tournamentId, roundNum);
+    }
 
 
 

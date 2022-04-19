@@ -137,6 +137,24 @@ public class JdbcMatchesDao implements MatchesDao {
         }
     }
 
+    @Override
+    public List<Matches> getMatchByTournamentAndRound(int tournamentId, int roundNumber) {
+
+        List<Matches> matches = new ArrayList<>();
+
+        String sql = "SELECT match_id, tournament_id, start_date, start_time, home_team_id, away_team_id, location_id, " +
+                "winning_team_id, round_number" +
+                " FROM matches " +
+                " WHERE tournament_id = ? AND round_number = ?; ";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, tournamentId, roundNumber);
+        while (results.next()) {
+            matches.add(mapRowToMatches(results));
+        }
+        return matches;
+    }
+
+
+
     private Matches mapRowToMatches(SqlRowSet results) {
         Matches match = new Matches();
         match.setMatchId(results.getInt("match_id"));
