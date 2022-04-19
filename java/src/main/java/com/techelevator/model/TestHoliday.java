@@ -20,16 +20,18 @@ public class TestHoliday {
 
     public Integer status;
 
-    private List<Holiday> holidayList;
+    private Holiday[] holidays;
 
     private String error;
 
     private String warning;
 
 
-    public TestHoliday(Integer status, List<Holiday> holidayList, String error, String warning) {
+    public TestHoliday(){};
+
+    public TestHoliday(Integer status, Holiday[] holidayList, String error, String warning) {
         this.status = status;
-        this.holidayList = holidayList;
+        this.holidays = holidayList;
         this.error = error;
         this.warning = warning;
     }
@@ -42,12 +44,12 @@ public class TestHoliday {
         this.status = status;
     }
 
-    public List<Holiday> getHolidayList() {
-        return holidayList;
+    public Holiday[] getHolidays() {
+        return holidays;
     }
 
-    public void setHolidayList(List<Holiday> holidayList) {
-        this.holidayList = holidayList;
+    public void setHolidays(Holiday[] holidayList) {
+        this.holidays = holidayList;
     }
 
     public String getError() {

@@ -1,23 +1,27 @@
 <template>
-  <div class="inv">
+  <body class="inv">
       <h3>INVITES</h3>
           <ul>
 
-              <label for="tournaments">Select a Tournament: </label>
-              <select id="tournaments" name="tournaments" v-model="tournaments.tournamentId ">
+
+              <div>
+              <label for="tournamentNames">Select a Tournament: </label>
+              <select id="tournamentName" name="tournamentName" v-model="tournaments.tournamentId ">
+                   
                    <option value='' disabled></option>
-                   <option v-for="tournament in tournaments" v-bind:key="tournament.tournamentId"  v-bind:value="tournament.tournamentId" > {{tournaments.tournamentName}}</option>
-
-
+                   <option v-for="tournament in tournamentList" v-bind:key="tournament.tournamentId"  v-bind:value="tournament.tournamentId" > {{tournaments.tournamentName}}</option>
               </select>
+              </div>  
 
+              
+       
               <div v-for="player in players" v-bind:key="player.id">
                   {{ players.playerName }}
               </div>
               <div v-for="team in teams" v-bind:key="team.id">
                   {{ teams.teamName }}
               </div>
-              <div v-for="tournament in tournaments" v-bind:key="tournament.tournamentId"  v-bind:value="tournament.tournamentId" >
+              <div v-for="tournament in tournamentList" v-bind:key="tournament.tournamentId"  v-bind:value="tournament.tournamentId" >
                   {{ tournament.tournamentName }}
               </div> 
               <div v-for="invitation in invitations" v-bind:key="invitation.id">
@@ -27,7 +31,7 @@
               <!-- <li v-for="invitations in invites" v-bind:key="invitations.invitationId">{{ invitations }}</li>
               <li v-for="invitations in invites" v-bind:key="invitations.teamId">{{invitations.status}}</li> -->
           </ul>
-  </div>
+  </body>
 </template>
 
 <script>
@@ -48,7 +52,7 @@ export default {
         invitations: [],
         teams:[],
         players:[],
-        tournaments:[],
+        tournamentList:[],
 
         organizerId: this.$store.state.user.id,
         teamId: 0
@@ -63,7 +67,7 @@ export default {
         TournamentService.getAllTournaments().then(response => {
 
             if(response.data === 200){
-                this.tournaments.tournamentName = response.data.tournamentName
+                this.tournaments.tournamentList = response.data
             }
         })
 
@@ -80,6 +84,15 @@ export default {
                 
             }
         })
+
+        TournamentService.getAllTeams().then(response => {
+
+                if(response.status === 200){
+                    this.teamList = response.data 
+                }
+            })
+
+         
 
         // InvitationService.receivedInviteByTeamId().then(response =>{
 

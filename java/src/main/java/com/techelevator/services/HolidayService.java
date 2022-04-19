@@ -1,6 +1,7 @@
 package com.techelevator.services;
 
 import com.techelevator.model.Holiday;
+import com.techelevator.model.TestHoliday;
 import org.jboss.logging.BasicLogger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -27,21 +28,22 @@ public class HolidayService implements ServerHolidayService{
     @Override
     public Holiday[] getAllHolidaysOnDate(Date date) {
 
-         Holiday[] holidays = null;
+        TestHoliday testHoliday = null;
 
 
         try {
 
-            holidays  =
+           testHoliday  =
 
-                    restTemplate.getForObject(API_BASE_URL +  "?pretty&key="+ apiKey + "&country=US&year=2021",  Holiday[].class );
+                    restTemplate.getForObject(API_BASE_URL +  "?pretty&key="+ apiKey + "&country=US&year=2021&public=true",  TestHoliday.class );
 
         }catch (RestClientResponseException | ResourceAccessException e){
             System.out.println(e.getLocalizedMessage());
+            return null;
         }
 
 
-        return holidays;
+        return testHoliday.getHolidays();
     }
 
 //    curl -G -d country="US" -d year="2022" -d pretty

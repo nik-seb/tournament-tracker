@@ -23,6 +23,8 @@ public class Holiday {
 
     private boolean isPublic;
 
+    public Holiday(){};
+
     public Holiday(String name, String date, String observed, boolean isPublic) {
         this.name = name;
         this.date = date;
