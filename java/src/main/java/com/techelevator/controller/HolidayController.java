@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -25,9 +26,9 @@ public class HolidayController {
         this.serverHolidayService = serverHolidayService;
     }
 
-    @RequestMapping(path = "", method = RequestMethod.GET)
-    public List<Holiday> getAllHolidays(){
-       return serverHolidayService.getAllHoliday();
+    @RequestMapping(path = "test", method = RequestMethod.GET)
+    public Holiday[] getAllHolidays(Date date){
+       return serverHolidayService.getAllHolidaysOnDate(date);
     }
 
 

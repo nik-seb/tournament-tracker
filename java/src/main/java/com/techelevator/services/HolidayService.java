@@ -11,6 +11,7 @@ import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -18,24 +19,22 @@ import java.util.List;
 public class HolidayService implements ServerHolidayService{
 
     @Value("${api.key}")
-    private String apiKey;
+    private final String apiKey = "0fdef0df-5fac-40ce-bdf7-0b3c4a45ea3d";
 
-    public static final String API_BASE_URL = "https://holidayapi.com/v1/holidays + \"0fdef0df-5fac-40ce-bdf7-0b3c4a45ea3d\"";
+    public static final String API_BASE_URL = "https://holidayapi.com/v1/holidays";
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Override
-    public List<Holiday> getAllHoliday() {
+    public Holiday[] getAllHolidaysOnDate(Date date) {
 
-        List<Holiday> holidays = new ArrayList<>();
+         Holiday[] holidays = null;
 
 
         try {
 
-            ResponseEntity<List<Holiday>> actualHoliday  =
+            holidays  =
 
-                    restTemplate.exchange(API_BASE_URL +  "?api_key="+ apiKey, HttpMethod.GET, null, new ParameterizedTypeReference<List<Holiday>>() {} );
-
-            holidays = actualHoliday.getBody();
+                    restTemplate.getForObject(API_BASE_URL +  "?pretty&key="+ apiKey + "&country=US&year=2021",  Holiday[].class );
 
         }catch (RestClientResponseException | ResourceAccessException e){
             System.out.println(e.getLocalizedMessage());

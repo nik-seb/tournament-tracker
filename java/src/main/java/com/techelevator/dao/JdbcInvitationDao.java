@@ -34,24 +34,7 @@ public class JdbcInvitationDao implements InvitationDao{
 
     }
 
-    @Override
-    public List<Invitation> getInvitationByTournamentId(int tournamentId) {
 
-        List<Invitation> invitations = new ArrayList<>();
-
-        String sql = "SELECT invitation_id, tournament_id, team_id, organizer_id, inv_status " +
-                     "FROM invitations " +
-                     "WHERE tournament_id = ?;";
-
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, tournamentId);
-
-        while(results.next()){
-            invitations.add(mapRowToInvites(results));
-        }
-
-        return invitations;
-
-    }
 
     @Override
     public List<Invitation> getInvitationByStatus(String status) {
@@ -119,6 +102,28 @@ public class JdbcInvitationDao implements InvitationDao{
 
         return invitation;
 
+    }
+
+    @Override
+    public List<Invitation> getInvitationsByTournamentId(int tournamentId) {
+
+        List<Invitation> invitations = new ArrayList<>();
+
+        String sql = "SELECT invitations.inv_status, teams.team_name, players.player_name, tournaments.tournament_name " +
+                "     FROM invitations " +
+                "     JOIN tournaments ON invitations.tournament_id = tournaments.tournament_id" +
+                "     JOIN teams ON invitations.team_id = teams.team_id " +
+                "     JOIN player_team ON teams.team_id = player_team.team_id " +
+                "     JOIN players ON player_team.player_id = players.player_id " +
+                "     WHERE tournaments.tournament_id = ?;";
+
+       SqlRowSet results = jdbcTemplate.queryForRowSet(sql, tournamentId);
+
+       while(results.next()){
+           invitations.add(mapRowToInvites(results));
+       }
+
+       return invitations;
     }
 
 
