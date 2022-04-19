@@ -9,11 +9,12 @@
               <select id="tournamentName" name="tournamentName" v-model="tournaments.tournamentId ">
                    
                    <option value='' disabled></option>
-                   <option v-for="tournament in tournamentList" v-bind:key="tournament.tournamentId"  v-bind:value="tournament.tournamentId" > {{tournaments.tournamentName}}</option>
+                   <option v-for="tournament in tournaments" v-bind:key="tournament.tournamentId"  v-bind:value="tournament.tournamentId" > {{tournaments.tournamentName}}</option>
+
               </select>
               </div>  
 
-              
+
        
               <div v-for="player in players" v-bind:key="player.id">
                   {{ players.playerName }}
@@ -21,7 +22,7 @@
               <div v-for="team in teams" v-bind:key="team.id">
                   {{ teams.teamName }}
               </div>
-              <div v-for="tournament in tournamentList" v-bind:key="tournament.tournamentId"  v-bind:value="tournament.tournamentId" >
+              <div v-for="tournament in tournaments" v-bind:key="tournament.tournamentId"  v-bind:value="tournament.tournamentId" >
                   {{ tournament.tournamentName }}
               </div> 
               <div v-for="invitation in invitations" v-bind:key="invitation.id">
@@ -52,7 +53,7 @@ export default {
         invitations: [],
         teams:[],
         players:[],
-        tournamentList:[],
+        tournaments:[],
 
         organizerId: this.$store.state.user.id,
         teamId: 0
@@ -66,12 +67,12 @@ export default {
 
         TournamentService.getAllTournaments().then(response => {
 
-            if(response.data === 200){
-                this.tournaments.tournamentList = response.data
+            if(response.status === 200){
+                this.tournaments = response.data
             }
         })
 
-        InvitationService.getInviteByTournamentId()
+       
 
         InvitationService.sentInviteByOrganizerId(this.organizerId).then(response => {
 

@@ -113,8 +113,11 @@ public class TournamentController {
         return tournamentService.generateBracket(teamsList, tournamentId);
     }
 
-    @RequestMapping(path = "tournaments/{id}/bracket/{roundNum}", method = RequestMethod.POST)
-    public List<Matches> updateBracket(@PathVariable ("id") int tournamentId, @PathVariable int roundNum, @RequestBody List<Teams> teams){
+    @RequestMapping(path = "tournaments/{id}/bracket/{roundNum}", method = RequestMethod.PUT)
+    public List<Matches> updateBracket(@PathVariable ("id") int tournamentId,
+                                       @PathVariable ("roundNum") int roundNum, @RequestBody List<Teams> teams)
+                                        throws MatchNotFoundException{
+
         return tournamentService.updateBracket(teams, tournamentId, roundNum);
     }
 

@@ -46,20 +46,4 @@ public class HolidayService implements ServerHolidayService{
         return testHoliday.getHolidays();
     }
 
-//    curl -G -d country="US" -d year="2022" -d pretty
-//-d key="0fdef0df-5fac-40ce-bdf7-0b3c4a45ea3d" "https://holidayapi.com/v1/holidays"
-
-//    private HttpEntity<Void> makeAuthEntity(){
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setBearerAuth(authToken);
-//        return new HttpEntity<>(headers);
-//    }
-
-
-
-    //        HttpHeaders httpHeaders = new HttpHeaders();
-//
-//        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-//
-//        HttpEntity<Holiday> entity = new HttpEntity<>(httpHeaders);
 }

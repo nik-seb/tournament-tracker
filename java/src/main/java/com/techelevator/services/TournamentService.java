@@ -3,6 +3,7 @@ package com.techelevator.services;
 import com.techelevator.dao.MatchesDao;
 import com.techelevator.dao.TeamsDao;
 import com.techelevator.dao.TournamentDao;
+import com.techelevator.exception.MatchNotFoundException;
 import com.techelevator.model.Matches;
 import com.techelevator.model.Teams;
 import com.techelevator.model.Tournament;
@@ -160,7 +161,7 @@ public class TournamentService implements ServerTournamentService{
     }
 
     @Override
-    public List<Matches> updateBracket(List<Teams> teams, int roundNum, int tournamentId) {
+    public List<Matches> updateBracket(List<Teams> teams, int roundNum, int tournamentId) throws MatchNotFoundException {
 
 
         List<Matches> listMatches = matchesDao.getMatchByTournamentAndRound(roundNum, tournamentId);
@@ -179,9 +180,16 @@ public class TournamentService implements ServerTournamentService{
             teams.remove(0);
             match.setAwayTeamId(teams.get(0).getTeamId());
             teams.remove(0);
-
         }
+
+        for (Matches match: listMatches){
+            matchesDao.updateMatch(match);
+        }
+
+
         return listMatches;
+
+
     }
 
 //    }
