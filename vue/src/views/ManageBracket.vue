@@ -54,7 +54,32 @@ export default {
     },
     methods: {
         updateMatchesWithNames () {
-            this.namedMatches = this.matchesList.map((match) => {
+            //BELOW mutates matches list even though it's map? I iterate through matcheslist and it still receives the names
+            // this.namedMatches = this.matchesList.map((match) => {
+            //     let team1 = this.teams.find((team) => {
+            //         if (team.teamId == match.homeTeamId) {
+            //             return true;
+            //         }
+            //     });
+            //     if (team1) {
+            //         match.homeTeamName = team1.teamName;
+            //     } else {
+            //         match.homeTeamName = '';
+            //     }
+            //     let team2 = this.teams.find((team) => {
+            //         if (team.teamId == match.awayTeamId) {
+            //             return true;
+            //         }
+            //     })
+            //     if (team2) {
+            //         match.awayTeamName = team2.teamName;
+            //     } else {
+            //         match.awayTeamName = '';
+            //     }
+            //     console.log(match.awayTeamName);
+            // })
+            // same issue with below as with above
+            this.matchesList.forEach((match) => {
                 let team1 = this.teams.find((team) => {
                     if (team.teamId == match.homeTeamId) {
                         return true;
@@ -75,9 +100,9 @@ export default {
                 } else {
                     match.awayTeamName = '';
                 }
-                console.log(match.awayTeamName);
             })
         }
+        
     }
 }
 </script>

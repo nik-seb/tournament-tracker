@@ -89,6 +89,10 @@ export default {
 
   getAllTeams(){
     return axios.get('/teams');
+  },
+
+  getAllLocations(){
+    return axios.get('/locations');
   }
 
 }
