@@ -1,5 +1,6 @@
 package com.techelevator.services;
 
+import com.fasterxml.jackson.databind.deser.DataFormatReaders;
 import com.techelevator.dao.MatchesDao;
 import com.techelevator.dao.TeamsDao;
 import com.techelevator.dao.TournamentDao;
@@ -60,6 +61,7 @@ public class TournamentService implements ServerTournamentService{
             pairs.add(pair);
             match.setTournamentId(tournamentId);
             match.setLocationId(1);
+            match.setRoundNumber(1);
             match.setWinningTeamId(pair[1].getTeamId());
             allMatches.add(match);
             System.out.println("Away Team: " + match.getAwayTeamId() + "Home Team: " + match.getHomeTeamId());
@@ -77,6 +79,7 @@ public class TournamentService implements ServerTournamentService{
         }
         System.out.println("Shuffled Teams: " + pairs);
         System.out.println("Number of Paired Teams: " + pairs.size());
+
     List<Teams> byes = teams;
         int round2NumberOfTeams = pow2/2;
         int numRounds = 1;
@@ -84,6 +87,10 @@ public class TournamentService implements ServerTournamentService{
 
         System.out.println("Teams not paired: ");
         for(Teams teams1 : teams){
+            Matches byeMatches = new Matches();
+            byeMatches.setHomeTeamId(teams1.getTeamId());
+//            byeMatches.setAwayTeamId();
+            byeMatches.setRoundNumber(1);
             System.out.println(teams1.getTeamName() + ", ");
         }
 
