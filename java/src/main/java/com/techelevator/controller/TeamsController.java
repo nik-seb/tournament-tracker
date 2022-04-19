@@ -33,12 +33,13 @@ public class TeamsController {
 
     public TeamsController(TeamsDao teamsDao, PlayersDao playersDao) { this.teamsDao = teamsDao; this.playersDao = playersDao; }
 
-
+    //tested and ok
     @GetMapping("/teams")
     public List<Teams> listAllTeams() throws TeamNotFoundException {
         return teamsDao.listAllTeams();
     }
 
+    // tested and ok
     @GetMapping("/teams/{id}")
     public Teams getTeamById(@PathVariable ("id") int teamId) throws TeamNotFoundException {
 
@@ -62,6 +63,7 @@ public class TeamsController {
             return result;
         }
     }
+
     @GetMapping("/teams/{id}/players")
     public List<Players> getPlayersByTeam(@PathVariable ("id") int teamId){
         return playersDao.getPlayerByTeam(teamId);

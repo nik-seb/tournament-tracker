@@ -29,12 +29,29 @@ public class JdbcPlayersDao implements PlayersDao {
                      "FROM players " +
                      "WHERE player_id = ?; ";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, playerId);
-            if (results.next()) {
+
+        if (results.next()) {
                 player = mapRowToPlayers(results);
 
     }
             return player;
 }
+
+
+    @Override
+    public List<Players> getPlayerByTeamId(int playerId) {
+        List<Players> players = new ArrayList<>();
+        String sql = "SELECT player_id, player_name " +
+                "FROM players " +
+                "INNER JOIN  player_team ON player_team.player_id = player_team.player_id " +
+                " WHERE team_id = ?;  ";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+        while (results.next()) {
+            players.add(mapRowToPlayers(results));
+
+        }
+        return players;
+    }
 
 
     @Override
