@@ -6,29 +6,38 @@ export default {
         return axios.post('/invitations', invitation);
     },
 
-    sentInviteByOrganizerId(organizerId){
+    getInviteByTournamentId(tournamentID){
+        return axios.get(`/invitations/tournament/${tournamentID}`)
+    },
+
+   sentInviteByOrganizerId(organizerId){
         return axios.get(`/invitations/organizer/${organizerId}`);
     },
 
-  
-    getInviteList() {
-        return axios.get('/invitations');
-    },
+        // refilter/refactor code below 
 
-    getInviteByStatus(invitationStatus) {
-        return axios.get(`/invitations/${invitationStatus}`);
-    },
+    // sentInviteByOrganizerId(organizerId){
+    //     return axios.get(`/invitations/organizer/${organizerId}`);
+    // },
 
-    getInvitationByTeamId(teamId) {
-        return axios.get(`/invitations/${teamId}`);
-    },
+    // getInviteList() {
+    //     return axios.get('/invitations');
+    // },
 
-    getInviteByOrganizer(organizerId) {
-        return axios.get(`/invitations/${organizerId}`);
-    },
+    // getInviteByStatus(invitationStatus) {
+    //     return axios.get(`/invitations/${invitationStatus}`);
+    // },
 
-    updateInvitationStatus(invitation) {
-        return axios.put(`/invitations/status/`, invitation);
-    }
+    // getInvitationByTeamId(teamId) {
+    //     return axios.get(`/invitations/${teamId}`);
+    // },
+
+    // getInviteByOrganizer(organizerId) {
+    //     return axios.get(`/invitations/${organizerId}`);
+    // },
+
+    // updateInvitationStatus(invitation) {
+    //     return axios.put(`/invitations/status/`, invitation);
+    // }
     
 }
