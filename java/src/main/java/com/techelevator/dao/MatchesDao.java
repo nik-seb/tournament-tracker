@@ -16,4 +16,5 @@ public interface MatchesDao {
     Matches updateMatch(Matches match);
     Matches setMatchWinner(Matches match);
     boolean deleteMatch(int matchId);
+    List<Matches> getMatchByTournamentAndRound(int tournamentId, int roundNumber);
 }
