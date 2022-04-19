@@ -18,7 +18,8 @@ export default {
   components: { TournamentDetails, TournOptions, Bracket, Participants },
   data () {
     return {
-      tournamentTeams: []
+      tournamentTeams: [],
+      isOpen: true
     }
   },
   created () {

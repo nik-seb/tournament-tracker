@@ -11,7 +11,8 @@
 </template>
 
 <script>
-import invitationService from '../services/InvitationService.js'
+import InvitationService from '../services/InvitationService.js'
+
 export default {
     name: 'invite-details',
    
@@ -29,24 +30,74 @@ export default {
 
     created(){
 
-        invitationService.sentInviteByOrganizerId(this.organizerId).then(response => {
-            if(response.status == 200){
-                this.invites = response.data
-            }
-        })
 
-        invitationService.receivedInviteByTeamId().then(response =>{
+        InvitationService.sentInviteByOrganizerId(this.organizerId).then(response => {
 
             if(response.status == 200){
                 this.invites = response.data
+                this.invitationId = response.data.invitationId;
+                this.tournamentId = response.data.tournamentId;
+                this.teamId = response.data.teamId;
+                this.organizerId = response.data.organizerId;
+                this.inviteStatus = response.data.inviteStatus;
+                
             }
         })
 
-        
+        // InvitationService.receivedInviteByTeamId().then(response =>{
 
+        //     if(response.status == 200){
+        //         this.invites = response.data
+        //     }
+        // })
 
-    }
+    },
 
+methods: {
+    getInviteList() {
+        InvitationService.getInviteList()
+   },
+
+    getInviteByTournamentId() {
+        InvitationService.getInviteByTournamentId(this.tournament.tournamentId).then((response) => {
+            if (response.status == 200) {
+                this.invitation = response.data;
+            }
+        });
+    },
+
+    getInviteByStatus() {
+        InvitationService.getInviteByStatus(this.invitationStatus).then((response) => {
+            if (response.status == 200) {
+                this.invitation = response.data;
+            }
+    });
+},
+
+//     getInvitationByTeamId() {
+// InvitationService.getInviteByTeamId(this.team.teamId).then((response) => {
+//             if (response.status == 200) {
+//                 this.invitation = response.data;
+//             }
+//         });
+//     },
+
+    getInviteByOrganizer() {
+      InvitationService.getInviteByOrganizer(this.organizer.organizerId).then((response) => {
+            if (response.status == 200) {
+                this.invitation = response.data;
+            }
+        });  
+    },
+    updateInvitationStatus() {
+            InvitationService.updateInvitationStatus(this.invitation).then(response => {
+                if (response.status == 200) {
+                    this.invitation = response.data;
+                    
+                }
+            });
+        }
+    },
 }
 </script>
 
