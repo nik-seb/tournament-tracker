@@ -158,6 +158,33 @@ public class TournamentService implements ServerTournamentService{
 
     return null;
     }
+
+    @Override
+    public List<Matches> updateBracket(List<Teams> teams, int roundNum, int tournamentId) {
+
+
+        List<Matches> listMatches = matchesDao.getMatchByTournamentAndRound(roundNum, tournamentId);
+
+        int pow2 = 1;
+        while (pow2 < teams.size()) {
+            pow2 = pow2 * 2;
+        }
+        int remainder = pow2 - teams.size();
+        System.out.println("pow2:" + pow2);
+
+        Collections.shuffle(teams);
+
+        for (Matches match : listMatches) {
+            match.setHomeTeamId(teams.get(0).getTeamId());
+            teams.remove(0);
+            match.setAwayTeamId(teams.get(0).getTeamId());
+            teams.remove(0);
+
+        }
+        return listMatches;
+    }
+
+//    }
 //    public void testRun(){
 //        List<Teams> teamsList = new ArrayList<>();
 //        Teams one = new Teams(1, "one", 4);

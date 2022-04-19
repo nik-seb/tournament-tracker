@@ -10,6 +10,9 @@ public interface ServerTournamentService {
 
     List<Matches> generateBracket(List<Teams> teams, int tournamentId);
     List<Matches> generateMatchesByRound(List<Teams> teams);
+
+    List<Matches> updateBracket(List<Teams> teams, int tournamentId, int roundNum);
+
     void advanceWinner();
     void endRound(List<Matches> matches);
 

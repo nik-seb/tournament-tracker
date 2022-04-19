@@ -1,7 +1,7 @@
 <template>
 <body>
    <header>
-       <h1>Tournament</h1>
+       <h1>Invite to Tournament</h1>
     
     </header> 
 
@@ -9,7 +9,9 @@
            <a href=""></a>
        </nav>
 
-  <form id='invForm' action="invite-form" v-on:submit.prevent="createForm()">
+      <p id="invTournament">Please enter the selected tournament you would like to send an invite for</p>   
+      <p id="invTeam">Please enter the selected team you would like to send an invite for </p>
+      <form id='invForm' action="invite-form" v-on:submit.prevent="createForm()">
     
       
       <label for="tournamentNames">Tournament Names: </label>
@@ -88,7 +90,7 @@ export default {
 
          },
 
-
+            
  
 
     methods: {
