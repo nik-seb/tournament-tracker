@@ -15,7 +15,7 @@
              <th>Winner</th>
              <th></th>
          </tr>
-         <tr v-for="match in sortedByMatchId" v-bind:key="match.matchId">
+         <tr v-for="match in sortedByStartDate" v-bind:key="match.matchId">
              <td>{{match.roundNumber}}</td>
             <td>{{getTeamNameFromTeamList(match.homeTeamId)}}</td>
             <td>{{getTeamNameFromTeamList(match.awayTeamId)}}</td>
@@ -67,11 +67,21 @@ export default {
             }
             return locationId;
         },
-        compareMatchId(match1, match2) {
-            if (match1.matchId > match2.matchId) {
-                return 1;
+        compareDate(match1, match2) {
+            // checks regular dates first, then date + time if dates are equal
+            if (match1.startDate == null) {
+                return +1;
             }
-            if (match1.matchId < match2.matchId) {
+            if (match1.startDate.toString() > match2.startDate.toString()) {
+                return 1;
+            } else if (match1.startDate.toString() < match2.startDate.toString()) {
+                return -1;
+            }
+            if (match1.startTime == null) {
+                return +1;
+            } else if ((match1.startDate.toString() + match1.startTime.toString()) > (match2.startDate.toString() + match2.startTime.toString())) {
+                return 1;
+            } else if ((match1.startDate.toString() + match1.startTime.toString()) < (match2.startDate.toString() + match2.startTime.toString())) {
                 return -1;
             }
             return 0;
@@ -81,12 +91,11 @@ export default {
         }
     },
     computed: {
-        sortedByMatchId () {
-            return this.matches.slice().sort(this.compareMatchId);
+        sortedByStartDate() {
+            return this.matches.slice().sort(this.compareDate);
         }
     },
     created () {
-        console.log('teams: ' + this.tournamentTeams);
         TournamentService.getMatchesByTournamentId(this.tournamentID).then((response) => {
                 if (response.status == 200) {
                     this.matches = response.data;
