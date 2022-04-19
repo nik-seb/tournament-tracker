@@ -2,9 +2,11 @@
   <div>
       <h3>Bracket</h3>
       <p v-if="matches.length == 0">Schedule TBD</p>
-      <button v-if="this.$store.state.user.role == 'ROLE_HOST' && matches.length == 0" v-on:click.prevent="generateBracket()">Generate Matches</button>
+      <router-link v-bind:to="{name: 'manage-bracket', params: {id: this.tournamentID, matches: this.matches, tournamentID: this.tournamentID}}"> <button v-if="isHost && matches.length > 0">Edit Bracket</button></router-link>
+      <button v-if="isHost && matches.length == 0" v-on:click.prevent="generateBracket()">Generate Matches</button>
       <table id="schedule" v-if="matches.length > 0">
           <tr>
+              <th>Round</th>
              <th>Home Team</th>
              <th>Away Team</th>
              <th>Location</th>
@@ -13,16 +15,15 @@
              <th>Winner</th>
              <th></th>
          </tr>
-         <tr v-for="match in matches" v-bind:key="match.matchId">
+         <tr v-for="match in sortedByMatchId" v-bind:key="match.matchId">
+             <td>{{match.roundNumber}}</td>
             <td>{{getTeamNameFromTeamList(match.homeTeamId)}}</td>
             <td>{{getTeamNameFromTeamList(match.awayTeamId)}}</td>
-            <td>{{match.locationId}}</td>
+            <td>{{getLocationNameFromLocationList(match.locationId)}}</td>
             <td>{{match.startDate}}</td>
             <td>{{match.startTime}}</td>
-            <td>{{(match.winningTeamName) ? match.winningTeamName : "TBD"}}</td>
-            <td><button>Edit match</button></td>
-            <!-- <td v-for="team in tournamentTeams" v-bind:key="team.teamId">{{team.teamName}}></td> -->
-            <!-- THIS THING WORKS FINE WITH TOURNAMENT TEAMS^^^^^^ -->
+            <td>{{getTeamNameFromTeamList(match.winningTeamId) || "TBD"}}</td>
+            <td><button v-on:click="addWinner(match)">Add Winner</button></td>
         </tr>
       </table>
   </div>
@@ -33,62 +34,79 @@ import TournamentService from "@/services/TournamentService.js";
 export default {
     name: 'bracket',
     props: {
-        tournamentID: Number,
-        tournamentTeams: Array
+        tournamentID: Number
     },
     methods: {
         generateBracket() {
             TournamentService.createBracketForTournament(this.tournamentID).then((response) => {
                 if (response.status == 200) {
-                        this.$router.push({name: "manage-bracket", params: {id: this.tournamentID, matches: response.data, tournamentID: this.tournamentID}});
+                        this.$router.push({name: "manage-bracket", params: {id: this.tournamentID, matches: response.data, tournamentID: this.tournamentID, teams: this.tournamentTeams}});
                     }
             });
         },
-        // THIS BREAKS IF I GIVE IT TOURNAMENT TEAMS 
         // need some more complex logic here to display differently if bye or tbd
         getTeamNameFromTeamList(teamId) {
-            console.log(teamId)
-            const activeTeam = this.teams.find((team) => {
+            const activeTeam = this.tournamentTeams.find((team) => {
                 if (team.teamId == teamId) {
                     return true;
                 }
             });
-            console.log(activeTeam)
-            return activeTeam.teamName;
+            if (activeTeam) {
+                return activeTeam.teamName;
+            }
+            return '';
+        },
+        getLocationNameFromLocationList(locationId) {
+            const activeLocation = this.locations.find((location) => {
+                if (location.locationId == locationId) {
+                    return true;
+                }
+            })
+            if (activeLocation) {
+                return `${activeLocation.cityName}, ${activeLocation.stateName}`
+            }
+            return locationId;
+        },
+        compareMatchId(match1, match2) {
+            if (match1.matchId > match2.matchId) {
+                return 1;
+            }
+            if (match1.matchId < match2.matchId) {
+                return -1;
+            }
+            return 0;
+        },
+        addWinner(currentMatch) {
+            this.$router.push({name: 'winner-form', params: {id: currentMatch.matchId}})
+        }
+    },
+    computed: {
+        sortedByMatchId () {
+            return this.matches.slice().sort(this.compareMatchId);
         }
     },
     created () {
+        console.log('teams: ' + this.tournamentTeams);
         TournamentService.getMatchesByTournamentId(this.tournamentID).then((response) => {
                 if (response.status == 200) {
                     this.matches = response.data;
-                    if (this.matches.length > 0) {
-                        for (let match of this.matches) {
-                            TournamentService.getTeamByTeamId(match.homeTeamId).then((response) => {
-                                if (response.status == 200) {
-                                    match.homeTeamName = response.data.teamName;
-                                }
-                            })
-                            TournamentService.getTeamByTeamId(match.awayTeamId).then((response) => {
-                                if (response.status == 200) {
-                                    match.awayTeamName = response.data.teamName;
-                                } 
-                            })
-                            if (match.winningTeamId) {
-                                TournamentService.getTeamByTeamId(match.winningTeamId).then((response) => {
-                                if (response.status == 200) {
-                                    match.winningTeamName = response.data.teamName;
-                                }
-                            })
-                            }
-                            // add get for location name when that model/method is available
+                    TournamentService.getParticipantsInTournament(this.$route.params.id).then(response => {
+                        if (response.status == 200) {
+                            this.tournamentTeams = response.data;
                         }
-                    }
+                    })            
                 }
             });
-        
+        TournamentService.getAllLocations().then((response) => {
+                if (response.status == 200) {
+                    this.locations = response.data;            
+                }
+            })
     },
     data () {
         return {
+            isHost: this.$store.state.user.role == 'ROLE_HOST',
+            winnerForm: false,
             tournament: {
                 name: 'Cool tournament',
                 startDate: '1990-04-05',
@@ -131,7 +149,9 @@ export default {
                     teamName: 'BYE'
                 }
             ],
-            matches: []
+            tournamentTeams: [],
+            matches: [],
+            locations: []
         }
     }
 }

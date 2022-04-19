@@ -46,6 +46,14 @@ export default {
     return axios.put(`/matches/${match.matchId}`, match);
   },
 
+  updateMatchWinner(match) {
+    return axios.put(`/matches/${match.matchId}/winner`, match);
+  },
+
+  getMatchByMatchId(matchId) {
+    return axios.get(`/matches/${matchId}`)
+  },
+
   addParticipantToTournament(tournamentID, team) {
     return axios.post(`tournaments/${tournamentID}/teams`, team);
   },
@@ -81,6 +89,10 @@ export default {
 
   getAllTeams(){
     return axios.get('/teams');
+  },
+
+  getAllLocations(){
+    return axios.get('/locations');
   }
 
 }
