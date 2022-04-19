@@ -19,7 +19,7 @@
              <td>{{match.roundNumber}}</td>
             <td>{{getTeamNameFromTeamList(match.homeTeamId)}}</td>
             <td>{{getTeamNameFromTeamList(match.awayTeamId)}}</td>
-            <td>{{match.locationId}}</td>
+            <td>{{getLocationNameFromLocationList(match.locationId)}}</td>
             <td>{{match.startDate}}</td>
             <td>{{match.startTime}}</td>
             <td>{{getTeamNameFromTeamList(match.winningTeamId) || "TBD"}}</td>
@@ -56,6 +56,17 @@ export default {
             }
             return '';
         },
+        getLocationNameFromLocationList(locationId) {
+            const activeLocation = this.locations.find((location) => {
+                if (location.locationId == locationId) {
+                    return true;
+                }
+            })
+            if (activeLocation) {
+                return `${activeLocation.cityName}, ${activeLocation.stateName}`
+            }
+            return locationId;
+        },
         compareMatchId(match1, match2) {
             if (match1.matchId > match2.matchId) {
                 return 1;
@@ -86,7 +97,11 @@ export default {
                     })            
                 }
             });
-        
+        TournamentService.getAllLocations().then((response) => {
+                if (response.status == 200) {
+                    this.locations = response.data;            
+                }
+            })
     },
     data () {
         return {
@@ -135,7 +150,8 @@ export default {
                 }
             ],
             tournamentTeams: [],
-            matches: []
+            matches: [],
+            locations: []
         }
     }
 }
