@@ -24,8 +24,8 @@ export default{
     SideBar</script>
 
 
-<style scoped>
-
+<style >
+@import url("https://fonts.googleapis.com/css?family=Raleway:400,400i,700");
 #nav{
   display: flex;
   flex-direction: row;

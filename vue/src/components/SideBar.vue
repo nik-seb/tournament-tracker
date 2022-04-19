@@ -1,3 +1,4 @@
+
 <template>
          <aside>    
             <nav>
@@ -27,11 +28,13 @@ export default {
     height: 100%;
     width: 100px;
     padding-top: 5%;
+    top: -3%;
 
 }
-
 aside li{
-
+    max-width: 50px;
+    display: grid;
+    align-content: center;
     padding-top: 50px;
     padding-bottom: 75%;   
     list-style: none; 
@@ -46,6 +49,7 @@ aside img{
 }
 
 #create{
+   
     display: flex;
     flex-direction: row;
     justify-content: center;
