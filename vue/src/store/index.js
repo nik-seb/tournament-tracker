@@ -32,6 +32,15 @@ export default new Vuex.Store({
       description: '',
       tournamentId: null
     },
+    activePlayer: {
+      playerName: '',
+      playerId: 0
+    },
+    activeTeam: {
+      teamName: '',
+      teamId: 0,
+      teamSize: 1
+    },
 
     teamList:[
       {
@@ -143,6 +152,12 @@ export default new Vuex.Store({
     },
     SET_ACTIVE_TOURNAMENT(state, tournament) {
       state.activeTournament = tournament;
+    },
+    SET_ACTIVE_PLAYER(state, player) {
+      state.activePlayer = player;
+    },
+    SET_ACTIVE_TEAM(state, team) {
+      state.activeTeam = team;
     },
     SET_SPORT_LIST(state, list) {
       state.sportList = list;
