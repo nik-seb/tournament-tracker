@@ -1,7 +1,7 @@
 <template>
     <div>
         <form v-on:submit.prevent="saveMatch()">
-            <p>{{match.homeTeamId}} vs {{match.awayTeamId}} </p>
+            <p>{{match.homeTeamName}} vs {{match.awayTeamName}} </p>
 
             <label for="date">Select a date for this match: </label>
             <input type="date" v-bind:id="'date' + match.matchId" value="date" v-model="match.startDate">

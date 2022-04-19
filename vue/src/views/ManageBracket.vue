@@ -25,15 +25,58 @@ export default {
             TournamentService.getMatchesByTournamentId(this.tournamentID).then((response) => {
                 if (response.status == 200) {
                     this.matchesList = response.data;
+                    TournamentService.getParticipantsInTournament(this.tournamentID).then(response => {
+                        console.log(response.data)
+                        if (response.status == 200) {
+                            this.teams = response.data;
+                            this.updateMatchesWithNames();
+                    }
+                 })
                 }
             })
         } else {
-            this.matchesList = this.matches;
+            TournamentService.getParticipantsInTournament(this.tournamentID).then(response => {
+                        console.log(response.data)
+                        if (response.status == 200) {
+                            this.teams = response.data;
+                            this.updateMatchesWithNames();
+                    }
+                 })
         }
+         
     },
     data () {
         return {
-            matchesList: []
+            matchesList: [],
+            namedMatchesList: [],
+            teams: []
+        }
+    },
+    methods: {
+        updateMatchesWithNames () {
+            this.namedMatches = this.matchesList.map((match) => {
+                let team1 = this.teams.find((team) => {
+                    if (team.teamId == match.homeTeamId) {
+                        return true;
+                    }
+                });
+                if (team1) {
+                    match.homeTeamName = team1.teamName;
+                } else {
+                    match.homeTeamName = '';
+                }
+                let team2 = this.teams.find((team) => {
+                    if (team.teamId == match.awayTeamId) {
+                        return true;
+                    }
+                })
+                if (team2) {
+                    match.awayTeamName = team2.teamName;
+                } else {
+                    match.awayTeamName = '';
+                }
+                console.log(match.awayTeamName);
+            })
         }
     }
 }
