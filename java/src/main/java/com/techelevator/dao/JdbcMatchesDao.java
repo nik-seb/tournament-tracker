@@ -117,7 +117,7 @@ public class JdbcMatchesDao implements MatchesDao {
                 " home_team_id = ?, " +
                 " away_team_id = ?, " +
                 " location_id = ?, " +
-                " round_number = ? " +
+                " round_number = ?, " +
                 " winning_team_id = ? " +
                 " WHERE match_id = ?;";
 

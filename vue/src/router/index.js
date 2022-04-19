@@ -13,6 +13,7 @@ import BrowseTournaments from '../views/BrowseTournaments'
 import JoinTournamentForm from '../components/JoinTournamentForm'
 import ManageBracket from '../views/ManageBracket'
 import Invite from '../views/Invite'
+import WinnerForm from '../components/WinnerForm.vue'
 
 Vue.use(Router)
 
@@ -126,6 +127,14 @@ const router = new Router({
       path: "/invitations",
       name: "create-invite",
       component: Invite,  
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/matches/:id/winner",
+      name: "winner-form",
+      component: WinnerForm,
       meta: {
         requiresAuth: true
       }

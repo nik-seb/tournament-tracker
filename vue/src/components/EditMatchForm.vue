@@ -1,7 +1,7 @@
 <template>
     <div>
         <form v-on:submit.prevent="saveMatch()">
-            <p>{{match.homeTeamId}} vs {{match.awayTeamId}} </p>
+            <p>{{match.homeTeamName}} vs {{match.awayTeamName}} </p>
 
             <label for="date">Select a date for this match: </label>
             <input type="date" v-bind:id="'date' + match.matchId" value="date" v-model="match.startDate">
@@ -10,8 +10,11 @@
             <input type="time" v-bind:id="'time' + match.matchId" value="time" v-model="match.startTime">
 
             <label for="location">Select a location for this match: </label>
-            <input type="location" v-bind:id="'location' + match.matchId" value="location" v-model="match.locationId">
-
+            <select id="location" name="location" v-model="match.locationId">
+              <option value='' disabled></option>
+              <option v-for="location in locations" v-bind:key="location.locationId" v-bind:value="location.locationId">{{location.cityName}}, {{location.stateName}}</option>
+          </select>
+          
             <input type="submit" value="Confirm match details">
         </form>
 
@@ -28,8 +31,16 @@ export default {
     },
     data () {
         return {
-            match: this.Match
+            match: this.Match,
+            locations: []
         }
+    },
+    created() {
+        TournamentService.getAllLocations().then((response) => {
+            if (response.status == 200) {
+                this.locations = response.data;
+            }
+        })
     },
     methods: {
         saveMatch() {

@@ -2,7 +2,7 @@
     <div>
         <h2> Edit the matches for this bracket</h2>
         <edit-match-form v-for="match in matchesList" v-bind:key="match.matchId" v-bind:Match="match"/>
-        <button>Return to tournament page</button>
+        <router-link v-bind:to="{name: 'view-tournament', params: {id: this.tournamentID}}"><button>Return to tournament page</button></router-link>
     </div>
 </template>
 
@@ -19,20 +19,90 @@ export default {
         EditMatchForm
     },
     created () {
-        if (!this.matches || this.matches.length == 0) {
+        console.log(this.matches)
+        this.matchesList = this.matches;
+        if (!this.matchesList || this.matchesList.length == 0) {
             TournamentService.getMatchesByTournamentId(this.tournamentID).then((response) => {
                 if (response.status == 200) {
                     this.matchesList = response.data;
+                    TournamentService.getParticipantsInTournament(this.tournamentID).then(response => {
+                        console.log(response.data)
+                        if (response.status == 200) {
+                            this.teams = response.data;
+                            this.updateMatchesWithNames();
+                    }
+                 })
                 }
             })
         } else {
-            this.matchesList = this.matches;
+            TournamentService.getParticipantsInTournament(this.tournamentID).then(response => {
+                        console.log(response.data)
+                        if (response.status == 200) {
+                            this.teams = response.data;
+                            this.updateMatchesWithNames();
+                    }
+                 })
         }
+         
     },
     data () {
         return {
-            matchesList: []
+            matchesList: [],
+            namedMatchesList: [],
+            teams: []
         }
+    },
+    methods: {
+        updateMatchesWithNames () {
+            //BELOW mutates matches list even though it's map? I iterate through matcheslist and it still receives the names
+            // this.namedMatches = this.matchesList.map((match) => {
+            //     let team1 = this.teams.find((team) => {
+            //         if (team.teamId == match.homeTeamId) {
+            //             return true;
+            //         }
+            //     });
+            //     if (team1) {
+            //         match.homeTeamName = team1.teamName;
+            //     } else {
+            //         match.homeTeamName = '';
+            //     }
+            //     let team2 = this.teams.find((team) => {
+            //         if (team.teamId == match.awayTeamId) {
+            //             return true;
+            //         }
+            //     })
+            //     if (team2) {
+            //         match.awayTeamName = team2.teamName;
+            //     } else {
+            //         match.awayTeamName = '';
+            //     }
+            //     console.log(match.awayTeamName);
+            // })
+            // same issue with below as with above
+            this.matchesList.forEach((match) => {
+                let team1 = this.teams.find((team) => {
+                    if (team.teamId == match.homeTeamId) {
+                        return true;
+                    }
+                });
+                if (team1) {
+                    match.homeTeamName = team1.teamName;
+                } else {
+                    match.homeTeamName = '';
+                }
+                let team2 = this.teams.find((team) => {
+                    if (team.teamId == match.awayTeamId) {
+                        return true;
+                    }
+                })
+                if (team2) {
+                    match.awayTeamName = team2.teamName;
+                } else {
+                    match.awayTeamName = '';
+                }
+            })
+        }
+        
     }
 }
 </script>
