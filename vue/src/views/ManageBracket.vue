@@ -10,7 +10,7 @@
 <script>
 import EditMatchForm from '@/components/EditMatchForm.vue'
 import TournamentService from '@/services/TournamentService.js'
-import HolidayService from '@/services/HolidayService.js'
+// import HolidayService from '@/services/HolidayService.js'
 export default {
     name: 'manage-bracket',
     props: {
@@ -38,7 +38,6 @@ export default {
             })
         } else {
             TournamentService.getParticipantsInTournament(this.tournamentID).then(response => {
-                        console.log(response.data)
                         if (response.status == 200) {
                             this.teams = response.data;
                             this.updateMatchesWithNames();
@@ -46,13 +45,14 @@ export default {
                  })
         }
 
-        if (!this.$store.state.holidays || this.$store.state.holidays.length == 0) {
-            HolidayService.getAllHolidays().then(response => {
-                if (response.status == 200) {
-                    this.$store.commit("SET_HOLIDAYS", response.data)
-                }
-            })
-        }
+// TEMPORARILY COMMENTED OUT TO AVOID EXCESS CALLS
+        // if (!this.$store.state.holidays || this.$store.state.holidays.length == 0) {
+        //     HolidayService.getAllHolidays().then(response => {
+        //         if (response.status == 200) {
+        //             this.$store.commit("SET_HOLIDAYS", response.data)
+        //         }
+        //     })
+        // }
          
     },
     data () {
