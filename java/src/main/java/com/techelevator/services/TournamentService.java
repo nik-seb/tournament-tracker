@@ -172,14 +172,8 @@ public class TournamentService implements ServerTournamentService {
 
         List<Matches> listMatches = matchesDao.getMatchesByTournamentAndRound(tournamentId, roundNum);
 
-        int pow2 = 1;
-        while (pow2 < teams.size()) {
-            pow2 = pow2 * 2;
-        }
-        int remainder = pow2 - teams.size();
-        System.out.println("pow2:" + pow2);
-
         Collections.shuffle(teams);
+        System.out.println(teams);
 
         for (Matches match : listMatches) {
             match.setHomeTeamId(teams.get(0).getTeamId());
@@ -187,9 +181,11 @@ public class TournamentService implements ServerTournamentService {
             match.setAwayTeamId(teams.get(0).getTeamId());
             teams.remove(0);
             matchesDao.updateBracketMatches(match);
+<<<<<<< HEAD
 
+=======
+>>>>>>> f1e0ccbeee8140915656d96a4f85f7b1d97492fb
         }
-
 
         return listMatches;
     }

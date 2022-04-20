@@ -38,6 +38,10 @@ export default {
     return axios.post(`/tournaments/${tournamentID}/bracket`);
   },
 
+  createMatchesForNextRound(tournamentID, roundNumber) {
+    return axios.put(`/tournaments/${tournamentID}/bracket/${roundNumber}`);
+  },
+
   getMatchesByTournamentId(tournamentID) {
     return axios.get(`/tournaments/${tournamentID}/matches`);
   },
@@ -55,11 +59,11 @@ export default {
   },
 
   addParticipantToTournament(tournamentID, team) {
-    return axios.post(`tournaments/${tournamentID}/teams`, team);
+    return axios.post(`/tournaments/${tournamentID}/teams`, team);
   },
 
   getParticipantsInTournament(tournamentID) {
-      return axios.get(`tournaments/${tournamentID}/teams`);
+      return axios.get(`/tournaments/${tournamentID}/teams`);
   },
 
   getTeamOfPlayer(playerID) {
