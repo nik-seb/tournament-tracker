@@ -5,6 +5,7 @@
 
             <label for="date">Select a date for this match: </label>
             <input type="date" v-bind:id="'date' + match.matchId" value="date" v-model="match.startDate">
+            <div id="isHoliday" v-if="dateIsAHoliday">{{currentHoliday}} is observed on this day.</div>
 
             <label for="date">Select a time for this match: </label>
             <input type="time" v-bind:id="'time' + match.matchId" value="time" v-model="match.startTime">
@@ -32,7 +33,8 @@ export default {
     data () {
         return {
             match: this.Match,
-            locations: []
+            locations: [],
+            currentHoliday: ''
         }
     },
     created() {
@@ -46,10 +48,25 @@ export default {
         saveMatch() {
             TournamentService.updateMatch(this.match).then(response => {
                 if (response.status == 200) {
-                    console.log('updated!')
-                    // something to indicate change, like add checkbox to the DOM
+                    alert('The match has been successfully updated.')
+                    // something nicer to indicate change, like add checkbox to the DOM?
                 }
             })
+        }
+    },
+    computed: {
+        dateIsAHoliday() {
+            let matchingHoliday = this.$store.state.holidays.find((holiday) => {
+                if (holiday.observed == this.match.startDate) {
+                    this.currentHoliday = holiday.name;
+                    return true;
+                }
+            })
+            if (matchingHoliday) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 }

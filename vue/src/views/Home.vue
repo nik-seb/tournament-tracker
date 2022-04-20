@@ -8,22 +8,18 @@
   <div></div>
   <div></div>
   <div></div>
-  <div>
-    <browse-tournaments></browse-tournaments>
-  </div>
 </div> 
 </template>
 
 <script>
 import EventContainers from '@/components/EventContainers';
-import BrowseTournaments from '../views/BrowseTournaments';
+
 
 
 export default {
 
 components:{
-  EventContainers,
-  BrowseTournaments
+  EventContainers
 
 },
 

@@ -4,6 +4,7 @@
       <p v-if="matches.length == 0">Schedule TBD</p>
       <router-link v-bind:to="{name: 'manage-bracket', params: {id: this.tournamentID, matches: this.matches, tournamentID: this.tournamentID}}"> <button v-if="isHost && matches.length > 0">Edit Bracket</button></router-link>
       <button v-if="isHost && matches.length == 0" v-on:click.prevent="generateBracket()">Generate Matches</button>
+      <button v-if="isHost && canGenerateNextRound" v-on:click.prevent="generateNextRound()">Generate Matches for Next Round</button>
       <table id="schedule" v-if="matches.length > 0">
           <tr>
               <th>Round</th>
@@ -15,7 +16,7 @@
              <th>Winner</th>
              <th></th>
          </tr>
-         <tr v-for="match in sortedByMatchId" v-bind:key="match.matchId">
+         <tr v-for="match in sortedByStartDate" v-bind:key="match.matchId">
              <td>{{match.roundNumber}}</td>
             <td>{{getTeamNameFromTeamList(match.homeTeamId)}}</td>
             <td>{{getTeamNameFromTeamList(match.awayTeamId)}}</td>
@@ -44,6 +45,13 @@ export default {
                     }
             });
         },
+        generateNextRound() {
+            TournamentService.createMatchesForNextRound(this.tournamentID, this.nextRound).then((response) => {
+                if (response.status == 200) {
+                        this.$router.push({name: "manage-bracket", params: {id: this.tournamentID, matches: response.data, tournamentID: this.tournamentID, teams: this.tournamentTeams}});
+                    }
+            });
+        },
         // need some more complex logic here to display differently if bye or tbd
         getTeamNameFromTeamList(teamId) {
             const activeTeam = this.tournamentTeams.find((team) => {
@@ -67,29 +75,94 @@ export default {
             }
             return locationId;
         },
-        compareMatchId(match1, match2) {
-            if (match1.matchId > match2.matchId) {
-                return 1;
+        compareDate(match1, match2) {
+            // checks regular dates first, then date + time if dates are equal
+            if (match1.startDate == null) {
+                return +1;
             }
-            if (match1.matchId < match2.matchId) {
+            if (match2.startDate == null) {
+                return 0;
+            }
+            if (match1.startDate.toString() > match2.startDate.toString()) {
+                return 1;
+            } else if (match1.startDate.toString() < match2.startDate.toString()) {
+                return -1;
+            }
+            if (match1.startTime == null) {
+                return +1;
+            } else if (match2.startTime == null) {
+                return 0;
+            } else if ((match1.startDate.toString() + match1.startTime.toString()) > (match2.startDate.toString() + match2.startTime.toString())) {
+                return 1;
+            } else if ((match1.startDate.toString() + match1.startTime.toString()) < (match2.startDate.toString() + match2.startTime.toString())) {
                 return -1;
             }
             return 0;
         },
         addWinner(currentMatch) {
             this.$router.push({name: 'winner-form', params: {id: currentMatch.matchId}})
+        },
+        // check for the most recent round where num of matches = num of winners declared, and set to 0 if no rounds completed
+        // then check if a match in the round after that has a bye, and if so, next round must be generated
+        checkCompletedRounds() {
+            let recordMatches = {}; // number of matches per round
+            let recordWins = {}; // number of wins per round
+            let validRounds = []; // number of rounds in this set of matches
+            for (let match of this.matches) {
+                if (recordMatches[match.roundNumber] >= 1) {
+                    recordMatches[match.roundNumber]++;
+                } else {
+                    recordMatches[match.roundNumber] = 1;
+                    validRounds.push(match.roundNumber)
+                }
+                if (recordWins[match.roundNumber] >= 1 && match.winningTeamId != 0) {
+                    recordWins[match.roundNumber]++;
+                } else if (match.winningTeamId != 0) {
+                    recordWins[match.roundNumber] = 1;
+                } else if (match.winningTeamId == 0) {
+                    recordWins[match.roundNumber] = 0;
+                }
+            }
+            let mostRecentlyCompleted = 0;
+            for (let round in validRounds) {
+                if (recordMatches[round] == recordWins[round]) {
+                    mostRecentlyCompleted = Number(round);
+                } 
+            }
+            let readyForNextRound = false;
+
+            if (mostRecentlyCompleted == 0) {
+                return readyForNextRound;
+            }
+
+            // if any match of round after 1 has bye, that round hasn't had matches generated yet
+            for (let match of this.matches) {
+                if (match.roundNumber == mostRecentlyCompleted+1) {
+                    if (match.homeTeamId == 13 || match.awayTeamId == 13) {
+                        readyForNextRound = true;
+                        break;
+                    }
+                }
+            }
+            if (readyForNextRound) {
+                this.nextRound = mostRecentlyCompleted+1;
+            }
+            return readyForNextRound;
         }
     },
     computed: {
-        sortedByMatchId () {
-            return this.matches.slice().sort(this.compareMatchId);
+        sortedByStartDate() {
+            return this.matches.slice().sort(this.compareDate);
+        },
+        canGenerateNextRound() {
+            return this.checkCompletedRounds();
         }
     },
     created () {
-        console.log('teams: ' + this.tournamentTeams);
         TournamentService.getMatchesByTournamentId(this.tournamentID).then((response) => {
                 if (response.status == 200) {
                     this.matches = response.data;
+                            console.log(this.checkCompletedRounds())
                     TournamentService.getParticipantsInTournament(this.$route.params.id).then(response => {
                         if (response.status == 200) {
                             this.tournamentTeams = response.data;
@@ -107,51 +180,10 @@ export default {
         return {
             isHost: this.$store.state.user.role == 'ROLE_HOST',
             winnerForm: false,
-            tournament: {
-                name: 'Cool tournament',
-                startDate: '1990-04-05',
-                endDate: '1999-08-09',
-                sportId: '5',
-                numOfTeams: '99',   
-                id: 1
-            },
-            teams: [
-                {
-                    teamId: 1,
-                    teamName: 'Owls'
-                },
-                {
-                    teamId: 2,
-                    teamName: 'Eagles'
-                },
-                {
-                    teamId: 3,
-                    teamName: 'Falcons'
-                },
-                {
-                    teamId: 4,
-                    teamName: 'Larks'
-                },
-                {
-                    teamId: 5,
-                    teamName: 'Toucans'
-                },
-                {
-                    teamId: 6,
-                    teamName: 'Finches'
-                },
-                {
-                    teamId: 7,
-                    teamName: 'Blackbirds'
-                },
-                {
-                    teamId: 13,
-                    teamName: 'BYE'
-                }
-            ],
             tournamentTeams: [],
             matches: [],
-            locations: []
+            locations: [],
+            nextRound: 0
         }
     }
 }
