@@ -1,8 +1,10 @@
 package com.techelevator.services;
 
+import com.fasterxml.jackson.databind.deser.DataFormatReaders;
 import com.techelevator.dao.MatchesDao;
 import com.techelevator.dao.TeamsDao;
 import com.techelevator.dao.TournamentDao;
+import com.techelevator.exception.MatchNotFoundException;
 import com.techelevator.model.Matches;
 import com.techelevator.model.Teams;
 import com.techelevator.model.Tournament;
@@ -69,6 +71,7 @@ public class TournamentService implements ServerTournamentService{
             pairs.add(pair);
             match.setTournamentId(tournamentId);
             match.setLocationId(1);
+            match.setRoundNumber(1);
             match.setWinningTeamId(pair[1].getTeamId());
             match.setRoundNumber(1); // might want to refactor so we can reuse this for subsequent matches too
             allMatches.add(match);
@@ -97,6 +100,7 @@ public class TournamentService implements ServerTournamentService{
         }
         System.out.println("Shuffled Teams: " + pairs);
         System.out.println("Number of Paired Teams: " + pairs.size());
+
     List<Teams> byes = teams;
         int round2NumberOfTeams = pow2/2;
         System.out.println("round1numofteams is " + round2NumberOfTeams);
@@ -105,7 +109,12 @@ public class TournamentService implements ServerTournamentService{
 
         System.out.println("Teams not paired: ");
         for(Teams teams1 : teams){
+            Matches byeMatches = new Matches();
+            byeMatches.setHomeTeamId(teams1.getTeamId());
+//            byeMatches.setAwayTeamId();
+            byeMatches.setRoundNumber(1);
             System.out.println(teams1.getTeamName() + ", ");
+
         }
 
 
@@ -158,6 +167,40 @@ public class TournamentService implements ServerTournamentService{
 
     return null;
     }
+
+    @Override
+    public List<Matches> updateBracket(List<Teams> teams, int tournamentId, int roundNum) {
+
+
+        List<Matches> listMatches = matchesDao.getMatchesByTournamentAndRound(tournamentId, roundNum);
+
+        int pow2 = 1;
+        while (pow2 < teams.size()) {
+            pow2 = pow2 * 2;
+        }
+        int remainder = pow2 - teams.size();
+        System.out.println("pow2:" + pow2);
+
+        Collections.shuffle(teams);
+
+        for (Matches match : listMatches) {
+            match.setHomeTeamId(teams.get(0).getTeamId());
+            teams.remove(0);
+            match.setAwayTeamId(teams.get(0).getTeamId());
+            teams.remove(0);
+            matchesDao.updateBracketMatches(match);
+
+        for (Matches match: listMatches){
+            matchesDao.updateMatch(match);
+        }
+
+
+        return listMatches;
+
+
+    }
+
+//    }
 //    public void testRun(){
 //        List<Teams> teamsList = new ArrayList<>();
 //        Teams one = new Teams(1, "one", 4);

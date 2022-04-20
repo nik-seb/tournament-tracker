@@ -36,7 +36,7 @@ public class InvitationsController {
 
     @RequestMapping(path = "/tournament/{id}", method = RequestMethod.GET)
     public List<Invitation> getInvByTournamentId(@PathVariable("id")int tournamentId) throws InvitationNotFoundException {
-      return invitationDao.getInvitationByTournamentId(tournamentId);
+      return invitationDao.getInvitationsByTournamentId(tournamentId);
 
     }
 
@@ -70,6 +70,9 @@ public class InvitationsController {
     public Invitation updateInvitationStatus(@RequestBody Invitation invitation)throws InvitationNotFoundException{
         return invitationDao.updateInvitationStatus(invitation);
     }
+
+
+
 
 }
 

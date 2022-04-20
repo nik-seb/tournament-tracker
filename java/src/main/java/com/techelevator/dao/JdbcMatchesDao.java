@@ -67,7 +67,8 @@ public class JdbcMatchesDao implements MatchesDao {
         String sql = "SELECT match_id, tournament_id, start_date, start_time, home_team_id, away_team_id, location_id, " +
                 "winning_team_id, round_number" +
                 " FROM matches " +
-                " WHERE tournament_id = ?; ";
+                " WHERE tournament_id = ? " +
+                " ORDER BY match_id ASC";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, tournamentId);
         while (results.next()) {
             matches.add(mapRowToMatches(results));
@@ -107,9 +108,23 @@ public class JdbcMatchesDao implements MatchesDao {
                 matches.getLocationId(), matches.getRoundNumber(), matches.getMatchId());
         return getMatch(matches.getMatchId());
     }
+    public Matches updateBracketMatches(Matches matches) {
+        String sql = "UPDATE matches " +
+                " SET tournament_id = ?, " +
+                " start_date = ?, " +
+                " start_time = ?, " +
+                " home_team_id = ?, " +
+                " away_team_id = ?, " +
+                " round_number = ? " +
+                " WHERE match_id = ?;";
+
+        jdbcTemplate.update(sql, matches.getTournamentId(), matches.getStartDate(), matches.getStartTime(), matches.getHomeTeamId(), matches.getAwayTeamId(),
+                matches.getRoundNumber(), matches.getMatchId());
+        return getMatch(matches.getMatchId());
+    }
 
     @Override
-    public Matches setMatchWinner(Matches matches) {
+    public Matches setMatchWinner(Matches matches, int matchId) {
         String sql = "UPDATE matches " +
                 " SET tournament_id = ?, " +
                 " start_date = ?, " +
@@ -122,8 +137,8 @@ public class JdbcMatchesDao implements MatchesDao {
                 " WHERE match_id = ?;";
 
         jdbcTemplate.update(sql, matches.getTournamentId(), matches.getStartDate(), matches.getStartTime(), matches.getHomeTeamId(), matches.getAwayTeamId(),
-                matches.getLocationId(), matches.getRoundNumber(), matches.getWinningTeamId(), matches.getMatchId());
-        return getMatch(matches.getMatchId());
+                matches.getLocationId(), matches.getRoundNumber(), matches.getWinningTeamId(), matchId);
+        return getMatch(matchId);
     }
 
     @Override
@@ -136,6 +151,32 @@ public class JdbcMatchesDao implements MatchesDao {
             return false;
         }
     }
+
+    @Override
+    public List<Matches> getMatchesByTournamentAndRound(int tournamentId, int roundNumber) {
+
+        List<Matches> matches = new ArrayList<>();
+
+        String sql = "SELECT match_id, tournament_id, start_date, start_time, home_team_id, away_team_id, location_id, " +
+                "winning_team_id, round_number" +
+                " FROM matches " +
+                " WHERE tournament_id = ? AND round_number = ?; ";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, tournamentId, roundNumber);
+        while (results.next()) {
+            matches.add(mapRowToMatches(results));
+        }
+        return matches;
+    }
+
+    @Override
+    public int getCurrentRoundNumber(int tournamentId) {
+        String sql = "SELECT MAX(round_number) " +
+                "FROM matches " +
+                "WHERE tournament_id = ? AND winning_team_id IS NOT 0;";
+        Integer results = jdbcTemplate.queryForObject(sql, Integer.class, tournamentId);
+        return results;
+    }
+
 
     private Matches mapRowToMatches(SqlRowSet results) {
         Matches match = new Matches();
