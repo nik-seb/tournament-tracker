@@ -1,7 +1,8 @@
 <template>
   <div id='tourn-view-body'>
       <tournament-details v-bind:tournamentID="Number($route.params.id)" />
-      <tourn-options v-bind:tournamentID="Number($route.params.id)"/> 
+      <tourn-options v-if="isOpen" v-bind:tournamentID="Number($route.params.id)" v-bind:teams="tournamentTeams"/> 
+      <div v-else>This tournament is not accepting new competitors and cannot be modified.</div>
       <router-view />
        <!--view will link to the given options as a child route  -->
       <div id="sections"> <div id="participants"> <participants v-bind:tournamentID="Number($route.params.id)" v-bind:tournamentTeams="tournamentTeams" /></div> <div id="bracket"> <bracket v-bind:tournamentID="Number($route.params.id)" v-bind:tournamentTeams="tournamentTeams" /> </div> </div>
@@ -28,6 +29,36 @@ export default {
         this.tournamentTeams = response.data;
       }
     })
+    TournamentService.getMatchesByTournamentId(this.$route.params.id).then((response) => {
+      if (response.status == 200) {
+          if (response.data.length > 0) {
+            this.isOpen = false;
+          }}
+     });
+    TournamentService.getUserPlayerID(this.$store.state.user.id).then((response) => {
+            if (response.status == 200) {
+                if (response.data.playerId != 0) {
+                    this.$store.commit("SET_ACTIVE_PLAYER", response.data);
+                    this.getPlayerTeam(response.data.playerId);
+                }
+            } else {
+              let blankPlayer = {
+                playerName: '',
+                playerId: 0,
+                userId: this.$store.state.user.id
+              }
+              this.$store.commit("SET_ACTIVE_PLAYER", blankPlayer)
+            }
+        })
+  },
+  methods: {
+    getPlayerTeam(playerId) {
+      TournamentService.getTeamOfPlayer(playerId).then((response) => {
+                if (response.status == 200) {
+                    this.$store.commit("SET_ACTIVE_TEAM", response.data)
+                }
+            })
+    }
   }
 }
 </script>

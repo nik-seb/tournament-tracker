@@ -25,37 +25,12 @@ export default {
     name: 'join-tournament-form',
     data () {
         return {
-            player: {
-                playerName: '',
-                playerId: 0,
-                userId: this.$store.state.user.id
-            },
-            team: {
-                teamName: '',
-                teamId: 0,
-                teamSize: 1
-            },
+            player: this.$store.state.activePlayer,
+            team: this.$store.state.activeTeam,
             tournament: this.$store.state.activeTournament
         }
     },
-    created() {
-        TournamentService.getUserPlayerID(this.player.userId).then((response) => {
-            if (response.status == 200) {
-                if (response.data.playerId != 0) {
-                    this.player = response.data;
-                    this.getPlayerTeam();
-                }
-            }
-        })
-    },
     methods: {
-        getPlayerTeam () {
-            TournamentService.getTeamOfPlayer(this.player.playerId).then((response) => {
-                if (response.status == 200) {
-                    this.team = response.data;
-                }
-            })
-        },
         createPlayerAndTeam() {
             TournamentService.createNewPlayer(this.player).then((response) => {
                 if (response.status == 200) {

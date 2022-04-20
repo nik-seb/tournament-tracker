@@ -14,26 +14,17 @@ export default {
         return axios.get(`/invitations/organizer/${organizerId}`);
     },
 
-        // refilter/refactor code below 
 
-    // sentInviteByOrganizerId(organizerId){
-    //     return axios.get(`/invitations/organizer/${organizerId}`);
-    // },
+    getInviteByStatus(invitationStatus) {
+        return axios.get(`/invitations/${invitationStatus}`);
+    },
+
+    getInviteByTeamId(teamId){
+        return axios.get(`/team/${teamId}`);
+    }
 
     // getInviteList() {
     //     return axios.get('/invitations');
-    // },
-
-    // getInviteByStatus(invitationStatus) {
-    //     return axios.get(`/invitations/${invitationStatus}`);
-    // },
-
-    // getInvitationByTeamId(teamId) {
-    //     return axios.get(`/invitations/${teamId}`);
-    // },
-
-    // getInviteByOrganizer(organizerId) {
-    //     return axios.get(`/invitations/${organizerId}`);
     // },
 
     // updateInvitationStatus(invitation) {

@@ -121,7 +121,11 @@ public class TournamentController {
         return tournamentService.updateBracket(winningTeams, tournamentId, roundNum);
     }
 
+    @RequestMapping(path = "tournaments/{id}/sport", method = RequestMethod.GET)
+    public Tournament getTournamentBySportId(@PathVariable("id")int sportId) throws TournamentNotFoundException {
 
+        return tournamentDao.getTournamentsBySportId(sportId);
+    }
 
 }
 
