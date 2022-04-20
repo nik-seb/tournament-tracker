@@ -27,6 +27,7 @@ export default {
     TournamentService.getParticipantsInTournament(this.$route.params.id).then(response => {
       if (response.status == 200) {
         this.tournamentTeams = response.data;
+        console.log(this.tournamentTeams)
       }
     })
     TournamentService.getMatchesByTournamentId(this.$route.params.id).then((response) => {
