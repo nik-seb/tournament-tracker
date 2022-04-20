@@ -172,13 +172,6 @@ public class TournamentService implements ServerTournamentService {
 
         List<Matches> listMatches = matchesDao.getMatchesByTournamentAndRound(tournamentId, roundNum);
 
-        int pow2 = 1;
-        while (pow2 < teams.size()) {
-            pow2 = pow2 * 2;
-        }
-        int remainder = pow2 - teams.size();
-        System.out.println("pow2:" + pow2);
-
         Collections.shuffle(teams);
 
         for (Matches match : listMatches) {

@@ -38,6 +38,10 @@ export default {
     return axios.post(`/tournaments/${tournamentID}/bracket`);
   },
 
+  createMatchesForNextRound(tournamentID, roundNumber) {
+    return axios.put(`/tournaments/${tournamentID}/bracket/${roundNumber}`);
+  },
+
   getMatchesByTournamentId(tournamentID) {
     return axios.get(`/tournaments/${tournamentID}/matches`);
   },

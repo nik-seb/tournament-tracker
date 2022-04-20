@@ -4,7 +4,7 @@
       <p v-if="matches.length == 0">Schedule TBD</p>
       <router-link v-bind:to="{name: 'manage-bracket', params: {id: this.tournamentID, matches: this.matches, tournamentID: this.tournamentID}}"> <button v-if="isHost && matches.length > 0">Edit Bracket</button></router-link>
       <button v-if="isHost && matches.length == 0" v-on:click.prevent="generateBracket()">Generate Matches</button>
-      <button v-if="isHost && canGenerateNextRound">Generate Matches for Next Round</button>
+      <button v-if="isHost && canGenerateNextRound" v-on:click.prevent="generateNextRound()">Generate Matches for Next Round</button>
       <table id="schedule" v-if="matches.length > 0">
           <tr>
               <th>Round</th>
@@ -40,6 +40,13 @@ export default {
     methods: {
         generateBracket() {
             TournamentService.createBracketForTournament(this.tournamentID).then((response) => {
+                if (response.status == 200) {
+                        this.$router.push({name: "manage-bracket", params: {id: this.tournamentID, matches: response.data, tournamentID: this.tournamentID, teams: this.tournamentTeams}});
+                    }
+            });
+        },
+        generateNextRound() {
+            TournamentService.createMatchesForNextRound(this.tournamentID, this.nextRound).then((response) => {
                 if (response.status == 200) {
                         this.$router.push({name: "manage-bracket", params: {id: this.tournamentID, matches: response.data, tournamentID: this.tournamentID, teams: this.tournamentTeams}});
                     }
@@ -132,6 +139,9 @@ export default {
                     }
                 }
             }
+            if (readyForNextRound) {
+                this.nextRound = mostRecentlyCompleted+1;
+            }
             return readyForNextRound;
         }
     },
@@ -167,7 +177,8 @@ export default {
             winnerForm: false,
             tournamentTeams: [],
             matches: [],
-            locations: []
+            locations: [],
+            nextRound: 0
         }
     }
 }

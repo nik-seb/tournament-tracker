@@ -115,10 +115,10 @@ public class TournamentController {
 
     @RequestMapping(path = "tournaments/{id}/bracket/{roundNum}", method = RequestMethod.PUT)
     public List<Matches> updateBracket(@PathVariable ("id") int tournamentId,
-                                       @PathVariable ("roundNum") int roundNum, @RequestBody List<Teams> teams)
+                                       @PathVariable ("roundNum") int roundNum)
                                         throws MatchNotFoundException{
-
-        return tournamentService.updateBracket(teams, tournamentId, roundNum);
+        List<Teams> winningTeams = teamsDao.getWinningTeamsByRoundNumber(roundNum - 1);
+        return tournamentService.updateBracket(winningTeams, tournamentId, roundNum);
     }
 
     @RequestMapping(path = "tournaments/{id}/sport", method = RequestMethod.GET)
