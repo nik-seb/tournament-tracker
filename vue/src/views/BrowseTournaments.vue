@@ -18,8 +18,8 @@
               <input type="">
             </td>
              <td>
-            <select id="sport" name="sport" v-model="currentSport.sportId">
-              <option value='' disabled></option>
+            <select id="sport" name="sport" v-model="currentSport.sportId" v-on:change="filterBySport()">
+              <option value='0' disabled></option>
               <option v-for="sport in sports" v-bind:key="sport.sportId" v-bind:value="sport.sportId">{{sport.sportName}}</option>
           </select>
             </td>
@@ -61,6 +61,7 @@ import TournamentService from '@/services/TournamentService.js'
 export default {
   data() {
     return {
+      originalTournamentArray: [],
       tournamentArray: [],
 
       currentSport: {
@@ -87,7 +88,13 @@ export default {
       TournamentService.getAllTournaments().then((response) => {
         if (response.status == 200) {
           this.tournamentArray = response.data;
-          this.tournamentArray.forEach((event) => {
+          this.mapTournaments();
+          this.originalTournamentArray = this.tournamentArray.slice();
+        }
+      })
+    },
+    mapTournaments() {
+      this.tournamentArray.forEach((event) => {
             let foundSport = this.sports.find((sport) => {
               if (event.sportId == sport.sportId) {
                 return true;
@@ -95,8 +102,6 @@ export default {
             })
             event.sportName = foundSport.sportName;
           })
-        }
-      })
     },
     compareDateAsc(tournament1, tournament2) {
         if (tournament1.startDate.toString() > tournament2.startDate.toString()) {
@@ -113,6 +118,18 @@ export default {
             return 1;
         }
         return 0;
+    },
+    filterBySport(){
+      if (this.currentSport.sportId == 0) {
+        return;
+      } else {
+        TournamentService.getTournamentsBySportId(this.currentSport.sportId).then(response => {
+          if (response.status == 200) {
+            this.tournamentArray = response.data;
+            this.mapTournaments();
+          }
+        })
+      }
     }
   },
   computed: {

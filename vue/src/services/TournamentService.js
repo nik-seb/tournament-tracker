@@ -34,6 +34,10 @@ export default {
       return axios.get(`/tournaments/${tournamentID}`);
   },
 
+  getTournamentsBySportId(sportID) {
+    return axios.get(`/tournaments/sport/${sportID}`)
+  },
+
   createBracketForTournament(tournamentID) {
     return axios.post(`/tournaments/${tournamentID}/bracket`);
   },
