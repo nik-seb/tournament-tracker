@@ -30,7 +30,7 @@
               <input type="">
             </td>
             <td>
-              <select id="status">
+              <select id="status" v-model="tournamentStatus">
               <option value="active">Active</option>
               <option value="complete">Complete</option>
               <option value="all">Show All</option>
@@ -45,7 +45,7 @@
           </td>
           </tr>
           <tr v-for="tournament in sortByWhat" v-bind:key="tournament.tournamentId">
-            <td>{{tournament.tournamentName}}</td>
+            <td><router-link v-bind:to="{ name: 'view-tournament', params: {id: Number(tournament.tournamentId)}}">{{tournament.tournamentName}}</router-link></td>
             <td>{{tournament.sportName}}</td>
             <td>{{tournament.startDate}}</td>
             <td>{{tournament.endDate}}</td>
@@ -66,11 +66,9 @@ export default {
       currentSport: {
         sportId: 0
       },
-
       sports: [],
 
       tournamentStatus: 'all',
-
       sortMethod: 'earliest'
     }
   },

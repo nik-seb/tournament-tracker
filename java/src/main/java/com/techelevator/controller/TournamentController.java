@@ -117,7 +117,7 @@ public class TournamentController {
     public List<Matches> updateBracket(@PathVariable ("id") int tournamentId,
                                        @PathVariable ("roundNum") int roundNum)
                                         throws MatchNotFoundException{
-        List<Teams> winningTeams = teamsDao.getWinningTeamsByRoundNumber(roundNum - 1);
+        List<Teams> winningTeams = teamsDao.getWinningTeamsByRoundNumber(tournamentId, roundNum - 1);
         return tournamentService.updateBracket(winningTeams, tournamentId, roundNum);
     }
 
