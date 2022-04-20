@@ -5,6 +5,8 @@
       <div class="alert alert-danger" role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
       </div>
+      <div></div>
+      <div></div>
       <label for="username" class="sr-only">Username</label>
       <input
         type="text"
@@ -15,6 +17,10 @@
         required
         autofocus
       />
+    <body>
+      
+    
+
       <label for="password" class="sr-only">Password</label>
       <input
         type="password"
@@ -32,6 +38,7 @@
         v-model="user.confirmPassword"
         required
       />
+     </body>
       <input id="isHost" type="checkbox" v-model="checkbox">
       <label for="isHost">host</label>
       <router-link :to="{ name: 'login' }">Have an account?</router-link>
@@ -103,5 +110,8 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  
 }
+
+
 </style>

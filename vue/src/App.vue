@@ -37,6 +37,7 @@ export default{
    padding-left: 1rem;
 }
 
+
 </style>
 
 
