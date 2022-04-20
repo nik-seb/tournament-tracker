@@ -20,7 +20,7 @@ export default {
     },
 
     getInviteByTeamId(teamId){
-        return axios.get(`/team/${teamId}`);
+        return axios.get(`/invitations/team/${teamId}`);
     }
 
     // getInviteList() {

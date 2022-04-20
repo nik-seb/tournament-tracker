@@ -19,12 +19,23 @@ public class Invitation {
    int organizerId;
 
     @NotNull(message = "invite status cannot be empty, it must contain a status pertaining to the users response eg.(NOT_ACCEPTED)")
-   String inviteStatus;
+    String inviteStatus;
+
+    String tournamentName;
+
+    String playerName;
+
+    String teamName;
+
+
 
     public Invitation(){}
 
+
+
     public Invitation(int invitationId, int tournamentId, int teamId,
-                      int organizerId, String inviteStatus) {
+                      int organizerId, String inviteStatus, String tournamentName,
+                      String playerName, String teamName) {
 
 
         this.invitationId = invitationId;
@@ -32,6 +43,9 @@ public class Invitation {
         this.teamId = teamId;
         this.organizerId = organizerId;
         this.inviteStatus = inviteStatus;
+        this.tournamentName = tournamentName;
+        this.playerName = playerName;
+        this.teamName = teamName;
     }
 
     public int getInvitationId() {
@@ -72,5 +86,29 @@ public class Invitation {
 
     public void setInviteStatus(String inviteStatus) {
         this.inviteStatus = inviteStatus;
+    }
+
+    public String getTournamentName() {
+        return tournamentName;
+    }
+
+    public void setTournamentName(String tournamentName) {
+        this.tournamentName = tournamentName;
+    }
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
     }
 }
