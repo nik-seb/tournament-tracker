@@ -108,9 +108,23 @@ public class JdbcMatchesDao implements MatchesDao {
                 matches.getLocationId(), matches.getRoundNumber(), matches.getMatchId());
         return getMatch(matches.getMatchId());
     }
+    public Matches updateBracketMatches(Matches matches) {
+        String sql = "UPDATE matches " +
+                " SET tournament_id = ?, " +
+                " start_date = ?, " +
+                " start_time = ?, " +
+                " home_team_id = ?, " +
+                " away_team_id = ?, " +
+                " round_number = ? " +
+                " WHERE match_id = ?;";
+
+        jdbcTemplate.update(sql, matches.getTournamentId(), matches.getStartDate(), matches.getStartTime(), matches.getHomeTeamId(), matches.getAwayTeamId(),
+                matches.getRoundNumber(), matches.getMatchId());
+        return getMatch(matches.getMatchId());
+    }
 
     @Override
-    public Matches setMatchWinner(Matches matches) {
+    public Matches setMatchWinner(Matches matches, int matchId) {
         String sql = "UPDATE matches " +
                 " SET tournament_id = ?, " +
                 " start_date = ?, " +
@@ -123,8 +137,8 @@ public class JdbcMatchesDao implements MatchesDao {
                 " WHERE match_id = ?;";
 
         jdbcTemplate.update(sql, matches.getTournamentId(), matches.getStartDate(), matches.getStartTime(), matches.getHomeTeamId(), matches.getAwayTeamId(),
-                matches.getLocationId(), matches.getRoundNumber(), matches.getWinningTeamId(), matches.getMatchId());
-        return getMatch(matches.getMatchId());
+                matches.getLocationId(), matches.getRoundNumber(), matches.getWinningTeamId(), matchId);
+        return getMatch(matchId);
     }
 
     @Override
@@ -139,7 +153,7 @@ public class JdbcMatchesDao implements MatchesDao {
     }
 
     @Override
-    public List<Matches> getMatchByTournamentAndRound(int tournamentId, int roundNumber) {
+    public List<Matches> getMatchesByTournamentAndRound(int tournamentId, int roundNumber) {
 
         List<Matches> matches = new ArrayList<>();
 
@@ -154,6 +168,14 @@ public class JdbcMatchesDao implements MatchesDao {
         return matches;
     }
 
+    @Override
+    public int getCurrentRoundNumber(int tournamentId) {
+        String sql = "SELECT MAX(round_number) " +
+                "FROM matches " +
+                "WHERE tournament_id = ? AND winning_team_id IS NOT 0;";
+        Integer results = jdbcTemplate.queryForObject(sql, Integer.class, tournamentId);
+        return results;
+    }
 
 
     private Matches mapRowToMatches(SqlRowSet results) {

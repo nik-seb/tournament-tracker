@@ -16,6 +16,7 @@ public interface TeamsDao {
       boolean deleteTeam(int teamId);
       List<Teams> getTeamsByTournamentId(int id);
       public Teams getTeamByPlayerId(int playerId);
+      List<Teams> getWinningTeamsByRoundNumber(int roundNumber);
       void addPlayersToTeam(Players players, int teamsId);
 
 }
