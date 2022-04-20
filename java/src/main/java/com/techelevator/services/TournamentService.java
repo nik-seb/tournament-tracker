@@ -18,7 +18,7 @@ import java.util.List;
 
 
 @Component
-public class TournamentService implements ServerTournamentService{
+public class TournamentService implements ServerTournamentService {
     private TournamentDao tournamentDao;
     private MatchesDao matchesDao;
     private TeamsDao teamsDao;
@@ -37,19 +37,18 @@ public class TournamentService implements ServerTournamentService{
     }
 
 
-
     @Override
     public List<Matches> generateBracket(List<Teams> teams, int tournamentId) {
         roundCounter = 1; // could set this differently in a generate matches call, then just set roundCounter in initial matches
         createdMatches = new ArrayList<>();
         allMatches = new ArrayList<>();
         this.tournamentId = tournamentId;
-        for(Teams teams1 : teams){
+        for (Teams teams1 : teams) {
             System.out.println(teams1.getTeamName() + ", ");
         }
         System.out.println("Original Teams: " + teams);
         int pow2 = 1;
-        while (pow2 < teams.size()){
+        while (pow2 < teams.size()) {
             pow2 = pow2 * 2;
         }
         int remainder = pow2 - teams.size();
@@ -59,7 +58,7 @@ public class TournamentService implements ServerTournamentService{
 //        teams = shuffle(teams);
         List<Teams[]> pairs = new ArrayList<>();
 
-        while(teams.size() > remainder){
+        while (teams.size() > remainder) {
             Matches match = new Matches();
             Teams[] pair = new Teams[2];
             pair[0] = teams.get(0);
@@ -95,20 +94,20 @@ public class TournamentService implements ServerTournamentService{
 
         System.out.println("All Matches: " + allMatches);
 
-        for(Teams[] teams1 : pairs){
+        for (Teams[] teams1 : pairs) {
             System.out.println(teams1[0].getTeamName() + " vs " + teams1[1].getTeamName());
         }
         System.out.println("Shuffled Teams: " + pairs);
         System.out.println("Number of Paired Teams: " + pairs.size());
 
-    List<Teams> byes = teams;
-        int round2NumberOfTeams = pow2/2;
+        List<Teams> byes = teams;
+        int round2NumberOfTeams = pow2 / 2;
         System.out.println("round1numofteams is " + round2NumberOfTeams);
         int numRounds = 1;
         int currentTeams = round2NumberOfTeams;
 
         System.out.println("Teams not paired: ");
-        for(Teams teams1 : teams){
+        for (Teams teams1 : teams) {
             Matches byeMatches = new Matches();
             byeMatches.setHomeTeamId(teams1.getTeamId());
 //            byeMatches.setAwayTeamId();
@@ -164,8 +163,7 @@ public class TournamentService implements ServerTournamentService{
         List<Matches> matchesByRound = new ArrayList<>();
 
 
-
-    return null;
+        return null;
     }
 
     @Override
@@ -174,14 +172,8 @@ public class TournamentService implements ServerTournamentService{
 
         List<Matches> listMatches = matchesDao.getMatchesByTournamentAndRound(tournamentId, roundNum);
 
-        int pow2 = 1;
-        while (pow2 < teams.size()) {
-            pow2 = pow2 * 2;
-        }
-        int remainder = pow2 - teams.size();
-        System.out.println("pow2:" + pow2);
-
         Collections.shuffle(teams);
+        System.out.println(teams);
 
         for (Matches match : listMatches) {
             match.setHomeTeamId(teams.get(0).getTeamId());
@@ -189,15 +181,9 @@ public class TournamentService implements ServerTournamentService{
             match.setAwayTeamId(teams.get(0).getTeamId());
             teams.remove(0);
             matchesDao.updateBracketMatches(match);
-
-        for (Matches match: listMatches){
-            matchesDao.updateMatch(match);
         }
 
-
         return listMatches;
-
-
     }
 
 //    }
@@ -232,7 +218,8 @@ public class TournamentService implements ServerTournamentService{
 //
 //        generateBracket(teamsList, 1);
 //    }
-//
+
+
     @Override
     public void advanceWinner() {
 
@@ -244,8 +231,7 @@ public class TournamentService implements ServerTournamentService{
 
 
     }
-//
-//}
+}
 
 /*
 //FIRST calculate byes and assign pairs for matches

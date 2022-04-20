@@ -1,15 +1,15 @@
 <template>
   <div>
-     <h1>Tournament Display</h1>
+     <h1>Browse Tournaments</h1>
     <table>
       <thead id= "tblUsers">
         <tr>
           <th>Tournament Name</th>
           <th>Sport Name</th>
-          <th>Number Of Teams</th>
           <th>Start Date</th>
           <th>End Date</th>
-          <th>Description</th>
+          <th>Status</th>
+          <th>Sort By:</th>
         </tr>
       </thead>
       <tbody>
@@ -18,13 +18,10 @@
               <input type="">
             </td>
              <td>
-              <input type="">
-            </td>
-             <td>
-              <input type="">
-            </td>
-             <td>
-              <input type="">
+            <select id="sport" name="sport" v-model="currentSport.sportId" v-on:change="filterBySport()">
+              <option value='0' disabled></option>
+              <option v-for="sport in sports" v-bind:key="sport.sportId" v-bind:value="sport.sportId">{{sport.sportName}}</option>
+          </select>
             </td>
              <td>
               <input type="">
@@ -33,67 +30,126 @@
               <input type="">
             </td>
             <td>
-              <select id="teams">
-              <option value="">Show All</option>
-              <option value="Active">Active</option>
-              <option value="Disabled">Disqualified</option>
+              <select id="status" v-model="tournamentStatus">
+              <option value="active">Active</option>
+              <option value="complete">Complete</option>
+              <option value="all">Show All</option>
               </select>
             </td>
+            <td><select id="sort-by" v-model="sortMethod">
+              <option value="earliest">Starting soonest</option>
+              <option value="latest">Starting latest</option>
+              <option value="name">Name</option>
+              <option value="sport">Sport</option>
+              </select>
+          </td>
           </tr>
-          <tr id="tournament-info">
-            <td>{{tournament.tournamentName}}</td>
+          <tr v-for="tournament in sortByWhat" v-bind:key="tournament.tournamentId">
+            <td><router-link v-bind:to="{ name: 'view-tournament', params: {id: Number(tournament.tournamentId)}}">{{tournament.tournamentName}}</router-link></td>
             <td>{{tournament.sportName}}</td>
             <td>{{tournament.startDate}}</td>
             <td>{{tournament.endDate}}</td>
-            <td>{{tournament.description}}</td>
           </tr>
       </tbody>
     </table>
 
-    <form action="">
-      <div>
-        <label for="">
-          <input type="text">
-        </label>
-      </div>
-      <div>
-        <label for="">
-          <input type="text">
-        </label>
-      </div>
-      <div>
-        <label for="">
-          <input type="text">
-        </label>
-      </div>
-      <div>
-        <label for="">
-          <input type="text">
-        </label>
-      </div>
-    </form>
-
   </div>
 </template>
 <script>
-//import TournamentDetails from "@/components/TournamentDetails.vue";
+import TournamentService from '@/services/TournamentService.js'
+
 export default {
   data() {
     return {
-      tournament: {
-         tournamentName: 'aeaeaear',
-         sportName: 'etertsb',
-         startDate: '444444',
-         endDate: '5555555',
-         description: 'cesrtrtttttttt',
-      },
+      originalTournamentArray: [],
+      tournamentArray: [],
 
-      form: {},
-      users:[
-        {}
-      ]
+      currentSport: {
+        sportId: 0
+      },
+      sports: [],
+
+      tournamentStatus: 'all',
+      sortMethod: 'earliest'
     }
   },
+
+  created(){
+      TournamentService.getSportsList().then((response) => {
+        if (response.status == 200) {
+          this.sports = response.data;
+          this.getAndMapTournaments();
+        }
+      })
+  },
+  methods: {
+    // inserts actual sport name into each tournament in tournamentArray
+    getAndMapTournaments() {
+      TournamentService.getAllTournaments().then((response) => {
+        if (response.status == 200) {
+          this.tournamentArray = response.data;
+          this.mapTournaments();
+          this.originalTournamentArray = this.tournamentArray.slice();
+        }
+      })
+    },
+    mapTournaments() {
+      this.tournamentArray.forEach((event) => {
+            let foundSport = this.sports.find((sport) => {
+              if (event.sportId == sport.sportId) {
+                return true;
+              }
+            })
+            event.sportName = foundSport.sportName;
+          })
+    },
+    compareDateAsc(tournament1, tournament2) {
+        if (tournament1.startDate.toString() > tournament2.startDate.toString()) {
+            return 1;
+        } else if (tournament1.startDate.toString() < tournament2.startDate.toString()) {
+            return -1;
+        }
+        return 0;
+    },
+    compareDateDesc(tournament1, tournament2) {
+        if (tournament1.startDate.toString() > tournament2.startDate.toString()) {
+            return -1;
+        } else if (tournament1.startDate.toString() < tournament2.startDate.toString()) {
+            return 1;
+        }
+        return 0;
+    },
+    filterBySport(){
+      if (this.currentSport.sportId == 0) {
+        return;
+      } else {
+        TournamentService.getTournamentsBySportId(this.currentSport.sportId).then(response => {
+          if (response.status == 200) {
+            this.tournamentArray = response.data;
+            this.mapTournaments();
+          }
+        })
+      }
+    }
+  },
+  computed: {
+        sortedByEarliest() {
+            return this.tournamentArray.slice().sort(this.compareDateAsc);
+        },
+        sortedByLatest() {
+          return this.tournamentArray.slice().sort(this.compareDateDesc);
+        },
+        sortByWhat() {
+          if (this.sortMethod == 'earliest') {
+            return this.sortedByEarliest;
+          }
+          if (this.sortMethod == 'latest') {
+            return this.sortedByLatest;
+          }
+          return this.tournamentArray;
+        }
+    }
+
 }
 </script>
 

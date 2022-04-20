@@ -34,13 +34,15 @@ export default new Vuex.Store({
     },
     activePlayer: {
       playerName: '',
-      playerId: 0
+      playerId: 0,
+      userId: currentUser.userId
     },
     activeTeam: {
       teamName: '',
       teamId: 0,
       teamSize: 1
     },
+    holidays: [],
 
     teamList:[
       {
@@ -175,6 +177,10 @@ export default new Vuex.Store({
 
     SET_TEAM_LIST(state, team){
       state.teamList = team;
+    },
+
+    SET_HOLIDAYS(state, holidays) {
+      state.holidays = holidays;
     }
   }
 })

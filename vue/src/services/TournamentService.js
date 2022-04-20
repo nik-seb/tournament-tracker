@@ -27,15 +27,23 @@ export default {
   // },
 
   modifyTournament(tournament) {
-    return axios.put(`/tournaments/${tournament.tournamentID}`, tournament);
+    return axios.put(`/tournaments/${tournament.tournamentId}`, tournament);
   },
 
   getTournamentDetails(tournamentID) {
       return axios.get(`/tournaments/${tournamentID}`);
   },
 
+  getTournamentsBySportId(sportID) {
+    return axios.get(`/tournaments/sport/${sportID}`)
+  },
+
   createBracketForTournament(tournamentID) {
     return axios.post(`/tournaments/${tournamentID}/bracket`);
+  },
+
+  createMatchesForNextRound(tournamentID, roundNumber) {
+    return axios.put(`/tournaments/${tournamentID}/bracket/${roundNumber}`);
   },
 
   getMatchesByTournamentId(tournamentID) {
@@ -55,11 +63,11 @@ export default {
   },
 
   addParticipantToTournament(tournamentID, team) {
-    return axios.post(`tournaments/${tournamentID}/teams`, team);
+    return axios.post(`/tournaments/${tournamentID}/teams`, team);
   },
 
   getParticipantsInTournament(tournamentID) {
-      return axios.get(`tournaments/${tournamentID}/teams`);
+      return axios.get(`/tournaments/${tournamentID}/teams`);
   },
 
   getTeamOfPlayer(playerID) {
