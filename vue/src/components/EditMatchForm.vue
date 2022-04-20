@@ -5,7 +5,7 @@
 
             <label for="date">Select a date for this match: </label>
             <input type="date" v-bind:id="'date' + match.matchId" value="date" v-model="match.startDate">
-            <div id="isHoliday" v-if="dateIsAHoliday">This day is {{currentHoliday}}</div>
+            <div id="isHoliday" v-if="dateIsAHoliday">{{currentHoliday}} is observed on this day.</div>
 
             <label for="date">Select a time for this match: </label>
             <input type="time" v-bind:id="'time' + match.matchId" value="time" v-model="match.startTime">
@@ -48,8 +48,8 @@ export default {
         saveMatch() {
             TournamentService.updateMatch(this.match).then(response => {
                 if (response.status == 200) {
-                    console.log('updated!')
-                    // something to indicate change, like add checkbox to the DOM
+                    alert('The match has been successfully updated.')
+                    // something nicer to indicate change, like add checkbox to the DOM?
                 }
             })
         }

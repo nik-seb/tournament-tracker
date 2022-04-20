@@ -1,15 +1,15 @@
 <template>
   <div>
-     <h1>Tournament Display</h1>
+     <h1>Browse Tournaments</h1>
     <table>
       <thead id= "tblUsers">
         <tr>
           <th>Tournament Name</th>
           <th>Sport Name</th>
-          <th>Number Of Teams</th>
           <th>Start Date</th>
           <th>End Date</th>
-          <th>Description</th>
+          <th>Status</th>
+          <th>Sort By:</th>
         </tr>
       </thead>
       <tbody>
@@ -18,13 +18,11 @@
               <input type="">
             </td>
              <td>
-              <input type="">
-            </td>
-             <td>
-              <input type="">
-            </td>
-             <td>
-              <input type="">
+            <select id="sport" name="sport" v-model="currentSportId.sportId">
+              <!-- Can't convince it to preview a "Select sport" as first option -->
+              <option value='' disabled></option>
+              <option v-for="sport in sports" v-bind:key="sport.sportId" v-bind:value="sport.sportId">{{sport.sportName}}</option>
+          </select>
             </td>
              <td>
               <input type="">
@@ -33,67 +31,75 @@
               <input type="">
             </td>
             <td>
-              <select id="teams">
-              <option value="">Show All</option>
-              <option value="Active">Active</option>
-              <option value="Disabled">Disqualified</option>
+              <select id="status">
+              <option value="active">Active</option>
+              <option value="complete">Complete</option>
+              <option value="all">Show All</option>
               </select>
             </td>
+            <td><select id="sort-by">
+              <option value=""></option>
+              <option value="name">Name</option>
+              <option value="sport">Sport</option>
+              <option value="earliest">Earliest</option>
+              <option value="latest">Latest</option>
+              </select>
+          </td>
           </tr>
-          <tr id="tournament-info">
+          <tr v-for="tournament in tournamentArray" v-bind:key="tournament.tournamentId">
             <td>{{tournament.tournamentName}}</td>
             <td>{{tournament.sportName}}</td>
             <td>{{tournament.startDate}}</td>
             <td>{{tournament.endDate}}</td>
-            <td>{{tournament.description}}</td>
           </tr>
       </tbody>
     </table>
 
-    <form action="">
-      <div>
-        <label for="">
-          <input type="text">
-        </label>
-      </div>
-      <div>
-        <label for="">
-          <input type="text">
-        </label>
-      </div>
-      <div>
-        <label for="">
-          <input type="text">
-        </label>
-      </div>
-      <div>
-        <label for="">
-          <input type="text">
-        </label>
-      </div>
-    </form>
-
   </div>
 </template>
 <script>
-//import TournamentDetails from "@/components/TournamentDetails.vue";
+import TournamentService from '@/services/TournamentService.js'
+
 export default {
   data() {
     return {
-      tournament: {
-         tournamentName: 'aeaeaear',
-         sportName: 'etertsb',
-         startDate: '444444',
-         endDate: '5555555',
-         description: 'cesrtrtttttttt',
-      },
+      tournamentArray: [],
 
-      form: {},
-      users:[
-        {}
-      ]
+      currentSportId: 1,
+
+      sports: [],
+
+      tournamentStatus: 'all'
     }
   },
+
+  created(){
+      TournamentService.getSportsList().then((response) => {
+        if (response.status == 200) {
+          this.sports = response.data;
+          this.getAndMapTournaments();
+        }
+      })
+  },
+  methods: {
+    // inserts actual sport name into each tournament in tournamentArray
+    getAndMapTournaments() {
+      TournamentService.getAllTournaments().then((response) => {
+        if (response.status == 200) {
+          this.tournamentArray = response.data;
+          this.tournamentArray.forEach((event) => {
+            let foundSport = this.sports.find((sport) => {
+              if (event.sportId == sport.sportId) {
+                return true;
+              }
+            })
+            event.sportName = foundSport.sportName;
+          })
+        }
+      })
+    }
+  }
+
 }
 </script>
 
