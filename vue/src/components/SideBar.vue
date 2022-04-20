@@ -1,4 +1,3 @@
-
 <template>
          <aside>    
             <nav>
@@ -21,24 +20,30 @@ export default {
 </script>
 
 <style>
-.sidebar-nav{
+@import url(https://fonts.googleapis.com/css?family=Lato);
 
+.sidebar-nav{
+    margin-block-start: 0%;
     position: fixed;
     border-right: 2px solid gold;
     height: 100%;
     width: 100px;
     padding-top: 5%;
-    top: -3%;
-
+    background-color: gold;
 }
+
 aside li{
-    max-width: 50px;
+
     display: grid;
-    align-content: center;
-    padding-top: 50px;
-    padding-bottom: 75%;   
+    padding-bottom:55%;   
     list-style: none; 
-    /* justify-content: right; */
+    position: left;
+  display: block;
+  font-family: Lato, sans-serif;
+  color: #121414;
+  text-decoration: none;
+  margin-left: -35%;
+
     
 }
 
@@ -49,7 +54,6 @@ aside img{
 }
 
 #create{
-   
     display: flex;
     flex-direction: row;
     justify-content: center;

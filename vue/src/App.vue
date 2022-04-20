@@ -24,13 +24,37 @@ export default{
     SideBar</script>
 
 
-<style >
-@import url("https://fonts.googleapis.com/css?family=Raleway:400,400i,700");
+<style scoped>
+div { background-color: rgb(197, 197, 195);
+}
+@import url(https://fonts.googleapis.com/css?family=Lato);
+html, body {
+margin: 0%;
+padding: 0%;  
+}
 #nav{
+  margin-block-start: -10px;
+  position: sticky;
   display: flex;
   flex-direction: row;
-  justify-content: right;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 20px;
+  top: 0%;
+  font-family: Lato, sans-serif;
+  color: #121414;
+
+
 }
+div nav {
+  font-family: Lato, sans-serif;
+  color: #121414;
+  text-decoration: none;
+  text-transform: uppercase;
+  margin-left: -35%;
+}
+
+  
 
 #main-view {
    margin-left: 140px;
