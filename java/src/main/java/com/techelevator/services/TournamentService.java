@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.deser.DataFormatReaders;
 import com.techelevator.dao.MatchesDao;
 import com.techelevator.dao.TeamsDao;
 import com.techelevator.dao.TournamentDao;
+import com.techelevator.exception.MatchNotFoundException;
 import com.techelevator.model.Matches;
 import com.techelevator.model.Teams;
 import com.techelevator.model.Tournament;
@@ -189,9 +190,14 @@ public class TournamentService implements ServerTournamentService{
             teams.remove(0);
             matchesDao.updateBracketMatches(match);
 
+        for (Matches match: listMatches){
+            matchesDao.updateMatch(match);
         }
-        roundNum++;
+
+
         return listMatches;
+
+
     }
 
 //    }

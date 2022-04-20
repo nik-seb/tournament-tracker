@@ -1,36 +1,25 @@
 <template>
   <body class="inv">
-      <h3>INVITES</h3>
-          <ul>
-
+      <h3></h3>
 
               <div>
               <label for="tournamentNames">Select a Tournament: </label>
-              <select id="tournamentName" name="tournamentName" v-model="tournaments.tournamentId ">
-                   
-                   <option value='' disabled></option>
-                   <option v-for="tournament in tournamentList" v-bind:key="tournament.tournamentId"  v-bind:value="tournament.tournamentId" > {{tournaments.tournamentName}}</option>
+              <select id="tournamentName" name="tournamentName" v-model="tournaments.tournamentId">      
+              <option value='' disabled></option>
+              <option v-for="tournament in tournaments" v-bind:key="tournament.tournamentId"  v-bind:value="tournament.tournamentId" > {{ tournament.tournamentName }}</option>
               </select>
               </div>  
 
-              
-       
-              <div v-for="player in players" v-bind:key="player.id">
-                  {{ players.playerName }}
-              </div>
-              <div v-for="team in teams" v-bind:key="team.id">
-                  {{ teams.teamName }}
-              </div>
-              <div v-for="tournament in tournamentList" v-bind:key="tournament.tournamentId"  v-bind:value="tournament.tournamentId" >
-                  {{ tournament.tournamentName }}
-              </div> 
-              <div v-for="invitation in invitations" v-bind:key="invitation.id">
-                  {{ invitation.inviteStatus }}
+              <div class="teamsTournament" v-for="team in getParticipantsInTournament" v-bind:key="team.tournamentId" v-bind:value="team.tournamentId" > {{team.teamName}}
+                
+                  
+
+              </div>  
+
+              <div>
+              <li v-for="invites in invitations" v-bind:key="invites.invitationId" v-bind:value="invitationId">  {{ invites.inviteStatus }} </li>   
               </div>
 
-              <!-- <li v-for="invitations in invites" v-bind:key="invitations.invitationId">{{ invitations }}</li>
-              <li v-for="invitations in invites" v-bind:key="invitations.teamId">{{invitations.status}}</li> -->
-          </ul>
   </body>
 </template>
 
@@ -42,7 +31,9 @@ export default {
     name: 'invite-details',
    
    props:{
-       tournamentID: Number
+       tournamentId: Number,
+       invitationId: Number
+   
     },
 
     data(){
@@ -52,10 +43,12 @@ export default {
         invitations: [],
         teams:[],
         players:[],
-        tournamentList:[],
+        tournaments:[],
 
         organizerId: this.$store.state.user.id,
-        teamId: 0
+        teamId: this.$store.state.activeTeam.teamId
+
+ 
        }
 
 
@@ -63,50 +56,73 @@ export default {
 
     created(){
 
-
         TournamentService.getAllTournaments().then(response => {
 
-            if(response.data === 200){
-                this.tournaments.tournamentList = response.data
-            }
-        })
-
-        InvitationService.getInviteByTournamentId()
-
-        InvitationService.sentInviteByOrganizerId(this.organizerId).then(response => {
-
-            if(response.status == 200){
-                this.invites = response.data
-                this.invitationId = response.data.invitationId;
-                this.teamId = response.data.teamId;
-                this.organizerId = response.data.organizerId;
-                this.inviteStatus = response.data.inviteStatus;
-                
+            if(response.status === 200){
+                this.tournaments = response.data
             }
         })
 
         TournamentService.getAllTeams().then(response => {
 
                 if(response.status === 200){
-                    this.teamList = response.data 
+                    this.teams = response.data 
                 }
             })
 
-         
+        InvitationService.sentInviteByOrganizerId(this.organizerId).then(response => {
 
-        // InvitationService.receivedInviteByTeamId().then(response =>{
+            if(response.status == 200){
+                this.invitations = response.data
 
-        //     if(response.status == 200){
-        //         this.invites = response.data
-        //     }
-        // })
+                
+            }
+        })
 
+        TournamentService.getUserPlayerID(this.$store.state.user.id).then((response) => {
+            if (response.status == 200) {
+                if (response.data.playerId != 0) {
+                    this.$store.commit("SET_ACTIVE_PLAYER", response.data);
+                    this.getPlayerTeam(response.data.playerId);
+                }
+            } else {
+              let blankPlayer = {
+                playerName: '',
+                playerId: 0,
+                userId: this.$store.state.user.id
+              }
+              this.$store.commit("SET_ACTIVE_PLAYER", blankPlayer)
+            }
+        })
+
+        TournamentService.getParticipantsInTournament(this.tournamentId).then(response => {
+
+            if(response.status === 200){
+                this.teams = response.data
+            }
+        })
+
+        InvitationService.getInviteByTeamId(this.teamId).then(response => {
+
+            if(response.status === 200){
+                this.invitations = response.data;
+            }
+        })
+
+        
     },
 
 methods: {
-//     getInviteList() {
-//         InvitationService.getInviteList()
-//    },
+
+     getPlayerTeam(playerId) {
+      TournamentService.getTeamOfPlayer(playerId).then((response) => {
+                if (response.status == 200) {
+                    this.$store.commit("SET_ACTIVE_TEAM", response.data)
+                }
+            })
+    },
+
+//get team by tourn id, get invite by team id using list of teams in tournament
 
     getInviteByTournamentId() {
         InvitationService.getInviteByTournamentId(this.tournamentId).then((response) => {
@@ -118,54 +134,28 @@ methods: {
                     this.invites.push(element.inviteStatus)
                 });
 
-                    this.invitation = response.data;
+                    this.invitation.inviteStatus = response.data;
                 
             }
         });
     },
 
+    getInviteByStatus() {
+        InvitationService.getInviteByStatus(this.invitationStatus).then((response) => {
+            if (response.status == 200) {
+                this.invitation = response.data;
+            }
+    });
+},
 
-
-
-
-
-
-
-//     getInviteByStatus() {
-//         InvitationService.getInviteByStatus(this.invitationStatus).then((response) => {
-//             if (response.status == 200) {
-//                 this.invitation = response.data;
-//             }
-//     });
-// },
-
-//     getInvitationByTeamId() {
-// InvitationService.getInviteByTeamId(this.team.teamId).then((response) => {
-//             if (response.status == 200) {
-//                 this.invitation = response.data;
-//             }
-//         });
-//     },
-
-    // getInviteByOrganizer() {
-    //   InvitationService.getInviteByOrganizer(this.organizer.organizerId).then((response) => {
-    //         if (response.status == 200) {
-    //             this.invitation = response.data;
-    //         }
-    //     });  
-    // },
-    // updateInvitationStatus() {
-    //         InvitationService.updateInvitationStatus(this.invitation).then(response => {
-    //             if (response.status == 200) {
-    //                 this.invitation = response.data;
-                    
-    //             }
-    //         });
-    //     }
     },
 }
 </script>
 
 <style>
-
+.inv{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
 </style>
