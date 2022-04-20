@@ -51,7 +51,7 @@ public class TournamentController {
 
         return teamsDao.getTeamsByTournamentId(tournamentId);
     }
-    @RequestMapping(path = "tournaments/{id}/matches", method = RequestMethod.GET)
+    @RequestMapping(path = "/tournaments/{id}/matches", method = RequestMethod.GET)
     public List<Matches> getTournamentMatches(@PathVariable ("id") int tournamentId){
         return matchesDao.getMatchesByTournament(tournamentId);
     }
@@ -101,19 +101,19 @@ public class TournamentController {
 
     }
 
-    @RequestMapping(path = "tournaments/{id}/teams", method = RequestMethod.POST)
+    @RequestMapping(path = "/tournaments/{id}/teams", method = RequestMethod.POST)
     public void addTeamsToTournament(@PathVariable ("id") int tournamentId, @RequestBody Teams teams)
             throws TournamentNotFoundException, TeamNotFoundException {
 
         tournamentDao.addTeamsToTournaments(teams, tournamentId);
     }
-    @RequestMapping(path = "tournaments/{id}/bracket", method = RequestMethod.POST)
+    @RequestMapping(path = "/tournaments/{id}/bracket", method = RequestMethod.POST)
     public List<Matches> createBracket(@PathVariable ("id") int tournamentId){
         List<Teams> teamsList = teamsDao.getTeamsByTournamentId(tournamentId);
         return tournamentService.generateBracket(teamsList, tournamentId);
     }
 
-    @RequestMapping(path = "tournaments/{id}/bracket", method = RequestMethod.PUT)
+    @RequestMapping(path = "/tournaments/{id}/bracket", method = RequestMethod.PUT)
     public List<Matches> updateBracket(@PathVariable("id") int tournamentId){
 
         int roundNum = matchesDao.getCurrentRoundNumber(tournamentId);
@@ -121,7 +121,7 @@ public class TournamentController {
         return tournamentService.updateBracket(winningTeams, tournamentId, roundNum);
     }
 
-    @RequestMapping(path = "tournaments/{id}/sport", method = RequestMethod.GET)
+    @RequestMapping(path = "/tournaments/{id}/sport", method = RequestMethod.GET)
     public Tournament getTournamentBySportId(@PathVariable("id")int sportId) throws TournamentNotFoundException {
 
         return tournamentDao.getTournamentsBySportId(sportId);
