@@ -190,7 +190,7 @@ public class TournamentService implements ServerTournamentService{
             matchesDao.updateBracketMatches(match);
 
         }
-        roundNum++;
+
         return listMatches;
     }
 
