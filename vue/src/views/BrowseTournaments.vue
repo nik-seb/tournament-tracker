@@ -18,8 +18,7 @@
               <input type="">
             </td>
              <td>
-            <select id="sport" name="sport" v-model="currentSportId.sportId">
-              <!-- Can't convince it to preview a "Select sport" as first option -->
+            <select id="sport" name="sport" v-model="currentSport.sportId">
               <option value='' disabled></option>
               <option v-for="sport in sports" v-bind:key="sport.sportId" v-bind:value="sport.sportId">{{sport.sportName}}</option>
           </select>
@@ -37,16 +36,15 @@
               <option value="all">Show All</option>
               </select>
             </td>
-            <td><select id="sort-by">
-              <option value=""></option>
+            <td><select id="sort-by" v-model="sortMethod">
+              <option value="earliest">Starting soonest</option>
+              <option value="latest">Starting latest</option>
               <option value="name">Name</option>
               <option value="sport">Sport</option>
-              <option value="earliest">Earliest</option>
-              <option value="latest">Latest</option>
               </select>
           </td>
           </tr>
-          <tr v-for="tournament in tournamentArray" v-bind:key="tournament.tournamentId">
+          <tr v-for="tournament in sortByWhat" v-bind:key="tournament.tournamentId">
             <td>{{tournament.tournamentName}}</td>
             <td>{{tournament.sportName}}</td>
             <td>{{tournament.startDate}}</td>
@@ -65,11 +63,15 @@ export default {
     return {
       tournamentArray: [],
 
-      currentSportId: 1,
+      currentSport: {
+        sportId: 0
+      },
 
       sports: [],
 
-      tournamentStatus: 'all'
+      tournamentStatus: 'all',
+
+      sortMethod: 'earliest'
     }
   },
 
@@ -97,8 +99,41 @@ export default {
           })
         }
       })
+    },
+    compareDateAsc(tournament1, tournament2) {
+        if (tournament1.startDate.toString() > tournament2.startDate.toString()) {
+            return 1;
+        } else if (tournament1.startDate.toString() < tournament2.startDate.toString()) {
+            return -1;
+        }
+        return 0;
+    },
+    compareDateDesc(tournament1, tournament2) {
+        if (tournament1.startDate.toString() > tournament2.startDate.toString()) {
+            return -1;
+        } else if (tournament1.startDate.toString() < tournament2.startDate.toString()) {
+            return 1;
+        }
+        return 0;
     }
-  }
+  },
+  computed: {
+        sortedByEarliest() {
+            return this.tournamentArray.slice().sort(this.compareDateAsc);
+        },
+        sortedByLatest() {
+          return this.tournamentArray.slice().sort(this.compareDateDesc);
+        },
+        sortByWhat() {
+          if (this.sortMethod == 'earliest') {
+            return this.sortedByEarliest;
+          }
+          if (this.sortMethod == 'latest') {
+            return this.sortedByLatest;
+          }
+          return this.tournamentArray;
+        }
+    }
 
 }
 </script>
