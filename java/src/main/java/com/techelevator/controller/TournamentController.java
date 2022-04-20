@@ -114,8 +114,10 @@ public class TournamentController {
     }
 
     @RequestMapping(path = "tournaments/{id}/bracket/{roundNum}", method = RequestMethod.POST)
-    public List<Matches> updateBracket(@PathVariable ("id") int tournamentId, @PathVariable int roundNum, @RequestBody List<Teams> teams){
-        return tournamentService.updateBracket(teams, tournamentId, roundNum);
+    public List<Matches> updateBracket(@PathVariable("id") int tournamentId, @PathVariable("roundNum") int roundNum){
+
+        List<Teams> winningTeams = teamsDao.getWinningTeamsByRoundNumber(roundNum - 1);
+        return tournamentService.updateBracket(winningTeams, tournamentId, roundNum);
     }
 
 
