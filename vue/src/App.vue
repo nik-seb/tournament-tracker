@@ -25,15 +25,10 @@ export default{
 
 
 <style scoped>
-div { background-color: rgb(197, 197, 195);
-}
-@import url(https://fonts.googleapis.com/css?family=Lato);
-html, body {
-margin: 0%;
-padding: 0%;  
+#app {
+  
 }
 #nav{
-  margin-block-start: -10px;
   position: sticky;
   display: flex;
   flex-direction: row;
@@ -41,18 +36,11 @@ padding: 0%;
   align-items: center;
   height: 20px;
   top: 0%;
-  font-family: Lato, sans-serif;
-  color: #121414;
-
+  text-align: center;
+  background-attachment: fixed;
 
 }
-div nav {
-  font-family: Lato, sans-serif;
-  color: #121414;
-  text-decoration: none;
-  text-transform: uppercase;
-  margin-left: -35%;
-}
+
 
   
 

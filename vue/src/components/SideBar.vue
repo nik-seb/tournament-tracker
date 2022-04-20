@@ -23,19 +23,19 @@ export default {
 @import url(https://fonts.googleapis.com/css?family=Lato);
 
 .sidebar-nav{
-    margin-block-start: 0%;
+    margin-block-start: -2.5%;
     position: fixed;
     border-right: 2px solid gold;
     height: 100%;
     width: 100px;
     padding-top: 5%;
-    background-color: gold;
+    
 }
 
 aside li{
 
     display: grid;
-    padding-bottom:55%;   
+    padding-bottom:45%;   
     list-style: none; 
     position: left;
   display: block;
