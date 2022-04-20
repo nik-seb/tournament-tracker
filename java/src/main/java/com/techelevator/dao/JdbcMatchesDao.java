@@ -134,7 +134,7 @@ public class JdbcMatchesDao implements MatchesDao {
                 " location_id = ?, " +
                 " round_number = ?, " +
                 " winning_team_id = ? " +
-                " WHERE match_id = ? AND (home_team_id = winning_team_id OR away_team_id = winning_team_id);";
+                " WHERE match_id = ?;";
 
         jdbcTemplate.update(sql, matches.getTournamentId(), matches.getStartDate(), matches.getStartTime(), matches.getHomeTeamId(), matches.getAwayTeamId(),
                 matches.getLocationId(), matches.getRoundNumber(), matches.getWinningTeamId(), matchId);
