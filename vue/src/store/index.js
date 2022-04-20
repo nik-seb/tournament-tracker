@@ -34,7 +34,8 @@ export default new Vuex.Store({
     },
     activePlayer: {
       playerName: '',
-      playerId: 0
+      playerId: 0,
+      userId: currentUser.userId
     },
     activeTeam: {
       teamName: '',

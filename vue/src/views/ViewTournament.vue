@@ -41,7 +41,14 @@ export default {
                 if (response.data.playerId != 0) {
                     this.$store.commit("SET_ACTIVE_PLAYER", response.data);
                     this.getPlayerTeam(response.data.playerId);
-                }
+                } else {
+                  let blankPlayer = {
+                  playerName: '',
+                  playerId: 0,
+                  userId: this.$store.state.user.id
+                 }
+                 this.$store.commit("SET_ACTIVE_PLAYER", blankPlayer)
+                  }
             } else {
               let blankPlayer = {
                 playerName: '',
