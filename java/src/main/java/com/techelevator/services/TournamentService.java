@@ -113,6 +113,7 @@ public class TournamentService implements ServerTournamentService{
 //            byeMatches.setAwayTeamId();
             byeMatches.setRoundNumber(1);
             System.out.println(teams1.getTeamName() + ", ");
+
         }
 
 
@@ -167,10 +168,10 @@ public class TournamentService implements ServerTournamentService{
     }
 
     @Override
-    public List<Matches> updateBracket(List<Teams> teams, int roundNum, int tournamentId) {
+    public List<Matches> updateBracket(List<Teams> teams, int tournamentId, int roundNum) {
 
 
-        List<Matches> listMatches = matchesDao.getMatchByTournamentAndRound(roundNum, tournamentId);
+        List<Matches> listMatches = matchesDao.getMatchesByTournamentAndRound(tournamentId, roundNum);
 
         int pow2 = 1;
         while (pow2 < teams.size()) {
@@ -186,8 +187,10 @@ public class TournamentService implements ServerTournamentService{
             teams.remove(0);
             match.setAwayTeamId(teams.get(0).getTeamId());
             teams.remove(0);
+            matchesDao.updateBracketMatches(match);
 
         }
+        roundNum++;
         return listMatches;
     }
 

@@ -107,6 +107,8 @@ public class JdbcTournamentDao implements TournamentDao {
     }
 
 
+
+
     private Tournament mapRowToTourney(SqlRowSet row){
 
         Tournament tournament = new Tournament();

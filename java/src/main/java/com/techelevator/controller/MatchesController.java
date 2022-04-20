@@ -69,7 +69,7 @@ public class MatchesController {
     @RequestMapping(path = "/matches/{id}/winner", method = RequestMethod.PUT)
     public Matches setMatchWinner(@PathVariable ("id") int matchId, @RequestBody Matches updatedMatch) throws MatchNotFoundException {
 
-        if (matchesDao.setMatchWinner(updatedMatch) != null) {
+        if (matchesDao.setMatchWinner(updatedMatch, matchId) != null) {
             return updatedMatch;
         } else {
             throw new MatchNotFoundException("Matches not found to update. ");

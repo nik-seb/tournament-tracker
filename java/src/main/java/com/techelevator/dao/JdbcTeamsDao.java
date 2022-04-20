@@ -127,6 +127,20 @@ public class JdbcTeamsDao implements TeamsDao {
         }
 
     @Override
+    public List<Teams> getWinningTeamsByRoundNumber(int roundNumber) {
+        List<Teams> winningTeams = new ArrayList<>();
+        String sql = "SELECT team_id, team_name, team_size " +
+                "FROM teams " +
+                "JOIN matches on home_team_id = team_id OR away_team_id = team_id " +
+                "WHERE winning_team_id = team_id AND matches.round_number = ?;";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, roundNumber);
+        while(results.next()){
+            winningTeams.add(mapRowToTeams(results));
+        }
+        return winningTeams;
+    }
+
+    @Override
     public void addPlayersToTeam(Players player, int teamId) {
 
         String sql = "INSERT INTO player_team (player_id, team_id) " +
