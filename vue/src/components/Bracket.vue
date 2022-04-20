@@ -46,7 +46,7 @@ export default {
             });
         },
         generateNextRound() {
-            TournamentService.createMatchesForNextRound(this.tournamentID).then((response) => {
+            TournamentService.createMatchesForNextRound(this.tournamentID, this.nextRound).then((response) => {
                 if (response.status == 200) {
                         this.$router.push({name: "manage-bracket", params: {id: this.tournamentID, matches: response.data, tournamentID: this.tournamentID, teams: this.tournamentTeams}});
                     }
@@ -80,6 +80,9 @@ export default {
             if (match1.startDate == null) {
                 return +1;
             }
+            if (match2.startDate == null) {
+                return 0;
+            }
             if (match1.startDate.toString() > match2.startDate.toString()) {
                 return 1;
             } else if (match1.startDate.toString() < match2.startDate.toString()) {
@@ -87,6 +90,8 @@ export default {
             }
             if (match1.startTime == null) {
                 return +1;
+            } else if (match2.startTime == null) {
+                return 0;
             } else if ((match1.startDate.toString() + match1.startTime.toString()) > (match2.startDate.toString() + match2.startTime.toString())) {
                 return 1;
             } else if ((match1.startDate.toString() + match1.startTime.toString()) < (match2.startDate.toString() + match2.startTime.toString())) {

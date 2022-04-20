@@ -113,10 +113,10 @@ public class TournamentController {
         return tournamentService.generateBracket(teamsList, tournamentId);
     }
 
-    @RequestMapping(path = "/tournaments/{id}/bracket", method = RequestMethod.PUT)
-    public List<Matches> updateBracket(@PathVariable("id") int tournamentId){
+    @RequestMapping(path = "/tournaments/{id}/bracket/{roundNum}", method = RequestMethod.PUT)
+    public List<Matches> updateBracket(@PathVariable("id") int tournamentId, @PathVariable int roundNum){
 
-        int roundNum = matchesDao.getCurrentRoundNumber(tournamentId);
+//        int roundNum = matchesDao.getCurrentRoundNumber(tournamentId);
         List<Teams> winningTeams = teamsDao.getWinningTeamsByRoundNumber(tournamentId, roundNum - 1);
         return tournamentService.updateBracket(winningTeams, tournamentId, roundNum);
     }
