@@ -173,6 +173,7 @@ public class TournamentService implements ServerTournamentService {
         List<Matches> listMatches = matchesDao.getMatchesByTournamentAndRound(tournamentId, roundNum);
 
         Collections.shuffle(teams);
+        System.out.println(teams);
 
         for (Matches match : listMatches) {
             match.setHomeTeamId(teams.get(0).getTeamId());

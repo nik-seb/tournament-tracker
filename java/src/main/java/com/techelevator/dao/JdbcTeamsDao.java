@@ -136,6 +136,7 @@ public class JdbcTeamsDao implements TeamsDao {
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, tournamentId, roundNumber);
         while(results.next()){
             winningTeams.add(mapRowToTeams(results));
+            System.out.println(mapRowToTeams(results));
         }
         return winningTeams;
     }

@@ -46,7 +46,7 @@ export default {
             });
         },
         generateNextRound() {
-            TournamentService.createMatchesForNextRound(this.tournamentID, this.nextRound).then((response) => {
+            TournamentService.createMatchesForNextRound(this.tournamentID).then((response) => {
                 if (response.status == 200) {
                         this.$router.push({name: "manage-bracket", params: {id: this.tournamentID, matches: response.data, tournamentID: this.tournamentID, teams: this.tournamentTeams}});
                     }
