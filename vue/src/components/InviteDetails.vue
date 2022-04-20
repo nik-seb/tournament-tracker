@@ -4,7 +4,7 @@
 
               <div>
               <label for="tournamentNames">Select a Tournament: </label>
-              <select id="tournamentName" name="tournamentName" v-model="tournamentID" v-on:change="getInviteByTournamentId()">      
+              <select id="tournamentName" name="tournamentName" v-model="tournamentID" v-on:change="getTeamsByTournamentId()">      
               <option value='' disabled></option>
               <option v-for="tournament in tournaments" 
               v-bind:key="tournament.tournamentId" 
@@ -12,12 +12,12 @@
               </select>
               </div>  
 
-              <div class="teamsTournament" v-for="team in teams" v-bind:key="team.tournamentId" v-bind:value="team.tournamentId" >
+              <div class="teamsTournament" v-for="team in teams" v-bind:key="team.tournamentId" v-bind:value="team.tournamentId">
                    {{team.teamName}}
               </div>  
 
               <div>
-              <li v-for="invites in invitations" v-bind:key="invites.invitationId" v-bind:value="invitationId"> {{invites.teamId}} {{ invites.inviteStatus }} </li>   
+              <li v-for="invites in invitations" v-bind:key="invites.tournamentId" v-bind:value="invites.invitationId"> {{invites.teamId}} {{ invites.inviteStatus }} </li>   
               </div>
 
   </body>
@@ -44,14 +44,11 @@ export default {
         players:[],
         tournaments:[],
         tournamentID: 0,
+        invitation: {},
 
         organizerId: this.$store.state.user.id,
         // teamId: this.$store.state.activeTeam.teamId
-
- 
        }
-
-
     },
 
     created(){
@@ -75,8 +72,6 @@ export default {
 
             if(response.status == 200){
                 this.invitations = response.data
-
-                
             }
         })
 
@@ -131,6 +126,7 @@ methods: {
                     this.teams.push(element.teamName)
                 });
                 this.teams = response.data;
+                
             }
         }
         )
@@ -139,16 +135,15 @@ methods: {
 
     getInviteByTournamentId() {
         InvitationService.getInviteByTournamentId(this.tournamentID).then((response) => {
-            if (response.status == 200) {
+            if (response.status === 200) {
                 response.data.forEach(element => {
                     this.teams.push(element.teamName)
-                    this.tournaments.push(element.tournamentName)
+                    this.tournaments.push(element.tournamentID)
                     this.players.push(element.playerName)
-                    this.invites.push(element.inviteStatus)
+                    this.invitations.push(element.inviteStatus)
                 });
-                    this.invitation.invitationId = response.data.invitationId;
-                    this.invitation.inviteStatus = response.data.status;
-                    this.teams = response.data.teams
+                    // this.invitations.invitationId = response.data.invitationId;
+                    // this.teams = response.data.teams;
                 
             }
         });
