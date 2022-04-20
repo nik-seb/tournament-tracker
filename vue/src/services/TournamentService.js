@@ -55,11 +55,11 @@ export default {
   },
 
   addParticipantToTournament(tournamentID, team) {
-    return axios.post(`tournaments/${tournamentID}/teams`, team);
+    return axios.post(`/tournaments/${tournamentID}/teams`, team);
   },
 
   getParticipantsInTournament(tournamentID) {
-      return axios.get(`tournaments/${tournamentID}/teams`);
+      return axios.get(`/tournaments/${tournamentID}/teams`);
   },
 
   getTeamOfPlayer(playerID) {
