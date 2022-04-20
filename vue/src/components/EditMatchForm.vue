@@ -56,15 +56,19 @@ export default {
     },
     computed: {
         dateIsAHoliday() {
-            let matchingHoliday = this.$store.state.holidays.filter((holiday) => {
-                if (holiday.observed == this.match.startDate) {
+            let matchingHoliday = this.$store.state.holidays.find((holiday) => {
+                if (!this.match.startDate) {
+                    return false;
+                }
+                let abbrev = holiday.date.toString().slice(5);
+                let abbrev2 = this.match.startDate.toString().slice(5);
+                console.log(abbrev, abbrev2)
+                if (abbrev == abbrev2) {
                     this.currentHoliday = holiday.name;
                     return true;
                 }
-                return false
             })
-            console.log(matchingHoliday)
-            if (matchingHoliday.length > 0) {
+            if (matchingHoliday) {
                 return true;
             } else {
                 return false;
