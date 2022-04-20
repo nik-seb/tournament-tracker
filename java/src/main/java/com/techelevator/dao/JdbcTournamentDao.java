@@ -107,19 +107,19 @@ public class JdbcTournamentDao implements TournamentDao {
     }
 
     @Override
-    public Tournament getTournamentsBySportId(int sportId) throws TournamentNotFoundException {
-
+    public List<Tournament> getTournamentsBySportId(int sportId) throws TournamentNotFoundException {
+        List<Tournament> tournaments = new ArrayList<>();
        String sql = "SELECT tournament_id, tournament_name, num_of_teams, start_date, end_date, sport_id, description, num_of_rounds, tournament_type, organizer_id " +
                     "FROM tournaments " +
                     "WHERE sport_id = ?;";
 
-      SqlRowSet sqlRowSet =  jdbcTemplate.queryForRowSet(sql, sportId);
+      SqlRowSet results =  jdbcTemplate.queryForRowSet(sql, sportId);
 
-        if (sqlRowSet.next()){
-            return mapRowToTourney(sqlRowSet);
+        while (results.next()){
+            Tournament tournament = mapRowToTourney(results);
+            tournaments.add(tournament);
         }
-
-        return null;
+        return tournaments;
     }
 
 

@@ -27,11 +27,15 @@ export default {
   // },
 
   modifyTournament(tournament) {
-    return axios.put(`/tournaments/${tournament.tournamentID}`, tournament);
+    return axios.put(`/tournaments/${tournament.tournamentId}`, tournament);
   },
 
   getTournamentDetails(tournamentID) {
       return axios.get(`/tournaments/${tournamentID}`);
+  },
+
+  getTournamentsBySportId(sportID) {
+    return axios.get(`/tournaments/sport/${sportID}`)
   },
 
   createBracketForTournament(tournamentID) {
