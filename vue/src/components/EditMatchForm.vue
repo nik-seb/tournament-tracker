@@ -1,6 +1,6 @@
 <template>
     <div>
-        <form v-on:submit.prevent="saveMatch()">
+        <form v-on:submit.prevent="saveMatch()" v-if="match.winningTeamId == 0">
             <p>{{match.homeTeamName}} vs {{match.awayTeamName}} </p>
 
             <label for="date">Select a date for this match: </label>
@@ -14,7 +14,7 @@
               <option value='' disabled></option>
               <option v-for="location in locations" v-bind:key="location.locationId" v-bind:value="location.locationId">{{location.cityName}}, {{location.stateName}}</option>
           </select>
-          
+
             <input type="submit" value="Confirm match details">
         </form>
 

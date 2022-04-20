@@ -23,7 +23,7 @@
             <td>{{match.startDate}}</td>
             <td>{{match.startTime}}</td>
             <td>{{getTeamNameFromTeamList(match.winningTeamId) || "TBD"}}</td>
-            <td><button v-on:click="addWinner(match)">Add Winner</button></td>
+            <td><button v-on:click="addWinner(match)" v-if="match.winningTeamId == 0">Add Winner</button></td>
         </tr>
       </table>
   </div>
