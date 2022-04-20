@@ -10,10 +10,10 @@
               </select>
               </div>  
 
-              <div class="teamsTournament" v-for="team in getParticipantsInTournament" v-bind:key="team.tournamentId" v-bind:value="team.tournamentId" > {{team.teamName}}
+              <div class="teamsTournament" v-for="team in teams" v-bind:key="team.tournamentId" v-bind:value="team.tournamentId" > {{team.teamName}}
                 
-                  
 
+                
               </div>  
 
               <div>
@@ -31,7 +31,6 @@ export default {
     name: 'invite-details',
    
    props:{
-       tournamentId: Number,
        invitationId: Number
    
     },
@@ -44,17 +43,18 @@ export default {
         teams:[],
         players:[],
         tournaments:[],
-
+        
         organizerId: this.$store.state.user.id,
-        teamId: this.$store.state.activeTeam.teamId
 
- 
+        
        }
 
 
     },
 
     created(){
+
+        
 
         TournamentService.getAllTournaments().then(response => {
 
