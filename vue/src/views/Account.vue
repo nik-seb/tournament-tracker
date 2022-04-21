@@ -72,6 +72,19 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
+form.account {
+    position: relative;
+  z-index: 1;
+background-color: #232323;
+  max-width: 360px;
+  margin: 0 auto 100px;
+  padding: 45px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+
+}
+
 
 </style>

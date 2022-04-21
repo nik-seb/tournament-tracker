@@ -1,12 +1,10 @@
 <template>
  <div>
     <h1 id="company-name"> RANNS Tournament Displays™ </h1>
-    <body>
-      
-    </body>
     <div class="tournament-picture">
-             
+      <img src="../assets/tournament_picture.jpg" alt="example of tournament picture">         
     </div> 
+
   <event-containers></event-containers>
   <div></div>
   <div></div>
@@ -34,7 +32,15 @@ components:{
 
 <style scoped>
 
-  
+.tournament-picture {
+
+  max-height: 500px;
+  padding-left: 5%;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
 
 #company-name{
   
