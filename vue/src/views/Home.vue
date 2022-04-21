@@ -35,10 +35,10 @@ components:{
 .tournament-picture {
 
   max-height: 500px;
-  padding-left: 5%;
   display: flex;
   justify-content: center;
   flex-direction: row;
+  padding-right: 2%;
 }
 
 
@@ -46,6 +46,7 @@ components:{
   
   display: flex;
   justify-content: center;
+  padding-right: 2%;
   font-style: oblique;
   font-weight: 80%;
 }

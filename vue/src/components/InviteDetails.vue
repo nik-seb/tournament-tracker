@@ -2,20 +2,19 @@
   <body class="inv">
       <h3></h3>
 
-              <div>
+              <div id="brittneyBitch">
                    <form>
                     <div class="inv" v-for="invite in invitations" v-bind:key="invite.teamId" v-bind:value="invite.teamId">
-                        Tournament Name: {{ invite.tournamentName }}
-                         Team Name:  {{ invite.teamName }}
-                         Invitation Status: {{ invite.inviteStatus }}
-                      <p v-if="invite.inviteStatus == 'TBD'"> 
+                       <p id="uno"> Tournament Name || {{ invite.tournamentName }} || </p>
+                        <p id="dos"> Team Name ||  {{ invite.teamName }} || </p>
+                        <p id="tres"> Invitation Status || {{ invite.inviteStatus }} </p>
+                        <p v-if="invite.inviteStatus == 'TBD'"> 
                          <button  v-bind:value="invite.tournamentId" id="acceptInvite" v-on:click.prevent="acceptInvite(invite)"> Accept Invite </button>
                          <button  v-bind:value="invite.tournamentId" id="declineInvite" v-on:click.prevent="declineInvite(invite)"> Decline Invite </button>
                       </p>     
                     </div> 
                   </form>
                    
-             
               </div>
 
   </body>
@@ -122,5 +121,22 @@ methods: {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    margin-top: 5%;
+    margin-bottom: 15%;
 }
+
+#uno{
+
+}
+
+#dos{
+
+}
+
+#tres{
+    
+}
+
+
+
 </style>
