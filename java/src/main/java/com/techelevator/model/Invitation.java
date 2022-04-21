@@ -21,6 +21,7 @@ public class Invitation {
     @NotNull(message = "invite status cannot be empty, it must contain a status pertaining to the users response eg.(NOT_ACCEPTED)")
    String inviteStatus;
 
+
     public Invitation(){}
 
     public Invitation(int invitationId, int tournamentId, int teamId,
