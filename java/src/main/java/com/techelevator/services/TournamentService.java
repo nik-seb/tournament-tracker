@@ -181,10 +181,6 @@ public class TournamentService implements ServerTournamentService {
             match.setAwayTeamId(teams.get(0).getTeamId());
             teams.remove(0);
             matchesDao.updateBracketMatches(match);
-<<<<<<< HEAD
-
-=======
->>>>>>> f1e0ccbeee8140915656d96a4f85f7b1d97492fb
         }
 
         return listMatches;

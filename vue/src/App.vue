@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="fixed-bg bg-1">
     <div id="nav">
       <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
       <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>&nbsp;|&nbsp;
@@ -25,19 +25,27 @@ export default{
 
 
 <style scoped>
-#app {
+.bg-1 { 
+  background-image: url("https://c4.wallpaperflare.com/wallpaper/726/945/213/sports-high-resolution-desktop-backgrounds-wallpaper-preview.jpg");
+  background-size: cover;
+  background-position: center;
+  background-position-x: 50px;
   
 }
+
 #nav{
+  
+  background-color:white;
+  margin-left: 140px;
   position: sticky;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
   height: 20px;
-  top: 0%;
+  margin-top: -0.8%;
   text-align: center;
-  background-attachment: fixed;
+  
 
 }
 
@@ -45,6 +53,7 @@ export default{
   
 
 #main-view {
+ 
    margin-left: 140px;
    padding-left: 1rem;
 }

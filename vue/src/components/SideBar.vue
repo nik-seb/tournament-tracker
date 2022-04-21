@@ -23,6 +23,7 @@ export default {
 @import url(https://fonts.googleapis.com/css?family=Lato);
 
 .sidebar-nav{
+    background-color: white;
     margin-block-start: -2.5%;
     position: fixed;
     border-right: 2px solid gold;
