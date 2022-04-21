@@ -109,6 +109,8 @@ public class JdbcInvitationDao implements InvitationDao{
 
     }
 
+
+
     @Override
     public List<Invitation> getInvitationsByTournamentId(int tournamentId) {
 
