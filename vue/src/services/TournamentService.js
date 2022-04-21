@@ -101,6 +101,10 @@ export default {
 
   getAllLocations(){
     return axios.get('/locations');
+  },
+
+  addLocation(location) {
+    return axios.post('/locations', location);
   }
 
 }
