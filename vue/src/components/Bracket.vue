@@ -72,10 +72,10 @@ export default {
                     return true;
                 }
             })
-            if (activeLocation) {
+            if (activeLocation && activeLocation.cityName) {
                 return `${activeLocation.cityName}, ${activeLocation.stateName}`
             }
-            return locationId;
+            return '';
         },
         compareDate(match1, match2) {
             // checks regular dates first, then date + time if dates are equal
