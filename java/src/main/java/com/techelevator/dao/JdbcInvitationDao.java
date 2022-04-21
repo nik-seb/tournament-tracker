@@ -59,9 +59,14 @@ public class JdbcInvitationDao implements InvitationDao{
 
         List<Invitation> invitations = new ArrayList<>();
 
-        String sql = "SELECT invitation_id, tournament_id, team_id, organizer_id, inv_status " +
-                     "FROM invitations " +
-                     "WHERE team_id = ?;";
+        String sql = "SELECT invitations.inv_status, teams.team_name, players.player_name, tournaments.tournament_name, " +
+                "     invitations.invitation_id, invitations.tournament_id, invitations.team_id, invitations.organizer_id  " +
+                "     FROM invitations " +
+                "     JOIN tournaments ON invitations.tournament_id = tournaments.tournament_id" +
+                "     JOIN teams ON invitations.team_id = teams.team_id " +
+                "     JOIN player_team ON teams.team_id = player_team.team_id " +
+                "     JOIN players ON player_team.player_id = players.player_id " +
+                "     WHERE teams.team_id = ?;";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
 
@@ -104,12 +109,15 @@ public class JdbcInvitationDao implements InvitationDao{
 
     }
 
+
+
     @Override
     public List<Invitation> getInvitationsByTournamentId(int tournamentId) {
 
         List<Invitation> invitations = new ArrayList<>();
 
-        String sql = "SELECT invitations.inv_status, teams.team_name, players.player_name, tournaments.tournament_name " +
+        String sql = "SELECT invitations.inv_status, teams.team_name, players.player_name, tournaments.tournament_name, " +
+                " invitations.invitation_id, invitations.tournament_id, invitations.team_id, invitations.organizer_id " +
                 "     FROM invitations " +
                 "     JOIN tournaments ON invitations.tournament_id = tournaments.tournament_id" +
                 "     JOIN teams ON invitations.team_id = teams.team_id " +
@@ -136,6 +144,9 @@ public class JdbcInvitationDao implements InvitationDao{
         invitation.setTeamId(row.getInt("team_id"));
         invitation.setOrganizerId(row.getInt("organizer_id"));
         invitation.setInviteStatus(row.getString("inv_status"));
+        invitation.setTeamName(row.getString("team_name"));
+        invitation.setTournamentName(row.getString("tournament_name"));
+        invitation.setPlayerName(row.getString("player_name"));
 
         return invitation;
 

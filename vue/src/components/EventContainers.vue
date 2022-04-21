@@ -84,7 +84,13 @@ export default {
   display: flex;
   flex-direction: row;
   color: white;
+  justify-content: center;
   
+}
+
+#ev-container-body{
+  margin: auto;
+  margin-top: 2.5%;
 }
 
 #live-events{
@@ -131,8 +137,10 @@ export default {
 
 #current{
   margin-right: 4%;
-  border-right: 2px solid goldenrod;
-  border-left: 2px solid goldenrod;
+  border-right: 2px  solid goldenrod;
+  border-left: 2px  solid goldenrod;
+  
+  height: 100vh;
   padding-right: 4%;
   padding-left: 4%;
 }
