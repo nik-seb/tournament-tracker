@@ -31,7 +31,7 @@ h1{
     flex-direction: row;
     justify-content: center;
     background-color: goldenrod;
-    border: thick, dotted;
+    border: thick;
  position: relative;
   z-index: 1;
   max-width: 360px;
