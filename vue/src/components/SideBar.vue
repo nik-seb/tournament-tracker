@@ -23,21 +23,23 @@ export default {
 <style>
 @import url(https://fonts.googleapis.com/css?family=Lato);
 
-.sidebar-nav{
-    background-color: white;
+.sidebar-nav {
+    background-color: #232323;
     margin-block-start: -2.5%;
     position: fixed;
     border-right: 2px solid gold;
     height: 100%;
     width: 100px;
     padding-top: 5%;
-    
+    color: #F2C629;
 }
+
 
 aside li{
 
     display: grid;
-    padding-bottom:45%;   
+    padding-bottom:30%;  
+        padding-top:30%; 
     list-style: none; 
     position: left;
   display: block;
@@ -45,8 +47,13 @@ aside li{
   color: #121414;
   text-decoration: none;
   margin-left: -35%;
-
+  text-align: center;
     
+}
+
+aside li a, aside li a:visited {
+    text-decoration: none;
+    color: #F2C629;
 }
 
 aside img{

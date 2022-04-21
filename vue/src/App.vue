@@ -1,11 +1,11 @@
 <template>
   <div id="app" class="fixed-bg bg-1">
-    <!-- <div id="nav">
-      <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
+    <div id="nav">
+      <!-- <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
       <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>&nbsp;|&nbsp;
       <router-link v-bind:to="{ name: 'login' }" v-if="$store.state.token == ''">Login</router-link>
-      <router-link v-bind:to="{ name: 'account-details', params: {id: Number($store.state.user.id)}}" v-if="$store.state.token != ''">Account</router-link>
-    </div> -->
+      <router-link v-bind:to="{ name: 'account-details', params: {id: Number($store.state.user.id)}}" v-if="$store.state.token != ''">Account</router-link> -->
+    </div>
     <side-bar/>
     <router-view id="main-view" />
   </div>
@@ -28,7 +28,7 @@ export default{
 
 #nav{
   
-  background-color:white;
+  background-color: #232323;
   margin-left: 140px;
   position: sticky;
   display: flex;
@@ -36,7 +36,7 @@ export default{
   justify-content: space-evenly;
   align-items: center;
   height: 20px;
-  margin-top: -0.8%;
+  margin-top:0;
   text-align: center;
   
 
@@ -49,15 +49,23 @@ export default{
    padding-left: 1rem;
 }
 
-/* div {
+div {
   background-color: #232323;
 }
 
-#app {
+body, html {
   height: 100%;
+  width: 100%;
+  min-height: 100vh;
   margin: 0px;
   padding: 0px;
-} */
+  color: #F2C629;
+}
+
+a, a:visited {
+ background-color: #232323;  
+ color: #DC8400; 
+}
 
 </style>
 

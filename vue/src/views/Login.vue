@@ -1,39 +1,45 @@
 <template>
-  <div id="login" class="text-center">
-    <form class="form-signin" @submit.prevent="login">
-      <h1 class="h3 mb-3 font-weight-normal">Please Sign In</h1>
-      <div
-        class="alert alert-danger"
-        role="alert"
-        v-if="invalidCredentials"
-      >Invalid username and password!</div>
-      <div
-        class="alert alert-success"
-        role="alert"
-        v-if="this.$route.query.registration"
-      >Thank you for registering, please sign in.</div>
-      <label id="user" for="username" class="sr-only">Please enter your username below</label>
-      <input
-        type="text"
-        id="username"
-        class="form-control"
-        placeholder="Username"
-        v-model="user.username"
-        required
-        autofocus
-      />
-      <label for="password" class="sr-only">Please enter your password below</label>
-      <input
-        type="password"
-        id="password"
-        class="form-control"
-        placeholder="Password"
-        v-model="user.password"
-        required
-      />
-        <router-link :to="{ name: 'register' }">Need an account?</router-link>
-        <button type="submit">Sign in</button>
-    </form>
+  <div class="text-center" id="login">
+    <div class="login-page">
+            <div class="login-header">
+              <h3>WELCOME</h3>
+              <p>To Tournament Tracker</p>
+            </div>
+      <form class="form form-signin form" @submit.prevent="login">
+        <h1 class="h3 mb-3 font-weight-normal">Please Sign In</h1>
+        <div
+          class="alert alert-danger"
+          role="alert"
+          v-if="invalidCredentials"
+        >Invalid username and password!</div>
+        <div
+          class="alert alert-success"
+          role="alert"
+          v-if="this.$route.query.registration"
+        >Thank you for registering, please sign in.</div>
+        <label id="user" for="username" class="sr-only">Please enter your username below</label>
+        <input
+          type="text"
+          id="username"
+          class="form-control"
+          placeholder="Username"
+          v-model="user.username"
+          required
+          autofocus
+        />
+        <label for="password" class="sr-only">Please enter your password below</label>
+        <input
+          type="password"
+          id="password"
+          class="form-control"
+          placeholder="Password"
+          v-model="user.password"
+          required
+        />
+          <router-link :to="{ name: 'register' }">Need an account?</router-link>
+          <button type="submit">Sign in</button>
+      </form>
+    </div>
   </div>
 </template>
 

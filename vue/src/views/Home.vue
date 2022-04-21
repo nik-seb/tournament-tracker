@@ -1,9 +1,6 @@
 <template>
  <div>
-    <h1 id="company-name"> IS THIS UPDATING </h1>
-    <body>
-      
-    </body>
+    <h1 id="company-name"> RANNS Tournament Displays™ </h1>
     <div class="tournament-picture">
       <img src="../assets/tournament_picture.jpg" alt="example of tournament picture">         
     </div> 
