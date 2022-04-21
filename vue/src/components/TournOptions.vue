@@ -1,5 +1,6 @@
 <template>  
-  <div id='tourn-options'>
+  <div>
+    <div  id='tourn-options'>
       <!-- show if player id associated with user isn't associated with tourn, else display "Leave" -->
      <router-link v-if="!playerHasJoinedTournament" v-bind:to="{ name: 'join-tournament'}" v-bind:tournamentID="tournamentID"><button id="join">Join</button></router-link>
       <!-- TO-DO  check if host is tournament's organizer-->
@@ -7,8 +8,8 @@
       <!-- show unless bracket has been generated -->
      <router-link v-bind:to="{ name: 'create-invite'}" > <button id="invite">Invite</button></router-link>
       <router-link v-bind:to="{name: 'Modify-tournament'}"> <button id="Modify">Modify</button> </router-link>
-      <button id="delete">Delete</button>
       </div>
+    </div>
   </div>
 </template>
 
@@ -35,10 +36,16 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   #tourn-options {
-    width: 50%;
+    text-align: center;
+    margin: auto;
     display: flex;
     justify-content: center;
   }
+
+  button {
+    margin: 0.25rem;
+  }
+
 </style>
