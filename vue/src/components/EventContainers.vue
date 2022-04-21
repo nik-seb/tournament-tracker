@@ -80,11 +80,12 @@ export default {
 
 <style scoped>
 
+
 .events{
   display: flex;
   flex-direction: row;
   color: white;
-  
+  justify-content: center;
 }
 
 #live-events{
