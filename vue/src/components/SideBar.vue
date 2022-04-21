@@ -2,12 +2,13 @@
          <aside>    
             <nav>
                 <ul class="sidebar-nav">
+                    <li><router-link v-bind:to="{ name: 'home' }">Home</router-link></li>
                     <li v-if="this.$store.state.user.role == 'ROLE_HOST'"><router-link v-bind:to="{name: 'create-tournament' }">Create Tournament</router-link></li>
                     <li><router-link v-bind:to="{name: 'browse-tournaments' }">Display Tournaments</router-link></li>
-                    <li>Display Matches</li>
-                    <li>Manage Tournaments</li>
                     <li v-if="this.$store.state.user.role == 'ROLE_HOST'"><router-link v-bind:to="{name: 'create-invite' }">Invite Form</router-link></li>
-                    <li>Contact Us</li>
+                    <li><router-link v-bind:to="{ name: 'account-details', params: {id: Number($store.state.user.id)}}" v-if="$store.state.token != ''">Account</router-link></li>
+                    <li><router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
+      <router-link v-bind:to="{ name: 'login' }" v-if="$store.state.token == ''">Login</router-link></li>
                 </ul>
             </nav>
         </aside>

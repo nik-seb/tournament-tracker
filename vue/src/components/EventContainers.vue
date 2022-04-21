@@ -81,7 +81,6 @@ export default {
 <style scoped>
 
 .events{
-  margin-left: 140px;
   display: flex;
   flex-direction: row;
 
