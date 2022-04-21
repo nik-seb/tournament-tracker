@@ -19,7 +19,7 @@
             </td>
              <td>
             <select id="sport" name="sport" v-model="currentSport.sportId" v-on:change="filterBySport()">
-              <option value='0' disabled></option>
+              <option value='0'>All</option>
               <option v-for="sport in sports" v-bind:key="sport.sportId" v-bind:value="sport.sportId">{{sport.sportName}}</option>
           </select>
             </td>
@@ -30,7 +30,7 @@
               <input type="">
             </td>
             <td>
-              <select id="status" v-model="tournamentStatus">
+              <select id="status" v-model="tournamentStatus" v-on:change="filterByActive()">
               <option value="active">Active</option>
               <option value="complete">Complete</option>
               <option value="all">Show All</option>
@@ -121,7 +121,7 @@ export default {
     },
     filterBySport(){
       if (this.currentSport.sportId == 0) {
-        return;
+        this.tournamentArray = this.originalTournamentArray.slice();
       } else {
         TournamentService.getTournamentsBySportId(this.currentSport.sportId).then(response => {
           if (response.status == 200) {
@@ -129,6 +129,23 @@ export default {
             this.mapTournaments();
           }
         })
+      }
+    },
+    filterByActive() {
+      if (this.tournamentStatus == 'all') {
+        this.tournamentArray = this.originalTournamentArray.slice();
+      }
+      if (this.tournamentStatus == 'active') {
+
+        const currentDate = new Date();
+        const activeEvents = this.tournamentArray.filter((event) => {
+        let convertedEndDate = new Date(event.endDate);
+        if (convertedEndDate >= currentDate) {
+          return true;
+        }
+        return false;
+      })
+      this.tournamentArray = activeEvents;
       }
     }
   },
@@ -159,6 +176,9 @@ table {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   margin-bottom: 20px;
+}
+h1 {
+  margin: 235px;
 }
 td, th {
   border:goldenrod 1px; 

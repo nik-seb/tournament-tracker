@@ -20,22 +20,31 @@ export default {
 </script>
 
 <style>
-.sidebar-nav{
+@import url(https://fonts.googleapis.com/css?family=Lato);
 
+.sidebar-nav{
+    background-color: white;
+    margin-block-start: -2.5%;
     position: fixed;
     border-right: 2px solid gold;
     height: 100%;
     width: 100px;
     padding-top: 5%;
-
+    
 }
 
 aside li{
 
-    padding-top: 50px;
-    padding-bottom: 75%;   
+    display: grid;
+    padding-bottom:45%;   
     list-style: none; 
-    /* justify-content: right; */
+    position: left;
+  display: block;
+  font-family: Lato, sans-serif;
+  color: #121414;
+  text-decoration: none;
+  margin-left: -35%;
+
     
 }
 

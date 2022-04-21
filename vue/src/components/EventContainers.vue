@@ -3,7 +3,6 @@
   <div id="ev-container-body">
     <div>
         <div class="events">
-          <!-- create a v-if condition if date is less than end date display -->
           <div id="past">
           <p id="past-events"> Past Events </p>
             <event-table class="past-events" v-bind:filteredList="pastEventArray"/>
@@ -82,10 +81,11 @@ export default {
 <style scoped>
 
 .events{
+  margin-left: 140px;
   display: flex;
   flex-direction: row;
-  margin-left: 3%;
-  margin-right: 3%;
+
+  
 }
 
 #live-events{
