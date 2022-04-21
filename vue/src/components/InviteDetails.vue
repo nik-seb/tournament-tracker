@@ -2,22 +2,19 @@
   <body class="inv">
       <h3></h3>
 
-              <div>
-              <label for="tournamentNames">Select a Tournament: </label>
-              <select id="tournamentName" name="tournamentName" v-model="tournamentID" v-on:change="getTeamsByTournamentId()">      
-              <option value='' disabled></option>
-              <option v-for="tournament in tournaments" 
-              v-bind:key="tournament.tournamentId" 
-               v-bind:value="tournament.tournamentId" > {{ tournament.tournamentName }}</option>
-              </select>
-              </div>  
-
-              <div class="teamsTournament" v-for="team in teams" v-bind:key="team.tournamentId" v-bind:value="team.tournamentId">
-                   {{team.teamName}}
-              </div>  
-
-              <div>
-              <li v-for="invites in invitations" v-bind:key="invites.tournamentId" v-bind:value="invites.invitationId"> {{invites.teamId}} {{ invites.inviteStatus }} </li>   
+              <div id="brittneyBitch">
+                   <form>
+                    <div class="inv" v-for="invite in invitations" v-bind:key="invite.teamId" v-bind:value="invite.teamId">
+                       <p id="uno"> Tournament Name || {{ invite.tournamentName }} || </p>
+                        <p id="dos"> Team Name ||  {{ invite.teamName }} || </p>
+                        <p id="tres"> Invitation Status || {{ invite.inviteStatus }} </p>
+                        <p v-if="invite.inviteStatus == 'TBD'"> 
+                         <button  v-bind:value="invite.tournamentId" id="acceptInvite" v-on:click.prevent="acceptInvite(invite)"> Accept Invite </button>
+                         <button  v-bind:value="invite.tournamentId" id="declineInvite" v-on:click.prevent="declineInvite(invite)"> Decline Invite </button>
+                      </p>     
+                    </div> 
+                  </form>
+                   
               </div>
 
   </body>
@@ -29,59 +26,36 @@ import TournamentService from '../services/TournamentService.js'
 
 export default {
     name: 'invite-details',
-   
-   props:{
-       invitationId: Number
-   
-    },
 
     data(){
 
-       return{ 
-        
+       return{         
         invitations: [],
         teams:[],
         players:[],
         tournaments:[],
         tournamentID: 0,
-        invitation: {},
-
         organizerId: this.$store.state.user.id,
-        // teamId: this.$store.state.activeTeam.teamId
+        teamId: 0
        }
     },
 
     created(){
-        // this.inviteForm.tournamentId = this.$store.state.activeTournament.tournamentId;
-
-        TournamentService.getAllTournaments().then(response => {
-
-            if(response.status === 200){
-                this.tournaments = response.data
-            }
-        })
-
-        TournamentService.getAllTeams().then(response => {
-
-                if(response.status === 200){
-                    this.teams = response.data 
-                }
-            })
-
-        InvitationService.sentInviteByOrganizerId(this.organizerId).then(response => {
-
-            if(response.status == 200){
-                this.invitations = response.data
-            }
-        })
-
+       
         TournamentService.getUserPlayerID(this.$store.state.user.id).then((response) => {
             if (response.status == 200) {
                 if (response.data.playerId != 0) {
                     this.$store.commit("SET_ACTIVE_PLAYER", response.data);
                     this.getPlayerTeam(response.data.playerId);
-                }
-            } else {
+                }else{
+                    let blankPlayer = {
+                playerName: '',
+                playerId: 0,
+                userId: this.$store.state.user.id
+              }
+              this.$store.commit("SET_ACTIVE_PLAYER", blankPlayer)
+              }
+              }else{
               let blankPlayer = {
                 playerName: '',
                 playerId: 0,
@@ -89,75 +63,56 @@ export default {
               }
               this.$store.commit("SET_ACTIVE_PLAYER", blankPlayer)
             }
-        })
+        })  
+    },
 
-        TournamentService.getParticipantsInTournament(this.tournamentID).then(response => {
-
-            if(response.status === 200){
-                this.teams = response.data
-            }
-        })
-
-        InvitationService.getInviteByTeamId(this.teamId).then(response => {
+methods: {
+     getPlayerTeam(playerId) {
+      TournamentService.getTeamOfPlayer(playerId).then((response) => {
+                if (response.status == 200) {
+                    this.$store.commit("SET_ACTIVE_TEAM", response.data)
+                    this.teamId = response.data.teamId
+                    this.getInviteByTeamId()
+                }
+            })
+    },
+        getInviteByTeamId(){
+         InvitationService.getInviteByTeamId(this.teamId).then(response => {
 
             if(response.status === 200){
                 this.invitations = response.data;
             }
         })
+        },
+        acceptInvite(invite){
+      
+            invite.inviteStatus = "ACCEPTED";
 
-        
-    },
+             if(confirm('Are you sure about this?')){
+                InvitationService.updateInvitationStatus(invite).then(response => {
 
-methods: {
+                    if(response.status === 200){
+                        this.inviteStatus = "ACCEPTED"
+                        this.$store.commit('SET_STATUS', this.$store.state.invitationList)
+                    }
+                })
+         }
+        },
 
-     getPlayerTeam(playerId) {
-      TournamentService.getTeamOfPlayer(playerId).then((response) => {
-                if (response.status == 200) {
-                    this.$store.commit("SET_ACTIVE_TEAM", response.data)
-                }
-            })
-    },
+        declineInvite(invite){
+           
+            invite.inviteStatus = "DECLINED";
 
-//get team by tourn id, get invite by team id using list of teams in tournament
-    getTeamsByTournamentId(){
-        TournamentService.getParticipantsInTournament(this.tournamentID).then((response) => {
-            if(response.status === 200){
-                response.data.forEach(element => {
-                    this.teams.push(element.teamName)
-                });
-                this.teams = response.data;
-                
-            }
+             if(confirm('ARE YOU SURE ABOUT THIS')){
+                 InvitationService.updateInvitationStatus(invite).then(response =>{
+
+                     if(response.status === 200){
+                         this.inviteStatus = 'DECLINED';
+                     }
+                 })
+             }   
         }
-        )
-
-    },
-
-    getInviteByTournamentId() {
-        InvitationService.getInviteByTournamentId(this.tournamentID).then((response) => {
-            if (response.status === 200) {
-                response.data.forEach(element => {
-                    this.teams.push(element.teamName)
-                    this.tournaments.push(element.tournamentID)
-                    this.players.push(element.playerName)
-                    this.invitations.push(element.inviteStatus)
-                });
-                    // this.invitations.invitationId = response.data.invitationId;
-                    // this.teams = response.data.teams;
-                
-            }
-        });
-    },
-
-    getInviteByStatus() {
-        InvitationService.getInviteByStatus(this.invitationStatus).then((response) => {
-            if (response.status == 200) {
-                this.invitation = response.data;
-            }
-    });
-},
-
-    },
+    } 
 }
 </script>
 
@@ -166,5 +121,22 @@ methods: {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    margin-top: 5%;
+    margin-bottom: 15%;
 }
+
+#uno{
+
+}
+
+#dos{
+
+}
+
+#tres{
+    
+}
+
+
+
 </style>

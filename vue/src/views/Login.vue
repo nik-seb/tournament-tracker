@@ -2,8 +2,7 @@
   <div class="text-center" id="login">
     <div class="login-page">
             <div class="login-header">
-              <h3>WELCOME</h3>
-              <p>To Tournament Tracker</p>
+              <h3>Welcome To Tournament Tracker</h3>
             </div>
       <form class="form form-signin form" @submit.prevent="login">
         <h1 class="h3 mb-3 font-weight-normal">Please Sign In</h1>
@@ -27,7 +26,7 @@
           required
           autofocus
         />
-        <label for="password" class="sr-only">Please enter your password below</label>
+        <label id="pass" for="password" class="sr-only">Please enter your password below</label>
         <input
           type="password"
           id="password"
@@ -36,8 +35,8 @@
           v-model="user.password"
           required
         />
-          <router-link :to="{ name: 'register' }">Need an account?</router-link>
-          <button type="submit">Sign in</button>
+          <router-link id="register" :to="{ name: 'register' }">Need an account?</router-link>
+          <button id="submitButton" type="submit">Sign in</button>
       </form>
     </div>
   </div>
@@ -94,6 +93,7 @@ margin-top: 4px;
   width: 360px;
   padding: 8% 0 0;
   margin: auto;
+  font-family: "Roboto", sans-serif;
 }
 .login-page .form .login{
   margin-top: -31px;
@@ -102,7 +102,7 @@ margin-bottom: 26px;
 .form {
   position: relative;
   z-index: 1;
-  background: #FFFFFF;
+  background:black#FFFFFF;
   max-width: 360px;
   margin: 0 auto 100px;
   padding: 45px;
@@ -168,7 +168,25 @@ p {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: x-large;
   color: goldenrod;
+  margin: auto;
+  padding-left: 18%;
   
+}
+
+#register{
+  font-family: "Roboto", sans-serif;
+}
+
+#submitButton{
+  margin-top: 3.5%;
+}
+
+#password{
+  margin-top: 3.5%;
+}
+
+#username{
+  margin-top: 3.5%;
 }
 
 /* #username {

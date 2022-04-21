@@ -1,27 +1,23 @@
 <template>
 <body>
    <header>
-       <h1>Invite to Tournament</h1>
+       <h1>Invite team to tournament</h1>
     
     </header> 
 
-       <nav>
-           <a href=""></a>
-       </nav>
+       
 
-      <p id="invTournament">Please enter the selected tournament you would like to send an invite for</p>   
-      <p id="invTeam">Please enter the selected team you would like to send an invite for </p>
+      <p id="invTournament">Please enter the selected tournament and team you would like to send an invite for</p>   
       <form id='invForm' action="invite-form" v-on:submit.prevent="createForm()">
-    
-      
-      <label for="tournamentNames">Tournament Names: </label>
+      <label id="tourNames" for="tournamentNames">Tournament Names: </label>
+  
       <select id="tournamentName" name="tournamentName" v-model="inviteForm.tournamentId">
       <option value='' disabled></option>
       <option v-for="tournament in tournamentList" v-bind:key="tournament.tournamentId" v-bind:value="tournament.tournamentId">{{tournament.tournamentName}}</option>
       </select>
 
     <!-- team addition  -->
-      <label for="teamName"> Team Names: </label>
+      <label id="teamNames" for="teamName"> Team Names: </label>
       <select id="teamName" name="teamName" v-model="inviteForm.teamId">
       <option value='' disabled> </option>
       <option v-for="team in teamList" v-bind:key="team.teamId" v-bind:value="team.teamId">{{ team.teamName }}</option>
@@ -29,7 +25,7 @@
       </select>
     <!-- team addition  -->
       
-      <button>Save</button>
+      <button id="save">Save</button>
   </form>
 
   </body>
@@ -109,20 +105,6 @@ export default {
                    console.log(response)
                }
            })
-
-          
-
-
-
-
-
-
-
-            // this.$store.commit('SAVE_FORM', this.form);
-            // this.form = {
-            //     tournamentName: '',
-            //     teamName: ''
-            // };
         }
     }
 }
@@ -130,21 +112,49 @@ export default {
 </script>
 
 <style>
-
 #invForm{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    padding-top: 2.5%;
+  position: relative;
+  background: black #FFFFFF;
+  max-width: 360px;
+  margin: 0 auto 100px;
+  padding: 45px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  display: flex;
+  flex-direction: column;
 }
 
-/* .invitation-form input, .invitation-form button {
-    margin: 10px;
-    font-size: 1rem;
-
+/* header{
     display: flex;
     flex-direction: row;
     justify-content: center;
 } */
+body{
+   display: f;
+}
+
+#invTournament{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-top: 5%;
+}
+
+#tourNames{
+    margin-bottom: 5%;
+}
+#teamNames{
+    margin-top: 15%;
+    margin-bottom: 5%;
+}
+
+#save{
+    margin-top: 15%;
+    margin-bottom: 15%;
+    display: block;
+    block-size: 50px;
+}
+
+
 
 </style>
