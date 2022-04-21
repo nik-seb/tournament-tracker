@@ -97,5 +97,10 @@ div {
     margin-left: 140px;
     padding: 1em;
 }
-
+h2{
+    text-align: center;
+}
+p{
+    text-align: center;
+}
 </style>

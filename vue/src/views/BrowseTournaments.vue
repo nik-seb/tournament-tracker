@@ -190,9 +190,15 @@ td, th {
   text-align: left;
   padding:8px;
 }
+#tblUsers{
+  border:goldenrod 1px; 
+  text-align: left;
+  padding:8px;
+}
 th {
   text-transform: uppercase;
   background-color: goldenrod;
+  color: black
 }
 td {
   padding: 10px;

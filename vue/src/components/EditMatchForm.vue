@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <form v-on:submit.prevent="submitForm()" v-if="match.winningTeamId == 0">
+    <div v-if="match.winningTeamId == 0">
+        <form v-on:submit.prevent="submitForm()" >
             <p>{{match.homeTeamName}} vs {{match.awayTeamName}} </p>
 
             <label for="date">Select a date for this match: </label>
@@ -108,5 +108,16 @@ export default {
 </script>
 
 <style>
+form{
+    position: relative;
+  background: black #FFFFFF;
+  max-width: 360px;
+  margin: 0 auto ;
+  padding: 45px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  display: flex;
+  flex-direction: column;
+}
 
 </style>
