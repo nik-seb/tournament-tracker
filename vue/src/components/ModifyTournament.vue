@@ -68,7 +68,7 @@ export default {
             })
         
             } else {
-                this.modifiedTournament();
+                this.modifyTournament();
             }
         },
         modifyTournament(){

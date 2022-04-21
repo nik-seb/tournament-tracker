@@ -72,10 +72,10 @@ export default {
                     return true;
                 }
             })
-            if (activeLocation) {
+            if (activeLocation && activeLocation.cityName) {
                 return `${activeLocation.cityName}, ${activeLocation.stateName}`
             }
-            return locationId;
+            return '';
         },
         compareDate(match1, match2) {
             // checks regular dates first, then date + time if dates are equal
@@ -225,7 +225,7 @@ export default {
         outline: 0;
         background-color: goldenrod;
         /* background-image: linear-gradient(45deg,#328f8a,#08ac4b); */
-        width: 100%;
+        /* width: 100%; */
         border: 0;
         padding: 5px;
         color: #FFFFFF;
@@ -233,5 +233,6 @@ export default {
         -webkit-transition: all 0.3 ease;
         transition: all 0.3 ease;
         cursor: pointer;
+        margin-left: 0.5rem;
 }
 </style>
