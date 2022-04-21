@@ -109,20 +109,6 @@ export default {
                    console.log(response)
                }
            })
-
-          
-
-
-
-
-
-
-
-            // this.$store.commit('SAVE_FORM', this.form);
-            // this.form = {
-            //     tournamentName: '',
-            //     teamName: ''
-            // };
         }
     }
 }
@@ -130,21 +116,10 @@ export default {
 </script>
 
 <style>
-
 #invForm{
     display: flex;
     flex-direction: row;
     justify-content: center;
     padding-top: 2.5%;
 }
-
-/* .invitation-form input, .invitation-form button {
-    margin: 10px;
-    font-size: 1rem;
-
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-} */
-
 </style>

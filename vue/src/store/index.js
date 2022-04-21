@@ -100,18 +100,21 @@ export default new Vuex.Store({
         invitationList:[
 
           {
+            invitationId: 0,
             tournamentId: 12,
             teamId: 12,
             organizerId: 12,
             invitationStatus: 'ACCEPTED'
           },
           {
+            invitationId: 1,
             tournamentId: 11,
             teamId: 11,
             organizerId: 11,
             invitationStatus: 'PENDING'
           },
           {
+            invitationId: 2,
             tournamentId: 13,
             teamId: 13,
             organizerId: 13,
@@ -120,11 +123,6 @@ export default new Vuex.Store({
 
         ],
 
-
-
-      // everything above this line may be junk
-
-    
   },
  
   getters:{
@@ -165,7 +163,7 @@ export default new Vuex.Store({
       state.sportList = list;
     },
     ADD_SPORT_TO_LIST(state, sport) {
-      state.sportList.push(sport); // should be a full sport object with name and ID
+      state.sportList.push(sport); 
     },
     ADD_TOURN_TO_LIST(state, tourn) {
       state.tournamentList.push(tourn);
@@ -173,7 +171,6 @@ export default new Vuex.Store({
     SAVE_FORM(state, form) {
       state.inviteForm = form;
     },
-    // above method 'SAVE_FORM might not be needed '
 
     SET_TEAM_LIST(state, team){
       state.teamList = team;
@@ -181,6 +178,10 @@ export default new Vuex.Store({
 
     SET_HOLIDAYS(state, holidays) {
       state.holidays = holidays;
+    },
+
+    SET_STATUS(state, status){
+      state.invitationList = status;
     }
   }
 })

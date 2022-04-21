@@ -22,10 +22,6 @@ export default {
     return axios.post('/tournaments', tournament);
   },
   
-  // modifyTournament(tournament) {
-  //   return axios.put('/tournaments{id}', tournament);
-  // },
-
   modifyTournament(tournament) {
     return axios.put(`/tournaments/${tournament.tournamentId}`, tournament);
   },
@@ -78,7 +74,6 @@ export default {
     return axios.get(`/teams/${teamID}`);
   },
 
-  //get the player associated with the input user
   getUserPlayerID(userID) {
     return axios.get(`/players/user/${userID}`);
   },
