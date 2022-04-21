@@ -1,6 +1,5 @@
 <template>
-<body>
-  <div>
+  <div id="invite-body">
       <h1>Invite Form</h1>
       <invite-form />
   </div>
@@ -18,6 +17,7 @@ name: "Invite",
 }
 </script>
 
+<<<<<<< HEAD
 <style>
 
 body {
@@ -26,6 +26,9 @@ body {
 
 }
 
+=======
+<style scoped>
+>>>>>>> 364b46a756a8732fdfae241785643f286bf52daa
 
 h1{
     display: flex;
@@ -39,10 +42,19 @@ h1{
   margin: 0 auto 100px;
   padding: 45px;
   text-align: center;
+<<<<<<< HEAD
 
 
   background:goldenrod;
   max-width: 360px;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24); 
+=======
+  background:goldenrod;
+  max-width: 360px;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24); 
+  color: black;
+>>>>>>> 364b46a756a8732fdfae241785643f286bf52daa
 }
+
+
 </style>

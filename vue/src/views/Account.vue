@@ -17,7 +17,7 @@
       </form>
 
        <div>
-         <h3>Invites Sent</h3>  
+         <h3>Invites Received</h3>  
          <invite-details />
          <p></p>
 
@@ -73,16 +73,31 @@ export default {
 }
 </script>
 
+<<<<<<< HEAD
 <style>
 form {
     position: relative;
   z-index: 1;
   background: #FFFFFF;
+=======
+<style scoped>
+
+form.account {
+    position: relative;
+  z-index: 1;
+background-color: #232323;
+>>>>>>> 364b46a756a8732fdfae241785643f286bf52daa
   max-width: 360px;
   margin: 0 auto 100px;
   padding: 45px;
   text-align: center;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+<<<<<<< HEAD
+=======
+
+}
+
+>>>>>>> 364b46a756a8732fdfae241785643f286bf52daa
 
 }
 </style>

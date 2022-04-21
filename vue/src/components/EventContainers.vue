@@ -3,17 +3,16 @@
   <div id="ev-container-body">
     <div>
         <div class="events">
-          <!-- create a v-if condition if date is less than end date display -->
           <div id="past">
-          <p id="past-events"> Past Events </p>
+          <h3> Past Events </h3>
             <event-table class="past-events" v-bind:filteredList="pastEventArray"/>
           </div>
           <div id="current">
-            <p id="live-events"> Current Events </p>
+            <h3 id="live-events"> Current Events </h3>
               <event-table class="live-events" v-bind:filteredList="currentEventArray"/>
           </div>  
           <div id="future">
-            <p id="upcoming-events"> Upcoming Events </p>
+            <h3 id="upcoming-events"> Upcoming Events </h3>
             <event-table class="upcoming-events" v-bind:filteredList="futureEventArray"/>  
           </div>
         </div>   
@@ -81,40 +80,46 @@ export default {
 
 <style scoped>
 
+
 .events{
   display: flex;
   flex-direction: row;
-  margin-left: 3%;
-  margin-right: 3%;
+  color: white;
+  justify-content: center;
+}
+
+#ev-container-body{
+  margin: auto;
+  margin-top: 2.5%;
 }
 
 #live-events{
 
 
-  padding-inline-end: 9%;
+  /* padding-inline-end: 9%;
   padding-inline-start: 20%;
   text-decoration-line: underline;
   text-decoration-style: double;
   text-decoration-skip-ink: none;
   font-size: 175%;
-  
+   */
 }
 
-#upcoming-events{
-  padding-inline-start: 17%;
-  text-decoration-line: underline;
-  text-decoration-style: double;
-  text-decoration-skip-ink: none;
-  font-size: 175%;
+/* #upcoming-events{
+  padding: 5%
 
-}
+} */
 
 #past-events{
-  padding-inline-start: 30%;
+  /* padding-inline-start: 30%;
   text-decoration-line: underline;
   text-decoration-style: double; 
-  font-size: 175%;
+  font-size: 175%; */
 }
+/* 
+#live-events, #past-events, #upcoming-events {
+  margin-right: 1rem;
+} */
 
 .view-more{
     display: flex;
@@ -123,12 +128,31 @@ export default {
 }
 
 #past{
-  margin-right: 10%;
+  margin-right: 4%;
+}
+
+#live-events{
+  padding: 0px;
 }
 
 #current{
+  margin-right: 4%;
+  border-right: 2px  solid goldenrod;
+  border-left: 2px  solid goldenrod;
   
-  padding-right: 15%;
+  height: 100vh;
+  padding-right: 4%;
+  padding-left: 4%;
 }
+
+h3 {
+ color: #DC8400; 
+  padding-inline-end: 9%;
+  padding-inline-start: 20%;
+  text-decoration-line: underline;
+  text-decoration-skip-ink: none;
+  font-size: 175%;
+}
+
 
 </style>

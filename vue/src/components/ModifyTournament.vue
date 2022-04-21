@@ -1,6 +1,6 @@
 <template>
   <div>
-      <form v-on:submit.prevent="modifyTournament()">
+      <form v-on:submit.prevent="submitForm()">
           <label for="tournamentName">Tournament Name(modify)</label>
           <input type="text" name="tournamentName" v-model="modifiedTournament.tournamentName">
           <label for="sportType">Sport or Game(modify)</label>
@@ -56,29 +56,23 @@ export default {
 
     },
  methods: {
-        modifyTournament() {
+        submitForm() {
             if (this.newSport.sportName != '') {
                 TournamentService.createSport(this.newSport).then((response) => {
                 if (response.status == 200) {
                     this.$store.commit("ADD_SPORT_TO_LIST", response.data);
                     console.log(response.data.sportId + ' is sportid')
                     this.modifiedTournament.sportId = Number(response.data.sportId);
-                    // TO-DO: refactor the horrible thing below, too much copy-paste. be careful not to create tournament before sport id is retrieved
-                    this.$store.commit("ADD_TOURN_TO_LIST", this.modifiedTournament);
-                    console.log(this.modifiedTournament);
-                    TournamentService.modifyTournament(this.modifiedTournament).then((responseT) => {
-                        if (responseT.status == 200) {
-                            const newID = Number(responseT.data.tournamentId);
-                            this.$router.push({name: 'view-tournament', params: {id: newID}});
-                        } else {
-                            console.log(responseT);
-                        }
-                    })
+                    this.modifyTournament();
                 }
             })
         
             } else {
-                this.$store.commit("ADD_TOURN_TO_LIST", this.modifiedTournament);
+                this.modifyTournament();
+            }
+        },
+        modifyTournament(){
+            this.$store.commit("ADD_TOURN_TO_LIST", this.modifiedTournament);
                 TournamentService.modifyTournament(this.modifiedTournament).then((response) => {
                     if (response.status == 200) {
                         const newID = Number(response.data.tournamentId);
@@ -87,7 +81,6 @@ export default {
                         console.log(response);
                     }
                 })
-            }
         }
     }
 }

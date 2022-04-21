@@ -1,12 +1,13 @@
 <template>
   <div>
-      <h3>Participants</h3>
+      <div class="container">
+            <h3>Participants</h3>
                 <!-- should display abbreviated list and click to view full list that shows teams and players on teams
                     once teams are fully implemented, display team size and link to team page
                 -->
-          <ul>
-              <li v-for="team in tournamentTeams" v-bind:key="team.teamId">{{team.teamName}}</li>
-          </ul>
+            <p v-if="tournamentTeams.length == 0">No teams have joined this tournament yet.</p>
+            <p v-for="team in tournamentTeams" v-bind:key="team.teamId">{{team.teamName}}</p>
+      </div>
   </div>
 </template>
 
@@ -35,9 +36,26 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
+div {
+  color:white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
 h3 {
     text-align: center;
+    color:#DC8400;
 }
+.container {
+    margin: auto;
+    border-right: 1px solid #F2C629;
+    height: 70vh;
+    margin-bottom:1rem;
+}
+
+td {
+    font-size: 90%;
+}
+
 </style>

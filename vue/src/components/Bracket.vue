@@ -1,32 +1,35 @@
 <template>
   <div>
-      <h3>Bracket</h3>
-      <p v-if="matches.length == 0">Schedule TBD</p>
-      <router-link v-bind:to="{name: 'manage-bracket', params: {id: this.tournamentID, matches: this.matches, tournamentID: this.tournamentID}}"> <button v-if="isHost && matches.length > 0">Edit Bracket</button></router-link>
-      <button v-if="isHost && matches.length == 0" v-on:click.prevent="generateBracket()">Generate Matches</button>
-      <button v-if="isHost && canGenerateNextRound" v-on:click.prevent="generateNextRound()">Generate Matches for Next Round</button>
-      <table id="schedule" v-if="matches.length > 0">
-          <tr>
-              <th>Round</th>
-             <th>Home Team</th>
-             <th>Away Team</th>
-             <th>Location</th>
-             <th>Start Date</th>
-             <th>Start Time</th>
-             <th>Winner</th>
-             <th></th>
-         </tr>
-         <tr v-for="match in sortedByStartDate" v-bind:key="match.matchId">
-             <td>{{match.roundNumber}}</td>
-            <td>{{getTeamNameFromTeamList(match.homeTeamId)}}</td>
-            <td>{{getTeamNameFromTeamList(match.awayTeamId)}}</td>
-            <td>{{getLocationNameFromLocationList(match.locationId)}}</td>
-            <td>{{match.startDate}}</td>
-            <td>{{match.startTime}}</td>
-            <td>{{getTeamNameFromTeamList(match.winningTeamId) || "TBD"}}</td>
-            <td><button v-on:click="addWinner(match)" v-if="match.winningTeamId == 0">Add Winner</button></td>
-        </tr>
-      </table>
+      <div class="container">
+        <div class="prologue">
+                    <h3>Bracket</h3>
+            <router-link v-bind:to="{name: 'manage-bracket', params: {id: this.tournamentID, matches: this.matches, tournamentID: this.tournamentID}}"> <button v-if="isHost && matches.length > 0">Edit Bracket</button></router-link>
+            <button v-if="isHost && matches.length == 0" v-on:click.prevent="generateBracket()">Generate Matches</button>
+            <button v-if="isHost && canGenerateNextRound" v-on:click.prevent="generateNextRound()">Generate Matches for Next Round</button>
+        </div>
+        <p v-if="matches.length == 0">Schedule TBD</p>
+        <table id="schedule" v-if="matches.length > 0">
+            <tr>
+                <th>Round</th>
+                <th>Home Team</th>
+                <th>Away Team</th>
+                <th>Location</th>
+                <th>Start Date</th>
+                <th>Start Time</th>
+                <th>Winner</th>
+            </tr>
+            <tr v-for="match in sortedByStartDate" v-bind:key="match.matchId">
+                <td>{{match.roundNumber}}</td>
+                <td>{{getTeamNameFromTeamList(match.homeTeamId)}}</td>
+                <td>{{getTeamNameFromTeamList(match.awayTeamId)}}</td>
+                <td>{{getLocationNameFromLocationList(match.locationId)}}</td>
+                <td>{{match.startDate}}</td>
+                <td>{{match.startTime}}</td>
+                <td>{{getTeamNameFromTeamList(match.winningTeamId) || "TBD"}}</td>
+                <td><button v-on:click="addWinner(match)" v-if="match.winningTeamId == 0">Add Winner</button></td>
+            </tr>
+        </table>
+      </div>
   </div>
 </template>
 
@@ -52,7 +55,6 @@ export default {
                     }
             });
         },
-        // need some more complex logic here to display differently if bye or tbd
         getTeamNameFromTeamList(teamId) {
             const activeTeam = this.tournamentTeams.find((team) => {
                 if (team.teamId == teamId) {
@@ -70,10 +72,10 @@ export default {
                     return true;
                 }
             })
-            if (activeLocation) {
+            if (activeLocation && activeLocation.cityName) {
                 return `${activeLocation.cityName}, ${activeLocation.stateName}`
             }
-            return locationId;
+            return '';
         },
         compareDate(match1, match2) {
             // checks regular dates first, then date + time if dates are equal
@@ -189,8 +191,48 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     img {
         width: 500px;
     }
+    th {
+        text-transform: uppercase;
+        background-color: goldenrod;
+        color: white;
+        font-size: 90%;
+        padding: 6px;
+    }
+    div {
+        color:white;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    h3 {
+        color:#DC8400;
+        margin-right: 1rem;
+    }
+    td {
+        font-size: 90%;
+    }
+    .prologue {
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    button {
+        text-transform: uppercase;
+        outline: 0;
+        background-color: goldenrod;
+        /* background-image: linear-gradient(45deg,#328f8a,#08ac4b); */
+        /* width: 100%; */
+        border: 0;
+        padding: 5px;
+        color: #FFFFFF;
+        font-size: 14px;
+        -webkit-transition: all 0.3 ease;
+        transition: all 0.3 ease;
+        cursor: pointer;
+        margin-left: 0.5rem;
+}
 </style>

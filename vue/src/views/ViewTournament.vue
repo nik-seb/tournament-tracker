@@ -1,11 +1,17 @@
 <template>
   <div id='tourn-view-body'>
-      <tournament-details v-bind:tournamentID="Number($route.params.id)" />
-      <tourn-options v-if="isOpen" v-bind:tournamentID="Number($route.params.id)" v-bind:teams="tournamentTeams"/> 
-      <div v-else>This tournament is not accepting new competitors and cannot be modified.</div>
-      <router-view />
+    <div id='test-grid'>
+      <tournament-details id="details" v-bind:tournamentID="Number($route.params.id)" />
+      <div id="upper-div">
+        <tourn-options id="options" v-if="isOpen" v-bind:tournamentID="Number($route.params.id)" v-bind:teams="tournamentTeams"/> 
+        <div v-else>This tournament is not accepting new competitors and cannot be modified.</div>
+        <router-view id="join-tourn" />
+      </div>
        <!--view will link to the given options as a child route  -->
-      <div id="sections"> <div id="participants"> <participants v-bind:tournamentID="Number($route.params.id)" v-bind:tournamentTeams="tournamentTeams" /></div> <div id="bracket"> <bracket v-bind:tournamentID="Number($route.params.id)" v-bind:tournamentTeams="tournamentTeams" /> </div> </div>
+      <div class="border"></div>
+        <div id="participants"> <participants v-bind:tournamentID="Number($route.params.id)" v-bind:tournamentTeams="tournamentTeams" /></div>
+        <div id="bracket"> <bracket v-bind:tournamentID="Number($route.params.id)" v-bind:tournamentTeams="tournamentTeams" /> </div>
+    </div>
   </div>
 </template>
 
@@ -24,6 +30,7 @@ export default {
     }
   },
   created () {
+    window.scrollTo(0, 0);
     TournamentService.getParticipantsInTournament(this.$route.params.id).then(response => {
       if (response.status == 200) {
         this.tournamentTeams = response.data;
@@ -71,22 +78,75 @@ export default {
 }
 </script>
 
-<style>
-
-#tourn-view-body {
-  margin-left: 140px;
+<style scoped>
+div {
+  color:white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-#sections {
-  display: flex;
+h2, h3 {
+  color:#DC8400;
+}
+
+#test-grid {
+  margin-left: 0px;
+  display: grid;
+  display:-moz-grid-group;
+  display:-ms-grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-areas: 
+    "header header"
+    "options options"
+    "border border"
+    "participants bracket"
+  ;
+  text-align: center;
+}
+
+#details {
+  grid-area: header;
+      position: relative;
+  z-index: 1;
+background-color: #232323;
+  max-width: 360px;
+  margin: 0 auto 20px;
+  padding: 45px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+
 }
 
 #participants {
-  width: 50%;
+  grid-area: participants;
+  width: 90%;
 }
 
 #bracket {
-  width: 50%;
+  grid-area: bracket;
+  width: 90%;
 }
+
+#upper-div {
+  grid-area: options;
+  margin: auto;
+}
+
+#options {
+  margin: auto;
+}
+
+#join-tourn {
+  grid-area: join;
+}
+
+/* .border {
+  margin: auto;
+  grid-area: border;
+  background-color: goldenrod;
+  height: 2px;
+    margin-right: 1rem;
+    padding-right:1rem;
+    width: 80%;
+} */
 
 </style>

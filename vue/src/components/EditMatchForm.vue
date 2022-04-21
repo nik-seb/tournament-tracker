@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <form v-on:submit.prevent="saveMatch()" v-if="match.winningTeamId == 0">
+    <div v-if="match.winningTeamId == 0">
+        <form v-on:submit.prevent="submitForm()" >
             <p>{{match.homeTeamName}} vs {{match.awayTeamName}} </p>
 
             <label for="date">Select a date for this match: </label>
@@ -14,7 +14,14 @@
             <select id="location" name="location" v-model="match.locationId">
               <option value='' disabled></option>
               <option v-for="location in locations" v-bind:key="location.locationId" v-bind:value="location.locationId">{{location.cityName}}, {{location.stateName}}</option>
+              <option value='newLocation'>Add new location</option>
           </select>
+          <p v-if="match.locationId == 'newLocation'">
+              <label for="newLocationState">New location state</label>
+              <input type="text" name="newLocationState" id="newLocationState" v-model="newLocation.stateName">
+              <label for="newLocationCity">New location city</label>
+              <input type="text" name="newLocationCity" id="newLocationCity" v-model="newLocation.cityName">
+          </p>
 
             <input type="submit" value="Confirm match details">
         </form>
@@ -34,7 +41,11 @@ export default {
         return {
             match: this.Match,
             locations: [],
-            currentHoliday: ''
+            currentHoliday: '',
+            newLocation: {
+                stateName: '',
+                cityName: ''
+            }
         }
     },
     created() {
@@ -45,11 +56,29 @@ export default {
         })
     },
     methods: {
+        submitForm() {
+            if (this.newLocation.stateName != '') {
+                TournamentService.addLocation(this.newLocation).then((response) => {
+                    if (response.status == 200) {
+                        const newId = response.data.locationId;
+                        this.match.locationId = newId;
+                        this.saveMatch();
+                        // reloads locations so new location appears in dropdown as selected
+                        TournamentService.getAllLocations().then((response) => {
+                            if (response.status == 200) {
+                                this.locations = response.data;
+                            }
+                        })
+                    }
+                })
+            } else {
+                this.saveMatch();
+            }
+        },
         saveMatch() {
             TournamentService.updateMatch(this.match).then(response => {
                 if (response.status == 200) {
                     alert('The match has been successfully updated.')
-                    // something nicer to indicate change, like add checkbox to the DOM?
                 }
             })
         }
@@ -57,7 +86,13 @@ export default {
     computed: {
         dateIsAHoliday() {
             let matchingHoliday = this.$store.state.holidays.find((holiday) => {
-                if (holiday.observed == this.match.startDate) {
+                if (!this.match.startDate) {
+                    return false;
+                }
+                let abbrev = holiday.date.toString().slice(5);
+                let abbrev2 = this.match.startDate.toString().slice(5);
+                console.log(abbrev, abbrev2)
+                if (abbrev == abbrev2) {
                     this.currentHoliday = holiday.name;
                     return true;
                 }
@@ -73,5 +108,16 @@ export default {
 </script>
 
 <style>
+form{
+    position: relative;
+  background: black #FFFFFF;
+  max-width: 360px;
+  margin: 0 auto ;
+  padding: 45px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  display: flex;
+  flex-direction: column;
+}
 
 </style>

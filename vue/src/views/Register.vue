@@ -5,9 +5,13 @@
       <div class="alert alert-danger" role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
       </div>
+<<<<<<< HEAD
       <div></div>
       <div></div>
       <label for="username" class="sr-only">Username</label>
+=======
+      <label id="user" for="username" class="sr-only">Username</label>
+>>>>>>> 364b46a756a8732fdfae241785643f286bf52daa
       <input
         type="text"
         id="username"
@@ -17,11 +21,15 @@
         required
         autofocus
       />
+<<<<<<< HEAD
     <body>
       
     
 
       <label for="password" class="sr-only">Password</label>
+=======
+      <label id="pass" for="password" class="sr-only">Password</label>
+>>>>>>> 364b46a756a8732fdfae241785643f286bf52daa
       <input
         type="password"
         id="password"
@@ -38,13 +46,20 @@
         v-model="user.confirmPassword"
         required
       />
+<<<<<<< HEAD
      </body>
+=======
+      <div class="host"> 
+>>>>>>> 364b46a756a8732fdfae241785643f286bf52daa
       <input id="isHost" type="checkbox" v-model="checkbox">
-      <label for="isHost">host</label>
-      <router-link :to="{ name: 'login' }">Have an account?</router-link>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">
+      <label for="isHost">Host? </label>
+      </div>
+
+      <button id="create" class="btn btn-lg btn-primary btn-block" type="submit">
         Create Account
       </button>
+      <router-link id="haveAccount" :to="{ name: 'login' }">Have an account?</router-link>
+
     </form>
   </div>
 </template>
@@ -106,12 +121,104 @@ export default {
 </script>
 
 <style scoped>
+
+
 #register{
+<<<<<<< HEAD
   display: flex;
   flex-direction: row;
   justify-content: center;
   
 }
 
+=======
+   width: 360px;
+  padding: 8% 0 0;
+  margin: auto;
+  font-family: "Roboto", sans-serif;
+}
+
+.text-center .form-register {
+  margin-top: 10%;
+}
+
+
+.form-register{
+
+  position: relative;
+  z-index: 1;
+  background: black #FFFFFF;
+  max-width: 360px;
+  margin: 0 auto 100px;
+  padding: 45px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+.form-register input{
+   font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.form-register button {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background-color: goldenrod;
+  /* background-image: linear-gradient(45deg,#328f8a,#08ac4b); */
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+}
+
+#username{
+  margin-top: 5%;
+  margin-bottom: 10% ;
+ 
+}
+
+#password{
+  margin-top: 5%;
+
+}
+
+#user{
+  font-family: "Roboto", sans-serif;
+}
+
+#pass{
+  padding-top: 5%;
+  font-family: "Roboto", sans-serif;
+}
+
+.host {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-items: center;
+}
+
+#create{
+  margin-top: 2.5%;
+  margin-bottom: 2.5%;
+  font-family: "Roboto", sans-serif;
+
+}
+
+.host #isHost{
+  margin-top: 3.5%;
+}
+>>>>>>> 364b46a756a8732fdfae241785643f286bf52daa
 
 </style>

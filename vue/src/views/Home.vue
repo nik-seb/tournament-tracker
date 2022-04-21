@@ -5,6 +5,7 @@
     <div class="tournament-picture">
       <img src="../assets/tournament_picture.jpg" alt="example of tournament picture">         
     </div> 
+
   <event-containers></event-containers>
   <div></div>
   <div></div>
@@ -32,20 +33,25 @@ components:{
 </script>
 
 <style scoped>
-#company-name {
-  display: flex;
-  justify-content: center;
-  font-style: oblique;
-  font-weight: 80%;
-}
 
 .tournament-picture {
  
   max-height: 500px;
-  padding-left: 5%;
   display: flex;
   justify-content: center;
   flex-direction: row;
+  padding-right: 2%;
 }
+
+
+#company-name{
+  
+  display: flex;
+  justify-content: center;
+  padding-right: 2%;
+  font-style: oblique;
+  font-weight: 80%;
+}
+
 
 </style>

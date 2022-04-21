@@ -1,17 +1,15 @@
 <template>  
-  <div id='tourn-options'>
+  <div>
+    <div  id='tourn-options'>
       <!-- show if player id associated with user isn't associated with tourn, else display "Leave" -->
      <router-link v-if="!playerHasJoinedTournament" v-bind:to="{ name: 'join-tournament'}" v-bind:tournamentID="tournamentID"><button id="join">Join</button></router-link>
-      <!-- TO-DO: Add "leave" button and functionality -->
-
       <!-- TO-DO  check if host is tournament's organizer-->
       <div v-if="this.$store.state.user.role == 'ROLE_HOST'">
       <!-- show unless bracket has been generated -->
      <router-link v-bind:to="{ name: 'create-invite'}" > <button id="invite">Invite</button></router-link>
-      <!-- show both if user is organizer and tournament is associated with their id -->
       <router-link v-bind:to="{name: 'Modify-tournament'}"> <button id="Modify">Modify</button> </router-link>
-      <button id="delete">Delete</button>
       </div>
+    </div>
   </div>
 </template>
 
@@ -38,10 +36,16 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   #tourn-options {
-    width: 50%;
+    text-align: center;
+    margin: auto;
     display: flex;
     justify-content: center;
   }
+
+  button {
+    margin: 0.25rem;
+  }
+
 </style>
