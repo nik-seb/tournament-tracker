@@ -5,13 +5,7 @@
       <div class="alert alert-danger" role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
       </div>
-<<<<<<< HEAD
-      <div></div>
-      <div></div>
-      <label for="username" class="sr-only">Username</label>
-=======
       <label id="user" for="username" class="sr-only">Username</label>
->>>>>>> 364b46a756a8732fdfae241785643f286bf52daa
       <input
         type="text"
         id="username"
@@ -21,15 +15,7 @@
         required
         autofocus
       />
-<<<<<<< HEAD
-    <body>
-      
-    
-
-      <label for="password" class="sr-only">Password</label>
-=======
       <label id="pass" for="password" class="sr-only">Password</label>
->>>>>>> 364b46a756a8732fdfae241785643f286bf52daa
       <input
         type="password"
         id="password"
@@ -46,11 +32,7 @@
         v-model="user.confirmPassword"
         required
       />
-<<<<<<< HEAD
-     </body>
-=======
       <div class="host"> 
->>>>>>> 364b46a756a8732fdfae241785643f286bf52daa
       <input id="isHost" type="checkbox" v-model="checkbox">
       <label for="isHost">Host? </label>
       </div>
@@ -124,14 +106,6 @@ export default {
 
 
 #register{
-<<<<<<< HEAD
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  
-}
-
-=======
    width: 360px;
   padding: 8% 0 0;
   margin: auto;
@@ -219,6 +193,5 @@ export default {
 .host #isHost{
   margin-top: 3.5%;
 }
->>>>>>> 364b46a756a8732fdfae241785643f286bf52daa
 
 </style>

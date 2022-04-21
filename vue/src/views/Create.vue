@@ -1,18 +1,10 @@
 <template>
   <div>
-<<<<<<< HEAD
-      <body>
-        <h1>Create Tournament</h1>
-        <create-tournament-form />
-      </body>
-    </div>
-=======
       <div id='create-body'>
         <h1>Create Tournament</h1>
         <create-tournament-form />
       </div>
   </div>
->>>>>>> 364b46a756a8732fdfae241785643f286bf52daa
 </template>
 
 <script>
@@ -48,11 +40,7 @@ h1{
     flex-direction: row;
     justify-content: center;
     background-color: goldenrod;
-<<<<<<< HEAD
-    border: thick, dotted;
-=======
     border: thick;
->>>>>>> 364b46a756a8732fdfae241785643f286bf52daa
  position: relative;
   z-index: 1;
   max-width: 360px;
@@ -64,16 +52,7 @@ h1{
   background:goldenrod;
   max-width: 360px;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24); 
-<<<<<<< HEAD
-
-
-
-}
-</style>
-
-=======
 }
 
 
 </style>
->>>>>>> 364b46a756a8732fdfae241785643f286bf52daa

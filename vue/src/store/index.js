@@ -34,12 +34,7 @@ export default new Vuex.Store({
     },
     activePlayer: {
       playerName: '',
-<<<<<<< HEAD
-      playerId: 0,
-      userId: 0
-=======
       playerId: 0
->>>>>>> 364b46a756a8732fdfae241785643f286bf52daa
     },
     activeTeam: {
       teamName: '',
