@@ -1,13 +1,8 @@
+
 <template>
-<body>
-  
-     <!-- <div id="login" class="text-center">
-    <form class="form-signin" @submit.prevent="login"> // v-on="click" //
-      <h1 class="h3 mb-3 font-weight-normal">Please Sign In</h1>
-      
-        -->
-  <div id="login" class="text-center">
-    <div class="login-page">
+  <body>
+    <div id="login" class="text-center">
+      <div class="login-page">
       <div class="form"  @submit.prevent="login">
         <div class="login">
           <div class="login-header">
@@ -43,24 +38,13 @@
         v-model="user.password"
         required
       />
-     
-      
         <router-link :to="{ name: 'register' }">Need an account?</router-link>
-        <button type="submit">Sign in</button>
-      
-  </div>
-
+        <button type="submit">Sign in</button>    
+          </div>
         </div>
-        <!-- <form class="login-form">
-          <input type="text" placeholder="username"/>
-          <input type="password" placeholder="password"/>
-          <button>login</button>
-           <p class="message">Not registered? <a href="#">Create an account</a></p>
-        </form> -->
-      </div> 
-    
-</body>
-
+       </div>  
+    </div>  
+ </body>
 </template>
 
 <script>
@@ -114,11 +98,14 @@ margin-top: 4px;
   width: 360px;
   padding: 8% 0 0;
   margin: auto;
+  
+  
 }
-.login-page .form .login{
+.login-page .form .login {
   margin-top: -31px;
 margin-bottom: 26px;
 }
+
 .form {
   position: relative;
   z-index: 1;
@@ -129,6 +116,7 @@ margin-bottom: 26px;
   text-align: center;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
+
 .form input {
   font-family: "Roboto", sans-serif;
   outline: 0;
@@ -140,6 +128,7 @@ margin-bottom: 26px;
   box-sizing: border-box;
   font-size: 14px;
 }
+
 .form button {
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
@@ -155,11 +144,13 @@ margin-bottom: 26px;
   transition: all 0.3 ease;
   cursor: pointer;
 }
+
 .form .message {
   margin: 15px 0 0;
   color:blue;
   font-size: 12px;
 }
+
 .form .message a {
   color:black;
   text-decoration: none;
@@ -172,13 +163,9 @@ margin-bottom: 26px;
   margin: 0 auto;
 }
 
-/* router-link {
-  color: blue;
-} */
-
 body {
   background-color: goldenrod;
-  background-image: linear-gradient(45deg,goldenrod,goldenrod);
+  background-image: linear-gradient(45deg,black,goldenrod);
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -188,20 +175,5 @@ p {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: x-large;
   color: goldenrod;
-  
 }
-
-/* #username {
-  display: flex;
-  flex-direction: column;
-  justify-items: center;
-} */
-
-
-/* 
-.sr-only{
-  margin: 0% auto;
-  padding-bottom: 5%;
-} */
-
 </style>

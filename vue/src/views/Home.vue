@@ -1,4 +1,5 @@
 <template>
+<body>
  <div>
     <h1 id="company-name"> RANNS Tournament Displays™ </h1>
     <div class="tournament-picture">
@@ -9,6 +10,7 @@
   <div></div>
   <div></div>
 </div> 
+</body>
 </template>
 
 <script>
@@ -30,7 +32,7 @@ components:{
 </script>
 
 <style scoped>
-#company-name{
+#company-name {
   display: flex;
   justify-content: center;
   font-style: oblique;
@@ -38,11 +40,12 @@ components:{
 }
 
 .tournament-picture {
-
+ 
   max-height: 500px;
   padding-left: 5%;
   display: flex;
   justify-content: center;
   flex-direction: row;
 }
+
 </style>
