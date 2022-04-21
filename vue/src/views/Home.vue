@@ -4,6 +4,7 @@
     <div class="tournament-picture">
       <img src="../assets/tournament_picture.jpg" alt="example of tournament picture">         
     </div> 
+
   <event-containers></event-containers>
   <div></div>
   <div></div>
@@ -30,12 +31,6 @@ components:{
 </script>
 
 <style scoped>
-#company-name{
-  display: flex;
-  justify-content: center;
-  font-style: oblique;
-  font-weight: 80%;
-}
 
 .tournament-picture {
 
@@ -45,4 +40,15 @@ components:{
   justify-content: center;
   flex-direction: row;
 }
+
+
+#company-name{
+  
+  display: flex;
+  justify-content: center;
+  font-style: oblique;
+  font-weight: 80%;
+}
+
+
 </style>

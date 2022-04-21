@@ -1,6 +1,13 @@
 <template>
-  <div>
+  <div id="browse-body">
      <h1>Browse Tournaments</h1>
+     <div>Show:
+       <select id="sport" name="sport" v-model="currentSport.sportId" v-on:change="filterBySport()">
+              <option value='0'>All</option>
+              <option v-for="sport in sports" v-bind:key="sport.sportId" v-bind:value="sport.sportId">{{sport.sportName}}</option>
+          </select>
+              
+     </div>
     <table>
       <thead id= "tblUsers">
         <tr>
@@ -8,42 +15,36 @@
           <th>Sport Name</th>
           <th>Start Date</th>
           <th>End Date</th>
-          <th>Status</th>
-          <th>Sort By:</th>
+          <th>Status
+            
+          </th>
+          <th>Sort By:
+          
+          </th>
         </tr>
       </thead>
       <tbody>
-          <tr>
-            <td>
-              <input type="">
-            </td>
-             <td>
-            <select id="sport" name="sport" v-model="currentSport.sportId" v-on:change="filterBySport()">
-              <option value='0'>All</option>
-              <option v-for="sport in sports" v-bind:key="sport.sportId" v-bind:value="sport.sportId">{{sport.sportName}}</option>
-          </select>
-            </td>
-             <td>
-              <input type="">
-            </td>
-             <td>
-              <input type="">
-            </td>
-            <td>
-              <select id="status" v-model="tournamentStatus" v-on:change="filterByActive()">
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>
+            <select id="status" v-model="tournamentStatus" v-on:change="filterByActive()">
               <option value="active">Active</option>
               <option value="complete">Complete</option>
               <option value="all">Show All</option>
-              </select>
-            </td>
-            <td><select id="sort-by" v-model="sortMethod">
-              <option value="earliest">Starting soonest</option>
+          </select>
+          </td>
+          <td>
+              <select id="sort-by" v-model="sortMethod">
+              <option value="earliest">Starting earliest</option>
               <option value="latest">Starting latest</option>
               <option value="name">Name</option>
               <option value="sport">Sport</option>
               </select>
           </td>
-          </tr>
+        </tr>
           <tr v-for="tournament in sortByWhat" v-bind:key="tournament.tournamentId">
             <td><router-link v-bind:to="{ name: 'view-tournament', params: {id: Number(tournament.tournamentId)}}">{{tournament.tournamentName}}</router-link></td>
             <td>{{tournament.sportName}}</td>
@@ -177,6 +178,13 @@ table {
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   margin-bottom: 20px;
 }
+#browse-body {
+  height: 100%;
+  min-height: 100vh;
+}
+/* h1 {
+  margin: 235px;
+} */
 td, th {
   border:goldenrod 1px; 
   text-align: left;
