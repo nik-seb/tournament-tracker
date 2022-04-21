@@ -9,7 +9,6 @@ public interface InvitationDao {
 
     void createInvitation(Invitation invitation);
 
-
     List<Invitation> getInvitationByStatus(String status);
 
     List<Invitation> getInvitationByTeamId(int id);
@@ -19,5 +18,7 @@ public interface InvitationDao {
     Invitation updateInvitationStatus(Invitation invitation);
 
     List<Invitation> getInvitationsByTournamentId(int tournamentId);
+
+
 
 }

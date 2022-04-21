@@ -16,7 +16,7 @@
       </form>
 
        <div>
-         <h3>Invites Sent</h3>  
+         <h3>Invites Received</h3>  
          <invite-details />
          <p></p>
 
