@@ -79,7 +79,6 @@ export default {
             TournamentService.updateMatch(this.match).then(response => {
                 if (response.status == 200) {
                     alert('The match has been successfully updated.')
-                    // something nicer to indicate change, like add checkbox to the DOM?
                 }
             })
         }
