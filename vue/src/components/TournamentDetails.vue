@@ -50,8 +50,12 @@ export default {
 <style scoped>
     h2 {
         text-align: center;
+        color:#DC8400;
     }
     #tournament-info {
         text-align: center;
+    }
+    div {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 </style>
