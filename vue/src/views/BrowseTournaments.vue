@@ -177,6 +177,9 @@ table {
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   margin-bottom: 20px;
 }
+h1 {
+  margin: 235px;
+}
 td, th {
   border:goldenrod 1px; 
   text-align: left;

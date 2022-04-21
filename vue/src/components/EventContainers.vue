@@ -81,10 +81,11 @@ export default {
 <style scoped>
 
 .events{
+  margin-left: 140px;
   display: flex;
   flex-direction: row;
-  margin-left: 3%;
-  margin-right: 3%;
+
+  
 }
 
 #live-events{
