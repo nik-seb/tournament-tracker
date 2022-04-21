@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="browse-body">
      <h1>Browse Tournaments</h1>
      <div>Show:
        <select id="sport" name="sport" v-model="currentSport.sportId" v-on:change="filterBySport()">
@@ -178,9 +178,13 @@ table {
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   margin-bottom: 20px;
 }
-h1 {
-  margin: 235px;
+#browse-body {
+  height: 100%;
+  min-height: 100vh;
 }
+/* h1 {
+  margin: 235px;
+} */
 td, th {
   border:goldenrod 1px; 
   text-align: left;

@@ -60,6 +60,7 @@ body, html {
   margin: 0px;
   padding: 0px;
   color: #F2C629;
+  background-color: #232323;
 }
 
 a, a:visited {
