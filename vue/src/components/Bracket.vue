@@ -52,7 +52,6 @@ export default {
                     }
             });
         },
-        // need some more complex logic here to display differently if bye or tbd
         getTeamNameFromTeamList(teamId) {
             const activeTeam = this.tournamentTeams.find((team) => {
                 if (team.teamId == teamId) {

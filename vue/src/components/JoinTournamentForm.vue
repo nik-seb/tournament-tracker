@@ -11,7 +11,6 @@
             -->
             <input type="submit" value="Register as new player.">
         </form>
-        <!-- TO-DO: fix: even if you get a 500 response from server, this still switches on and implies registration was successful -->
         <form id ="join-form" v-if="player.playerId != 0 && team.teamId != 0" v-on:submit.prevent="joinTournament()">
             <p> You are registered as player {{player.playerName}} on team {{team.teamName}}. Would you like to join this tournament?</p>
             <input type="submit" value="Join the tournament!">
@@ -41,7 +40,6 @@ export default {
                         this.team.teamId = response.data.teamId;
                         console.log(response.data)
                         TournamentService.addPlayerToTeam(this.team.teamId, this.player).then((response) => {
-                            // will need to manually increment team size when we fully implement teams
                             if (response.status == 200) {
                                 alert("You've been registered successfully");
                             } else {
