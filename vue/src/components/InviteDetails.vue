@@ -4,12 +4,13 @@
 
               <div id="brittneyBitch">
                    <form>
-                    <div class="inv" v-for="invite in invitations" v-bind:key="invite.teamId" v-bind:value="invite.teamId">
+                    <div class="inv" v-for="invite in invitations" v-bind:key="invite.invitationId" v-bind:value="invite.teamId">
                        <p id="uno"> Tournament Name || {{ invite.tournamentName }} || </p>
                         <p id="dos"> Team Name ||  {{ invite.teamName }} || </p>
                         <p id="tres"> Invitation Status || {{ invite.inviteStatus }} </p>
                         <p v-if="invite.inviteStatus == 'TBD'"> 
-                         <button  v-bind:value="invite.tournamentId" id="acceptInvite" v-on:click.prevent="acceptInvite(invite)"> Accept Invite </button>
+                         <button  v-bind:value="invite.tournamentId" id="acceptInvite" v-on:click.prevent="acceptInvite(invite)" > Accept Invite </button>
+
                          <button  v-bind:value="invite.tournamentId" id="declineInvite" v-on:click.prevent="declineInvite(invite)"> Decline Invite </button>
                       </p>     
                     </div> 
@@ -31,9 +32,9 @@ export default {
 
        return{         
         invitations: [],
-        teams:[],
+        team: {},
         players:[],
-        tournaments:[],
+        tournaments:{},
         tournamentID: 0,
         organizerId: this.$store.state.user.id,
         teamId: 0
@@ -63,8 +64,12 @@ export default {
               }
               this.$store.commit("SET_ACTIVE_PLAYER", blankPlayer)
             }
-        })  
-    },
+        })
+        
+
+        },
+    
+
 
 methods: {
      getPlayerTeam(playerId) {
@@ -94,11 +99,22 @@ methods: {
                     if(response.status === 200){
                         this.inviteStatus = "ACCEPTED"
                         this.$store.commit('SET_STATUS', this.$store.state.invitationList)
+                        this.getTournamentByID(invite.tournamentId);
                     }
                 })
          }
         },
 
+        getTournamentByID(tournamentID){
+            TournamentService.getTournamentDetails(tournamentID).then(response => {
+
+                if(response.status === 200){
+                    this.tournaments = response.data
+                    
+                    this.getTeamByTeamId();
+                }
+            })
+        },
         declineInvite(invite){
            
             invite.inviteStatus = "DECLINED";
@@ -111,6 +127,25 @@ methods: {
                      }
                  })
              }   
+        },
+             joinTournament () {
+              TournamentService.addParticipantToTournament(this.tournaments.tournamentId, this.team).then((response) => {
+                if (response.status == 200) {
+                    alert("You have joined the tournament!")
+                    this.tournaments.numOfTeams++;
+                    TournamentService.modifyTournament(this.tournaments).then((response) => {
+                        console.log(response);
+                    })
+                }
+            })
+        },
+        getTeamByTeamId() {
+            TournamentService.getTeamByTeamId(this.teamId).then(response => {
+                if (response.status == 200) {
+                    this.team = response.data;
+                    this.joinTournament()
+                }
+            })
         }
     } 
 }
