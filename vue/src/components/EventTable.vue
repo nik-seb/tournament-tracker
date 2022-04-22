@@ -40,4 +40,7 @@ table {
 td {
     margin: 0.5rem;
 }
+th {
+    text-align: left;
+}
 </style>

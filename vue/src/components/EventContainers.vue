@@ -93,13 +93,12 @@ export default {
 
 <style scoped>
 
-
 .events{
   display: flex;
   flex-direction: row;
   color: white;
   justify-content: center;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Roboto", sans-serif;;
 }
 
 #ev-container-body{
@@ -119,6 +118,7 @@ export default {
 
 #live-events{
   padding: 0px;
+  text-align: center;
 }
 
 #current{

@@ -1,5 +1,4 @@
 <template>
-<body>
  <div>
     <h1 id="company-name"> RANNS Tournament Displays™ </h1>
     <div class="tournament-picture">
@@ -10,8 +9,7 @@
   <div></div>
   <div></div>
   <div></div>
-</div> 
-</body>
+</div>
 </template>
 
 <script>

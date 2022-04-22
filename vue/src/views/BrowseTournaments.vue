@@ -32,7 +32,6 @@
           <td>
             <select id="status" v-model="tournamentStatus" v-on:change="filterByActive()">
               <option value="active">Active</option>
-              <option value="complete">Complete</option>
               <option value="all">Show All</option>
           </select>
           </td>
@@ -40,8 +39,6 @@
               <select id="sort-by" v-model="sortMethod">
               <option value="earliest">Starting earliest</option>
               <option value="latest">Starting latest</option>
-              <option value="name">Name</option>
-              <option value="sport">Sport</option>
               </select>
           </td>
         </tr>

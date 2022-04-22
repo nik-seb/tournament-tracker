@@ -112,6 +112,11 @@ export default {
 </script>
 
 <style>
+
+body {
+    font-family: "Roboto", sans-serif;
+}
+
 #invForm{
   position: relative;
   background: black #FFFFFF;
@@ -129,9 +134,6 @@ export default {
     flex-direction: row;
     justify-content: center;
 } */
-body{
-   display: f;
-}
 
 #invTournament{
     display: flex;
