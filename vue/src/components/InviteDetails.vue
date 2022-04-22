@@ -32,7 +32,7 @@ export default {
 
        return{         
         invitations: [],
-        teams:[],
+        team: {},
         players:[],
         tournaments:{},
         tournamentID: 0,
@@ -99,17 +99,19 @@ methods: {
                     if(response.status === 200){
                         this.inviteStatus = "ACCEPTED"
                         this.$store.commit('SET_STATUS', this.$store.state.invitationList)
-                        this.joinTournament(invite);
+                        this.getTournamentByID(invite.tournamentId);
                     }
                 })
          }
         },
 
-        getTournamentByID(){
-            TournamentService.getTournamentDetails(this.tournamentID).then(response => {
+        getTournamentByID(tournamentID){
+            TournamentService.getTournamentDetails(tournamentID).then(response => {
 
                 if(response.status === 200){
                     this.tournaments = response.data
+                    
+                    this.getTeamByTeamId();
                 }
             })
         },
@@ -127,13 +129,21 @@ methods: {
              }   
         },
              joinTournament () {
-              TournamentService.addParticipantToTournament(this.tournamentID, this.teamId).then((response) => {
+              TournamentService.addParticipantToTournament(this.tournaments.tournamentId, this.team).then((response) => {
                 if (response.status == 200) {
                     alert("You have joined the tournament!")
                     this.tournaments.numOfTeams++;
                     TournamentService.modifyTournament(this.tournaments).then((response) => {
                         console.log(response);
                     })
+                }
+            })
+        },
+        getTeamByTeamId() {
+            TournamentService.getTeamByTeamId(this.teamId).then(response => {
+                if (response.status == 200) {
+                    this.team = response.data;
+                    this.joinTournament()
                 }
             })
         }
