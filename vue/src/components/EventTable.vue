@@ -33,6 +33,10 @@ export default {
 </script>
 
 <style scoped>
+table {
+    border-spacing: 3px;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
 td {
     margin: 0.5rem;
 }

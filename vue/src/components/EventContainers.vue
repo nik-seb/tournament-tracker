@@ -99,6 +99,7 @@ export default {
   flex-direction: row;
   color: white;
   justify-content: center;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 #ev-container-body{
@@ -113,7 +114,7 @@ export default {
 }
 
 #past{
-  margin-right: 4%;
+  margin-right: 3%;
 }
 
 #live-events{
@@ -121,7 +122,7 @@ export default {
 }
 
 #current{
-  margin-right: 4%;
+  margin-right: 3%;
   border-right: 2px  solid goldenrod;
   border-left: 2px  solid goldenrod;
   

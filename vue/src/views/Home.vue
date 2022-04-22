@@ -41,6 +41,10 @@ components:{
   padding-right: 2%;
 }
 
+img {
+  max-width:500px;
+}
+
 
 #company-name{
   
