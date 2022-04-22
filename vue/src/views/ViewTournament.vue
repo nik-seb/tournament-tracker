@@ -81,7 +81,7 @@ export default {
 <style scoped>
 div {
   color:white;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+ font-family: "Roboto", sans-serif;
 }
 
 h2, h3 {
@@ -89,6 +89,7 @@ h2, h3 {
 }
 
 #test-grid {
+  
   margin-left: 0px;
   display: grid;
   display:-moz-grid-group;
@@ -101,9 +102,11 @@ h2, h3 {
     "participants bracket"
   ;
   text-align: center;
+  font-family: "Roboto", sans-serif;
 }
 
 #details {
+  font-family: "Roboto", sans-serif;
   grid-area: header;
       position: relative;
   z-index: 1;

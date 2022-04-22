@@ -18,7 +18,7 @@
           <label for="endDate">End Date</label>
           <input type="date" name="endDate" v-model="modifiedTournament.endDate">
           <label for="tournamentDescription"> Description </label>
-          <input type="text" placeholder="Enter a brief description pertaining to the tournament you are entering in!" v-model="modifiedTournament.description" >
+          <input id="description" type="text" placeholder="Enter a brief description pertaining to the tournament" v-model="modifiedTournament.description" >
           <button id="btn" type="submit"> Modify Tournament </button>
       </form>
   </div>
@@ -82,6 +82,7 @@ export default {
                     }
                 })
         }
+        
     }
 }
 </script>
@@ -92,4 +93,14 @@ export default {
     flex-direction: row;
     justify-content: center;
 }
+
+#description{
+    padding: 5%;
+}
+
+#btn{
+    margin-top: 5%;
+    padding: 2.5%;
+}
+
 </style>
