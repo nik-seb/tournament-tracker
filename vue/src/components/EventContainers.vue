@@ -50,6 +50,7 @@ export default {
         }
         return false;
       })
+      pastEvents.sort(this.compareDateAsc);
       return pastEvents
     },
     futureEventArray() {
@@ -60,6 +61,7 @@ export default {
         }
         return false;
       })
+      futureEvents.sort(this.compareDateAsc);
       return futureEvents;
     },
     currentEventArray() {
@@ -71,7 +73,18 @@ export default {
         }
         return false;
       })
+      currentEvents.sort(this.compareDateAsc);
       return currentEvents;
+    }
+  },
+  methods: {
+    compareDateAsc(tournament1, tournament2) {
+        if (tournament1.startDate.toString() > tournament2.startDate.toString()) {
+            return 1;
+        } else if (tournament1.startDate.toString() < tournament2.startDate.toString()) {
+            return -1;
+        }
+        return 0;
     }
   }
 }
@@ -92,34 +105,6 @@ export default {
   margin: auto;
   margin-top: 2.5%;
 }
-
-#live-events{
-
-
-  /* padding-inline-end: 9%;
-  padding-inline-start: 20%;
-  text-decoration-line: underline;
-  text-decoration-style: double;
-  text-decoration-skip-ink: none;
-  font-size: 175%;
-   */
-}
-
-/* #upcoming-events{
-  padding: 5%
-
-} */
-
-#past-events{
-  /* padding-inline-start: 30%;
-  text-decoration-line: underline;
-  text-decoration-style: double; 
-  font-size: 175%; */
-}
-/* 
-#live-events, #past-events, #upcoming-events {
-  margin-right: 1rem;
-} */
 
 .view-more{
     display: flex;

@@ -7,13 +7,11 @@
      <table v-if="filteredList.length > 0">
          <tr>
              <th>Tournament</th>
-             <th>Teams</th>
              <th>Start Date</th>
              <th>End Date</th>
          </tr>
         <tr v-for="tournament in filteredList" v-bind:key="tournament.id">
             <router-link v-bind:to="{ name: 'view-tournament', params: {id: Number(tournament.tournamentId)}}"><td>{{tournament.tournamentName}}</td></router-link>
-            <td>{{tournament.numOfTeams}}</td>
             <td>{{tournament.startDate}}</td>
             <td>{{tournament.endDate}}</td>
         </tr>         
@@ -35,5 +33,7 @@ export default {
 </script>
 
 <style scoped>
-
+td {
+    margin: 0.5rem;
+}
 </style>
