@@ -103,4 +103,10 @@ h2{
 p{
     text-align: center;
 }
+
+input {
+    margin-top: 7px;
+    margin-bottom: 7px;
+}
+
 </style>
