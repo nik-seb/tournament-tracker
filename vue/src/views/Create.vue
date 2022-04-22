@@ -26,6 +26,15 @@ export default {
 }
 
 
+
+
+body {
+    background-color: goldenrod;
+    border-color: white;
+
+}
+
+
 h1{
     display: flex;
     flex-direction: row;

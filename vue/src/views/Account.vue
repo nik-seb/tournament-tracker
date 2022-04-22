@@ -9,6 +9,7 @@
             <p>Current user role: {{$store.state.user.role == 'ROLE_USER' ? 'User' : 'Tournament Host'}} </p>
             <div v-if="$store.state.user.role == 'ROLE_USER'">
             <p>Interested in switching roles so you can now create a tournament?</p>
+        
             <p>Hit the button below to enable host privileges!</p>
             <!-- confirm button -->
             <button class="isHost" v-on:click.prevent="updateAccount()"> Enable Host</button>
@@ -75,6 +76,7 @@ export default {
 <style scoped>
 
 form.account {
+    
     position: relative;
   z-index: 1;
 background-color: #232323;
@@ -85,6 +87,7 @@ background-color: #232323;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 
 }
+
 
 
 </style>

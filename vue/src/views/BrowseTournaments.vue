@@ -174,8 +174,7 @@ export default {
 <style scoped>
 table {
   margin-top: 20px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-family: sans-serif;
   margin-bottom: 20px;
 }
 #browse-body {
@@ -208,6 +207,7 @@ tr.disabled {
 }
 input,
 select {
+  font-family: "Roboto", sans-serif;
   font-size: 16px;
 }
 
