@@ -1,4 +1,3 @@
-
 <template>
   <div class="text-center" id="login">
     <div class="login-page">
@@ -166,7 +165,7 @@ body {
 }
 
 p {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: x-large;
   color: goldenrod;
   margin: auto;
@@ -189,25 +188,20 @@ p {
 #username{
   margin-top: 3.5%;
 }
-header a img{
-  width: 134px;
-margin-top: 4px;
+
+/* #username {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
 } */
 
-.form button {
-  font-family: "Roboto", sans-serif;
-  text-transform: uppercase;
-  outline: 0;
-  background-color: goldenrod;
-  /* background-image: linear-gradient(45deg,#328f8a,#08ac4b); */
-  width: 100%;
-  border: 0;
-  padding: 15px;
-  color: #FFFFFF;
-  font-size: 14px;
-  -webkit-transition: all 0.3 ease;
-  transition: all 0.3 ease;
-  cursor: pointer;
-}
+
+/* 
+.sr-only{
+  margin: 0% auto;
+  padding-bottom: 5%;
+} */
+
 
 </style>
+

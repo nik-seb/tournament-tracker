@@ -45,7 +45,7 @@ components:{
 
 
 #company-name{
-  
+  font-family: "Roboto", sans-serif;
   display: flex;
   justify-content: center;
   padding-right: 2%;

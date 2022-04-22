@@ -20,6 +20,7 @@ name: "Invite",
 <style scoped>
 
 h1{
+    font-family: "Roboto", sans-serif;
     display: flex;
     flex-direction: row;
     justify-content: center;

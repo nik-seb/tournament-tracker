@@ -114,11 +114,12 @@ export default {
 
 .text-center .form-register {
   margin-top: 10%;
+  font-family: "Roboto", sans-serif;
 }
 
 
 .form-register{
-
+font-family: "Roboto", sans-serif;
   position: relative;
   z-index: 1;
   background: black #FFFFFF;
@@ -158,12 +159,14 @@ export default {
 }
 
 #username{
+  font-family: "Roboto", sans-serif;
   margin-top: 5%;
   margin-bottom: 10% ;
  
 }
 
 #password{
+  font-family: "Roboto", sans-serif;
   margin-top: 5%;
 
 }
@@ -178,12 +181,14 @@ export default {
 }
 
 .host {
+  font-family: "Roboto", sans-serif;
   display: flex;
   flex-direction: column-reverse;
   justify-items: center;
 }
 
 #create{
+  font-family: "Roboto", sans-serif;
   margin-top: 2.5%;
   margin-bottom: 2.5%;
   font-family: "Roboto", sans-serif;
@@ -191,6 +196,7 @@ export default {
 }
 
 .host #isHost{
+  font-family: "Roboto", sans-serif;
   margin-top: 3.5%;
 }
 

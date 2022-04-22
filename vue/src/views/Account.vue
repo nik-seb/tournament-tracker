@@ -76,6 +76,7 @@ export default {
 <style scoped>
 
 form.account {
+    
     position: relative;
   z-index: 1;
 background-color: #232323;
