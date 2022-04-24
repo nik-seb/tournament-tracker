@@ -1,5 +1,5 @@
 <template>
-    <div v-if="match.winningTeamId == 0">
+    <div id="main-match-form" v-if="match.winningTeamId == 0">
         <form v-on:submit.prevent="submitForm()" >
             <p>{{match.homeTeamName}} vs {{match.awayTeamName}} </p>
 
@@ -118,6 +118,23 @@ form{
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
   display: flex;
   flex-direction: column;
+  margin-left: 0px;
+}
+
+input {
+    margin-top: 7px;
+    margin-bottom: 7px;
+}
+
+#main-match-form {
+    margin: 0px;
+}
+
+#isHoliday {
+    background-color: goldenrod;
+    color: black;
+    padding: 0.15rem;
+    margin-bottom: 0.15rem;
 }
 
 </style>

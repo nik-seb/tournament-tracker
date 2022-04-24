@@ -1,7 +1,6 @@
 <template>
   <body class="inv">
-      <h3></h3>
-
+      <h3>Invites Received</h3>  
               <div id="brittneyBitch">
                    <form>
                     <div class="inv" v-for="invite in invitations" v-bind:key="invite.invitationId" v-bind:value="invite.teamId">
@@ -154,8 +153,9 @@ methods: {
 <style>
 .inv{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     margin-top: 5%;
     margin-bottom: 15%;
 }

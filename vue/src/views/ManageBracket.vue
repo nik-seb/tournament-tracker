@@ -1,9 +1,11 @@
 <template>
     <div>
+        <div  id="manage-bracket">
         <h2> Edit the matches for this bracket</h2>
         <p>Each match can only be edited until its winner is set.</p>
         <edit-match-form v-for="match in matchesList" v-bind:key="match.matchId" v-bind:Match="match"/>
         <router-link v-bind:to="{name: 'view-tournament', params: {id: this.tournamentID}}"><button>Return to tournament page</button></router-link>
+        </div>
     </div>
 </template>
 
@@ -103,4 +105,11 @@ h2{
 p{
     text-align: center;
 }
+
+#manage-bracket {
+      display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 </style>
